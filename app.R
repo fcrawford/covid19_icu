@@ -16,6 +16,7 @@ server <- function(input, output) {
                   distribution=input$distrib,
                   t= input$time)
     
+    
     plot_grid(plots[[1]], plots[[2]],plots[[3]],plots[[4]], nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
     
   })
