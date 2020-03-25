@@ -35,10 +35,6 @@ ui <- fluidPage(
           includeMarkdown("content/instructions.md"),
           sliderInput("initrep", "Initial report", min=1, max=1e3, value=1e4),
           sliderInput("finalrep", "Final report", min=1, max=1e3, value=1e4),
-          sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
-          sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352),
-          sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),
-          sliderInput("avgicudischargetime", "Average time in ICU",     min=0, max=25, value=10),
           sliderInput("time", "Days",     min=30, max=120, value=60),
           # put more sliderInputs here! 
           radioButtons("distrib", 
@@ -50,8 +46,15 @@ ui <- fluidPage(
                        inline=TRUE,
                        selected="ramp")
         ),
+        tabPanel("Capacity", fluid=TRUE,
+                 includeMarkdown("content/parameters.md"),
+                 sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
+                 sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352),
+        ),
         tabPanel("Parameters", fluid=TRUE,
-          includeMarkdown("content/parameters.md")
+          includeMarkdown("content/parameters.md"),
+          sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),
+          sliderInput("avgicudischargetime", "Average time in ICU",     min=0, max=25, value=10),
         ),
         tabPanel("About", fluid=TRUE,
           includeMarkdown("content/about.md")

@@ -78,7 +78,9 @@ plot_hospital<- function(initial_report= 1000,
         scale_color_manual( name=element_blank(), values=c("black", "red", "grey", "pink"), labels=c("CTotal"="In ICU", "FTotal"= "On floor", "totalWC" ="Waiting for ICU beds", "totalWF"="Waiting for floor beds"))+
         labs(x="Time (Day)", y="Patients")+
         ggtitle("ICU and floor utilization and queues")+
-        theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.75), legend.text=element_text(size=9),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent"))
+        theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.75), legend.text=element_text(size=9),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent"))+
+        geom_hline(yintercept=M, linetype="dashed", color = "black", size=1.5)+
+        geom_hline(yintercept=L, linetype="dashed", color = "red", size=1.5)
       
       
       list(p1, p2, p3, p4)
