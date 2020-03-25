@@ -27,8 +27,8 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("Main", fluid=TRUE,
           includeMarkdown("content/instructions.md"),
-          sliderInput("initrep", "Initial report", min=1, max=5e3, value=1e5),
-          sliderInput("finalrep", "Final report", min=1, max=5e3, value=1e5),
+          sliderInput("initrep", "Initial report", min=1, max=1e3, value=1e4),
+          sliderInput("finalrep", "Final report", min=1, max=1e3, value=1e4),
           sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
           sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352),
           sliderInput("time", "Days",     min=30, max=120, value=60),
