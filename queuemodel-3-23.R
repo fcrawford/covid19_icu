@@ -78,7 +78,9 @@ hospital_queues<- function(initial_report= 1000,
             distribution= "geometric",
             young=.24,
             medium=.6,
-            slope=50){
+            slope=50,
+            M=352,
+            L=1781){
   
 
       # read in parameters
@@ -272,8 +274,8 @@ hospital_queues<- function(initial_report= 1000,
         theta_WF3=pars$theta_WF3
         
         
-        M = pars$M;
-        L = pars$L;
+        #M = pars$M;
+        #L = pars$L;
         
         young =pars$young
         medium = pars$medium
