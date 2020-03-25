@@ -13,7 +13,8 @@ server <- function(input, output) {
                   final_report=input$finalrep,
                   L=input$floorcap, 
                   M=input$icucap,
-                  distribution=input$distrib)
+                  distribution=input$distrib,
+                  t= input$time)
   })
 }
 
@@ -30,6 +31,7 @@ ui <- fluidPage(
           sliderInput("finalrep", "Final report", min=1, max=5e3, value=1e5),
           sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
           sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352),
+          sliderInput("time", "Days",     min=30, max=120, value=60),
           # put more sliderInputs here! 
           radioButtons("distrib", 
                        "Infection curve",

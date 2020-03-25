@@ -23,7 +23,7 @@ start_time = Sys.time()
 # zeta = rate you can be moved to an ICU bed from queue
 
 ############## Reporting rate function determines who shows up to the ED 3/23
-report_rate<-function(t=60,
+report_rate<-function(t,
                       initial_report, 
                       final_report, 
                       distribution="uniform"){
@@ -80,7 +80,8 @@ hospital_queues<- function(initial_report= 1000,
             medium=.6,
             slope=50,
             M=352,
-            L=1781){
+            L=1781,
+		t = 60){
   
 
       # read in parameters
@@ -154,7 +155,7 @@ hospital_queues<- function(initial_report= 1000,
       
       ############## RUN MODEL
       
-      reports <- approxfun(report_rate(initial_report = initial_report, final_report = final_report, distribution=distribution), rule=2)
+      reports <- approxfun(report_rate(t = t, initial_report = initial_report, final_report = final_report, distribution=distribution), rule=2)
       
       
       model_strat <- function (t, x , pars,...) {
@@ -388,10 +389,10 @@ hospital_queues<- function(initial_report= 1000,
         return(as.data.frame(ode(func = func, y = xstart, times = times, parms = params, method = method)))
       }
 
-      test = run_model(model_strat, xstart = as.numeric(x), times = c(1:60), params, method = "lsodes")
+      test = run_model(model_strat, xstart = as.numeric(x), times = c(1:t), params, method = "lsodes")
       names(test)[2:ncol(test)] = names(x)
       
-      test$reports <- reports(1:60);
+      test$reports <- reports(1:t);
       
 
       
