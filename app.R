@@ -9,7 +9,9 @@ source("queuemodel-3-23.R")
 server <- function(input, output) {
   output$hospitalPlot <- renderPlot({
     # put slider control values here as arguments
-    plot_hospital(initial_report=input$initrep)
+    plot_hospital(initial_report=input$initrep, 
+                  L=input$floorcap, 
+                  M=input$icucap)
   })
 }
 
@@ -22,7 +24,9 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("Main", fluid=TRUE,
           includeMarkdown("content/instructions.md"),
-          sliderInput("initrep", "Initial report", min=5e2, max=5e3, value=1e3)
+          sliderInput("initrep", "Initial report", min=5e2, max=5e3, value=1e3),
+          sliderInput("floorcap", "Floor capacity", min=1, max=500, value=100),
+          sliderInput("icucap", "ICU capacity",     min=1, max=500, value=100)
           # put more sliderInputs here! 
         ),
         tabPanel("Parameters", fluid=TRUE,
@@ -38,6 +42,5 @@ ui <- fluidPage(
 )
 
 shinyApp(ui = ui, server = server)
-
 
 

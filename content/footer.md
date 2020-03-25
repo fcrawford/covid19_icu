@@ -1,6 +1,6 @@
-Copyright 2019 by [...]
+Copyright 2020 by [Soheil Eshghi](http://www.soheileshghi.com/), Margret Erlendsdottir, and [Forrest W. Crawford](http://www.crawfordlab.io). 
 
-Source at <https://github.com/fcrawford/covid19_icu> 
+Source code at <https://github.com/fcrawford/covid19_icu>. 
 
-Report issues to <forrest.crawford@yale.edu> or the [Github issues page](https://github.com/fcrawford/covid19_icu/issues). 
+Report issues to the [Github issues page](https://github.com/fcrawford/covid19_icu/issues). 
 

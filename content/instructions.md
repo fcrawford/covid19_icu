@@ -1,9 +1,6 @@
 
 #### Instructions 
 
-This web application ...
+This web application shows predictions of ...
 
-Click on this and that.
-
-slide the sliders...
 
