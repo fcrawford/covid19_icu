@@ -11,7 +11,8 @@ server <- function(input, output) {
     # put slider control values here as arguments
     plot_hospital(initial_report=input$initrep, 
                   L=input$floorcap, 
-                  M=input$icucap)
+                  M=input$icucap,
+                  distribution=input$distrib)
   })
 }
 
@@ -25,9 +26,17 @@ ui <- fluidPage(
         tabPanel("Main", fluid=TRUE,
           includeMarkdown("content/instructions.md"),
           sliderInput("initrep", "Initial report", min=5e2, max=5e3, value=1e3),
-          sliderInput("floorcap", "Floor capacity", min=1, max=2000, value=1781),
-          sliderInput("icucap", "ICU capacity",     min=1, max=500, value=352)
+          sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
+          sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352),
           # put more sliderInputs here! 
+          radioButtons("distrib", 
+                       "Infection curve",
+                       c("Ramp"="ramp",
+                         "Logistic"="logistic",
+                         "Exponential"="exponential",
+                         "Uniform"="uniform"),
+                       inline=TRUE,
+                       selected="ramp")
         ),
         tabPanel("Parameters", fluid=TRUE,
           includeMarkdown("content/parameters.md")
