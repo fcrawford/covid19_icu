@@ -10,6 +10,7 @@ server <- function(input, output) {
   output$hospitalPlot <- renderPlot({
     # put slider control values here as arguments
     plot_hospital(initial_report=input$initrep, 
+                  final_report=input$finalrep,
                   L=input$floorcap, 
                   M=input$icucap,
                   distribution=input$distrib)
@@ -25,7 +26,8 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("Main", fluid=TRUE,
           includeMarkdown("content/instructions.md"),
-          sliderInput("initrep", "Initial report", min=5e2, max=5e3, value=1e3),
+          sliderInput("initrep", "Initial report", min=1, max=5e3, value=1e5),
+          sliderInput("finalrep", "Final report", min=1, max=5e3, value=1e5),
           sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
           sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352),
           # put more sliderInputs here! 
@@ -33,7 +35,7 @@ ui <- fluidPage(
                        "Infection curve",
                        c("Ramp"="ramp",
                          "Logistic"="logistic",
-                         "Exponential"="exponential",
+                         "Geometric"="geometric",
                          "Uniform"="uniform"),
                        inline=TRUE,
                        selected="ramp")
