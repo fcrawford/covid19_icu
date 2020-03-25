@@ -53,7 +53,7 @@ plot_hospital<- function(initial_report= 1000,
         scale_color_manual( name="Legend", values=c("black", "red"), labels=c("Number_seen_at_ED"="ED throughput", "totaldead"="Deaths"))+
         labs(x="Time (Day)", y="Patients")+
         ggtitle("Emergency department cumulative triages and deaths")+
-        theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.75), legend.text=element_text(size=8),    legend.title=element_text(size=8))
+        theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.75), legend.text=element_text(size=8),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent"))
        
       p3 <-ggplot(hospital_melt,
                   aes(x=time,y=value, fill=variable))+
@@ -62,7 +62,7 @@ plot_hospital<- function(initial_report= 1000,
         scale_fill_manual( name="Legend", values=(c("black", "yellow", "red",  "pink", "grey", "orange")), labels=c("Dead_at_ICU"="In ICU", "Dead_waiting_for_ICU"="Waiting for ICU beds", "Dead_on_Floor"= "On floor", "Dead_waiting_for_Floor"="Waiting for floor beds", "Dead_with_mild_symptoms"="Post discharge from ED", "Dead_in_ED"="In ED"))+
         labs(x="Time (Day)", y="Patients")+
         ggtitle("Deaths by location")+
-        theme(panel.border = element_blank(), axis.line = element_line(colour = "black"), legend.position = c(0.25, 0.65), legend.text=element_text(size=8),    legend.title=element_text(size=8)) 
+        theme(panel.border = element_blank(), axis.line = element_line(colour = "black"), legend.position = c(0.25, 0.65), legend.text=element_text(size=8),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent")) 
   
       
       p4 <-ggplot(hospital_melt,
@@ -72,7 +72,7 @@ plot_hospital<- function(initial_report= 1000,
         scale_color_manual( name="Legend", values=c("black", "red", "grey", "pink"), labels=c("CTotal"="In ICU", "FTotal"= "On floor", "totalWC" ="Waiting for ICU beds", "totalWF"="Waiting for floor beds"))+
         labs(x="Time (Day)", y="Patients")+
         ggtitle("ICU and floor utilization and queues")+
-        theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.75), legend.text=element_text(size=8),    legend.title=element_text(size=8))
+        theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.75), legend.text=element_text(size=8),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent"))
       
       
       plot_grid(p1, p2,p3,p4, nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
