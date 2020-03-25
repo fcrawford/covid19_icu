@@ -76,7 +76,6 @@ plot_hospital<- function(initial_report= 1000,
         ggtitle("ICU and floor utilization and queues")+
         theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.75), legend.text=element_text(size=8),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent"))
       
-      
-      plot_grid(p1, p2,p3,p4, nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
+      list(p1, p2, p3, p4)
 
 }

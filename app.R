@@ -9,12 +9,15 @@ source("queuemodel-3-23.R")
 server <- function(input, output) {
   output$hospitalPlot <- renderPlot({
     # put slider control values here as arguments
-    plot_hospital(initial_report=input$initrep, 
+    plots<- plot_hospital(initial_report=input$initrep, 
                   final_report=input$finalrep,
                   L=input$floorcap, 
                   M=input$icucap,
                   distribution=input$distrib,
                   t= input$time)
+    
+    plot_grid(plots[[1]], plots[[2]],plots[[3]],plots[[4]], nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
+    
   })
 }
 
