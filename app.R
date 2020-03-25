@@ -25,8 +25,8 @@ ui <- fluidPage(
         tabPanel("Main", fluid=TRUE,
           includeMarkdown("content/instructions.md"),
           sliderInput("initrep", "Initial report", min=5e2, max=5e3, value=1e3),
-          sliderInput("floorcap", "Floor capacity", min=1, max=500, value=100),
-          sliderInput("icucap", "ICU capacity",     min=1, max=500, value=100)
+          sliderInput("floorcap", "Floor capacity", min=1, max=2000, value=1781),
+          sliderInput("icucap", "ICU capacity",     min=1, max=500, value=352)
           # put more sliderInputs here! 
         ),
         tabPanel("Parameters", fluid=TRUE,

@@ -26,10 +26,10 @@ plot_hospital<- function(initial_report= 1000,
       hospital <- hospital_queues(initial_report=initial_report,
                                   final_report = final_report,
                                   distribution= distribution,
-                                  young,
-                                  medium,
-                                  M,
-                                  L)
+                                  young=young,
+                                  medium=medium,
+                                  M=M,
+                                  L=L)
 
       hospital$totaldead<- hospital$Dead_at_ICU + hospital$Dead_in_ED + hospital$Dead_on_Floor+ hospital$Dead_waiting_for_Floor+ hospital$Dead_waiting_for_ICU+ hospital$Dead_with_mild_symptoms
       hospital$totalWC<- hospital$WC1 + hospital$WC2 + hospital$WC3
