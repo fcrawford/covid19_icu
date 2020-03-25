@@ -14,7 +14,9 @@ server <- function(input, output) {
                   L=input$floorcap, 
                   M=input$icucap,
                   distribution=input$distrib,
-                  t= input$time)
+                  t= input$time,
+                  chi_C=1/input$avgicudischargetime,
+                  chi_L=1/input$avgfloordischargetime)
     
     
     plot_grid(plots[[1]], plots[[2]],plots[[3]],plots[[4]], nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
@@ -35,6 +37,8 @@ ui <- fluidPage(
           sliderInput("finalrep", "Final report", min=1, max=1e3, value=1e4),
           sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
           sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352),
+          sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),
+          sliderInput("avgicudischargetime", "Average time in ICU",     min=0, max=25, value=10),
           sliderInput("time", "Days",     min=30, max=120, value=60),
           # put more sliderInputs here! 
           radioButtons("distrib", 

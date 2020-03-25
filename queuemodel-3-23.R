@@ -81,7 +81,10 @@ hospital_queues<- function(initial_report= 1000,
             slope=50,
             M=352,
             L=1781,
-		t = 60){
+		        t = 60,
+		        chi_C=0.1,
+		        chi_L=.142857
+		        ){
   
 
       # read in parameters
@@ -214,8 +217,8 @@ hospital_queues<- function(initial_report= 1000,
         sigma_MS1=pars$sigma_MS1
         sigma_C1=pars$sigma_C1
         sigma_F1=pars$sigma_F1
-        chi_C1=pars$chi_C1
-        chi_L1=pars$chi_L1
+        chi_C1=chi_C#pars$chi_C1
+        chi_L1=chi_L#=pars$chi_L1
         theta_F1=pars$theta_F1
         eta1=pars$eta1
         zeta1=pars$zeta1
@@ -236,8 +239,8 @@ hospital_queues<- function(initial_report= 1000,
         sigma_MS2=pars$sigma_MS2
         sigma_C2=pars$sigma_C2
         sigma_F2=pars$sigma_F2
-        chi_C2=pars$chi_C2
-        chi_L2=pars$chi_L2
+        chi_C2=chi_C#=pars$chi_C2
+        chi_L2=chi_L#=pars$chi_L2
         theta_F2=pars$theta_F2
         eta2=pars$eta2
         zeta2=pars$zeta2
@@ -258,8 +261,8 @@ hospital_queues<- function(initial_report= 1000,
         sigma_MS3=pars$sigma_MS3
         sigma_C3=pars$sigma_C3
         sigma_F3=pars$sigma_F3
-        chi_C3=pars$chi_C3
-        chi_L3=pars$chi_L3
+        chi_C3=chi_C#pars$chi_C3
+        chi_L3=chi_L#pars$chi_L3
         theta_F3=pars$theta_F3
         eta3=pars$eta3
         zeta3=pars$zeta3
