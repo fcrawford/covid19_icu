@@ -43,6 +43,8 @@ plot_hospital<- function(initial_report= 1000,
       hospital$totalWC<- hospital$WC1 + hospital$WC2 + hospital$WC3
       hospital$totalWF<- hospital$WF1 + hospital$WF2 + hospital$WF3
       
+
+      
       hospital_melt<- hospital %>% gather(variable, value, -time);  
       
   
@@ -53,6 +55,8 @@ plot_hospital<- function(initial_report= 1000,
         labs(x="Time (Day)", y="Patients")+
         ggtitle("ED visits per day")+
         theme(panel.border = element_blank(), axis.line = element_line(colour = "black"))      
+      
+     
       
       p2 <-ggplot(hospital_melt,
                   aes(x=time,y=value, color=variable))+
@@ -84,16 +88,26 @@ plot_hospital<- function(initial_report= 1000,
         geom_hline(yintercept=M, linetype="dashed", color = "black", size=1.5)+
         geom_hline(yintercept=L, linetype="dashed", color = "red", size=1.5)
       
+      ### determine when the hospital exceeds capacity
       
-	### determine when the hospital exceeds capacity
+      #ICU queue 
+      
+      ICUover = min(which(hospital$WC1+hospital$WC2+hospital$WC3>=1))
+      
+      
+      #floor queue
+      
+      floorover = min(which(hospital$WF1+hospital$WF2+hospital$WF3>=1))
+      
+      
+      if(is.finite(floorover)){
+        p4 <- p4 +annotate(geom="text", x=floorover, y=L*1.1, label=paste("Day", as.character(floorover)), size=6, color="red")
+      }
 
-	#ICU queue 
-	
-	ICUover = min(which(hospital$WC1>=1))
-
-	#floor queue
-	
-	floorover = min(which(hospital$WF1>=1))
+      if(is.finite(ICUover)){
+        p4 <- p4 +annotate(geom="text", x=ICUover, y=M*1.1, label=paste("Day", as.character(ICUover)), size=6)
+      }
       list(p1, p2, p3, p4, ICUover, floorover)
+      
 
 }
