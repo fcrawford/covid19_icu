@@ -56,10 +56,11 @@ ui <- fluidPage(
             condition = "input.distrib == 'exponential'",
             sliderInput("growth_rate", "Growth rate (exponential)", min=1.00, max=1.1, value=1.02)
             ),
-
-		
-          h4("Capacity:"),
-		includeMarkdown("content/capacity.md"),
+          
+        ),
+        tabPanel("Capacity", fluid=TRUE,
+		      includeMarkdown("content/capacity.md"),
+		      h4("Capacity:"),
           sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
           sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352)),
           # put more sliderInputs here! 
