@@ -33,10 +33,10 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("Main", fluid=TRUE,
           includeMarkdown("content/instructions.md"),
+          h2("Scenario:"),
           sliderInput("initrep", "Initial report", min=1, max=1e3, value=1e4),
           sliderInput("finalrep", "Final report", min=1, max=1e3, value=1e4),
-          sliderInput("time", "Days",     min=30, max=120, value=60),
-          # put more sliderInputs here! 
+          sliderInput("time", "Time Horizon",     min=30, max=120, value=60),
           radioButtons("distrib", 
                        "Infection curve",
                        c("Ramp"="ramp",
@@ -46,11 +46,10 @@ ui <- fluidPage(
                        inline=TRUE,
                        selected="ramp")
         ),
-        tabPanel("Capacity", fluid=TRUE,
-                 includeMarkdown("content/parameters.md"),
-                 sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
-                 sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352),
-        ),
+          h2("Capacity:"),
+          sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
+          sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352),
+          # put more sliderInputs here! 
         tabPanel("Parameters", fluid=TRUE,
           includeMarkdown("content/parameters.md"),
           sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),
