@@ -48,14 +48,12 @@ ui <- fluidPage(
                        inline=TRUE,
                        selected="exponential"),
           sliderInput("growth_rate", "Growth rate (exponential)", min=1.00, max=1.1, value=1.02),
-          sliderInput("time", "Time Horizon",     min=30, max=120, value=60),
-
-		
-          h4("Capacity:"),
+          sliderInput("time", "Time Horizon",     min=30, max=120, value=60)),
+        tabPanel("Capacity", fluid=TRUE,
 		includeMarkdown("content/capacity.md"),
           sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
           sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352)),
-          # put more sliderInputs here! 
+
         tabPanel("Parameters", fluid=TRUE,
           includeMarkdown("content/parameters.md"),
           sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),
