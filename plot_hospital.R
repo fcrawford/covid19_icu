@@ -92,20 +92,22 @@ plot_hospital<- function(initial_report= 1000,
       
       #ICU queue 
       
-      ICUover = min(which(hospital$WC1+hospital$WC2+hospital$WC3>=1))
+      ICUover = (hospital$WC1+hospital$WC2+hospital$WC3>=1)
       
       
       #floor queue
       
-      floorover = min(which(hospital$WF1+hospital$WF2+hospital$WF3>=1))
+      floorover = (hospital$WF1+hospital$WF2+hospital$WF3>=1)
       
       
-      if(is.finite(floorover)){
-        p4 <- p4 +annotate(geom="text", x=floorover, y=L*1.1, label=paste("Day", as.character(floorover)), size=6, color="red")
+      if(sum(floorover)>0){
+        floorover<- min(which(floorover))
+        p4 <- p4 +annotate(geom="label", x=floorover, y=L, label=paste("Day", as.character(floorover)), size=4, color="red")
       }
 
-      if(is.finite(ICUover)){
-        p4 <- p4 +annotate(geom="text", x=ICUover, y=M*1.1, label=paste("Day", as.character(ICUover)), size=6)
+      if(sum(ICUover)>0){
+        ICUover<- min(which(ICUover))
+        p4 <- p4 +annotate(geom="label", x=ICUover, y=M, label=paste("Day", as.character(ICUover)), size=4)
       }
       list(p1, p2, p3, p4, ICUover, floorover)
       
