@@ -1,8 +1,8 @@
 #### About this app
 
-This app was written by [Soheil Eshghi](http://www.soheileshghi.com/), Margret Erlendsdottir, and [Forrest W. Crawford](http://www.crawfordlab.io) using the [R](http://www.r-project.org) [shiny](http://shiny.rstudio.com/) framework.  
+This app was written by [Soheil Eshghi](http://www.soheileshghi.com/), Margret Erlendsdottir, [Maile Thayer Phillips](https://medicine.yale.edu/profile/maile_phillips/), [Suzan Iloglu](https://medicine.yale.edu/profile/suzan_iloglu/) and [Forrest W. Crawford](http://www.crawfordlab.io) using the [R](http://www.r-project.org) [shiny](http://shiny.rstudio.com/) framework.  
 
-We are grateful to [...] for advice and comments.  
+We are grateful to Hanna Ehrlich, Raphael Sherak,  Melanie Chitwood, Thomas Thornhill, and Stephanie Perniciaro for advice and comments.  
 
 [citation]
 
