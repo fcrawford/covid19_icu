@@ -15,8 +15,8 @@ library(zoo)
 
 
 
-plot_hospital<- function(initial_report= 1000,
-                           final_report = 10000,
+plot_hospital<- function(initial_report= 100000,
+                           final_report = 10000000,
                            distribution= "ramp",
                            young=.24,
                            medium=.6,
@@ -83,6 +83,15 @@ plot_hospital<- function(initial_report= 1000,
         geom_hline(yintercept=L, linetype="dashed", color = "red", size=1.5)
       
       
-      list(p1, p2, p3, p4)
+	### determine when the hospital exceeds capacity
+
+	#ICU queue 
+	
+	ICUover = min(which(hospital$WC1>=1))
+
+	#floor queue
+	
+	floorover = min(which(hospital$WF1>=1))
+      list(p1, p2, p3, p4, ICUover, floorover)
 
 }
