@@ -33,7 +33,7 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("Main", fluid=TRUE,
           includeMarkdown("content/instructions.md"),
-          h2("Scenario:"),
+          h4("Scenario:"),
           sliderInput("initrep", "Initial report", min=1, max=1e3, value=1e4),
           sliderInput("finalrep", "Final report", min=1, max=1e3, value=1e4),
           sliderInput("time", "Time Horizon",     min=30, max=120, value=60),
@@ -44,11 +44,10 @@ ui <- fluidPage(
                          "Geometric"="geometric",
                          "Uniform"="uniform"),
                        inline=TRUE,
-                       selected="ramp")
-        ),
-          h2("Capacity:"),
+                       selected="ramp"),
+          h4("Capacity:"),
           sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=1781),
-          sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352),
+          sliderInput("icucap", "ICU capacity",     min=0, max=500, value=352)),
           # put more sliderInputs here! 
         tabPanel("Parameters", fluid=TRUE,
           includeMarkdown("content/parameters.md"),
