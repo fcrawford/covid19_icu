@@ -38,9 +38,7 @@ ui <- fluidPage(
           h4("Scenario:"),
           sliderInput("initrep", "Initial cases per day", min=1, max=1e3, value=50),
           sliderInput("finalrep", "Expected cases per day at time horizon", min=1, max=1e3, value=1000),
-          sliderInput("growth_rate", "Growth rate (exponential)", min=1.00, max=1.1, value=1.02),
-          sliderInput("time", "Time Horizon",     min=30, max=120, value=60),
-          radioButtons("distrib", 
+	          radioButtons("distrib", 
                        "Infection curve",
                        c("Exponential"="exponential",
                          "Ramp"="ramp",
@@ -49,6 +47,9 @@ ui <- fluidPage(
                          "Uniform"="uniform"),
                        inline=TRUE,
                        selected="exponential"),
+          sliderInput("growth_rate", "Growth rate (exponential)", min=1.00, max=1.1, value=1.02),
+          sliderInput("time", "Time Horizon",     min=30, max=120, value=60),
+
 		
           h4("Capacity:"),
 		includeMarkdown("content/capacity.md"),
@@ -59,9 +60,6 @@ ui <- fluidPage(
           includeMarkdown("content/parameters.md"),
           sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),
           sliderInput("avgicudischargetime", "Average time in ICU",     min=0, max=25, value=10),
-        ),
-        tabPanel("About", fluid=TRUE,
-          includeMarkdown("content/about.md")
         )),width=3),
     mainPanel(plotOutput("hospitalPlot",height="700px"))
   ),
