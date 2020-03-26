@@ -14,10 +14,13 @@ plot_hospital<- function(initial_report= 1000,
                            medium=.6,
                            M=352,
                            L=1781,
-                					 t = 60,
-                				   chi_C=0.1,
-                					 chi_L=.142857,
-                					 growth_rate=1){
+                			t = 60,
+                			chi_C=0.1,
+                			chi_L=.142857,
+                			growth_rate=1,
+					mu_C1 = .1,
+					mu_C2 = .1,
+					mu_C3 = .1){
   
       hospital <- hospital_queues(initial_report=initial_report,
                                   final_report = final_report,
@@ -26,10 +29,13 @@ plot_hospital<- function(initial_report= 1000,
                                   medium=medium,
                                   M=M,
                                   L=L,
-                        					t=t,
-                        					chi_C=chi_C,
-                        					chi_L=chi_L,
-                        					growth_rate=growth_rate)
+                        		t=t,
+                        		chi_C=chi_C,
+                        		chi_L=chi_L,
+                        		growth_rate=growth_rate,
+						mu_C1 = mu_C1,
+						mu_C2 = mu_C2,
+						mu_C3 = mu_C3)
 
       hospital$totaldead<- hospital$Dead_at_ICU + hospital$Dead_in_ED + hospital$Dead_on_Floor+ hospital$Dead_waiting_for_Floor+ hospital$Dead_waiting_for_ICU+ hospital$Dead_with_mild_symptoms
       hospital$totalWC<- hospital$WC1 + hospital$WC2 + hospital$WC3
