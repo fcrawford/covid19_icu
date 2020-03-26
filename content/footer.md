@@ -7,7 +7,7 @@ This app was written by [Soheil Eshghi](http://www.soheileshghi.com/), [Margret 
 using the [R](http://www.r-project.org) [shiny](http://shiny.rstudio.com/) framework.  
 
 We are especially grateful to [Gregg Gonsalves](https://medicine.yale.edu/profile/gregg_gonsalves/), [David Paltiel] (https://medicine.yale.edu/profile/david_paltiel/),
-Hanna Ehrlich, Raphael Sherak,  Melanie Chitwood, Thomas Thornhill, and Stephanie Perniciaro for advice and comments.  
+Hanna Ehrlich, Raphael Sherak,  Melanie Chitwood, Thomas Thornhill, Nicole Swartwood, and Stephanie Perniciaro for advice and comments.  
 
 Source code at <https://github.com/fcrawford/covid19_icu>. 
 
