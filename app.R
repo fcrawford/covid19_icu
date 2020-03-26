@@ -16,7 +16,8 @@ server <- function(input, output) {
                   distribution=input$distrib,
                   t= input$time,
                   chi_C=1/input$avgicudischargetime,
-                  chi_L=1/input$avgfloordischargetime)
+                  chi_L=1/input$avgfloordischargetime,
+                  growth_rate=log(input$growth_rate))
     
     
     plot_grid(plots[[1]], plots[[2]],plots[[3]],plots[[4]], nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
@@ -36,15 +37,17 @@ ui <- fluidPage(
           h4("Scenario:"),
           sliderInput("initrep", "Initial cases per day", min=1, max=1e3, value=1e4),
           sliderInput("finalrep", "Expected cases per day at time horizon", min=1, max=1e3, value=1e4),
+          sliderInput("growth_rate", "Growth rate (exponential)", min=1.00, max=1.1, value=1.02),
           sliderInput("time", "Time Horizon",     min=30, max=120, value=60),
           radioButtons("distrib", 
                        "Infection curve",
-                       c("Ramp"="ramp",
+                       c("Exponential"="exponential",
+                         "Ramp"="ramp",
                          "Logistic"="logistic",
                          "Geometric"="geometric",
                          "Uniform"="uniform"),
                        inline=TRUE,
-                       selected="ramp"),
+                       selected="exponential"),
 		
           h4("Capacity:"),
 		includeMarkdown("content/capacity.md"),

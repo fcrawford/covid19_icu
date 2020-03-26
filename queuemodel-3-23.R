@@ -26,7 +26,8 @@ start_time = Sys.time()
 report_rate<-function(t,
                       initial_report, 
                       final_report, 
-                      distribution="uniform"){
+                      distribution="uniform",
+                      growth_rate=1){
   
   report_rate<-rep(0,t)
   if (distribution=="uniform"){
@@ -49,6 +50,9 @@ report_rate<-function(t,
     report_rate<- (geometric_factor^(1:t))*initial_report	
   }
   
+  if (distribution=="exponential"){
+    report_rate<- (exp(growth_rate*(1:t)))*initial_report	
+  }
   
   try(if (length(report_rate) != t)(stop("reporting rate time scale does not match inputted timescale")))
   
@@ -75,7 +79,7 @@ library(deSolve)
 
 hospital_queues<- function(initial_report= 1000,
             final_report = 10000,
-            distribution= "geometric",
+            distribution= "exponential",
             young=.24,
             medium=.6,
             slope=50,
@@ -83,7 +87,8 @@ hospital_queues<- function(initial_report= 1000,
             L=1781,
 		        t = 60,
 		        chi_C=0.1,
-		        chi_L=.142857
+		        chi_L=.142857,
+		        growth_rate=1
 		        ){
   
 
@@ -158,7 +163,7 @@ hospital_queues<- function(initial_report= 1000,
       
       ############## RUN MODEL
       
-      reports <- approxfun(report_rate(t = t, initial_report = initial_report, final_report = final_report, distribution=distribution), rule=2)
+      reports <- approxfun(report_rate(t = t, initial_report = initial_report, final_report = final_report, distribution=distribution, growth_rate=growth_rate), rule=2)
       
       
       model_strat <- function (t, x , pars,...) {

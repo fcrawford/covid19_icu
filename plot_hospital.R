@@ -17,14 +17,15 @@ library(zoo)
 
 plot_hospital<- function(initial_report= 1000,
                            final_report = 10000,
-                           distribution= "ramp",
+                           distribution= "exponential",
                            young=.24,
                            medium=.6,
                            M=352,
                            L=1781,
                 					 t = 60,
                 				   chi_C=0.1,
-                					 chi_L=.142857){
+                					 chi_L=.142857,
+                					 growth_rate=1){
   
       hospital <- hospital_queues(initial_report=initial_report,
                                   final_report = final_report,
@@ -35,7 +36,8 @@ plot_hospital<- function(initial_report= 1000,
                                   L=L,
                         					t=t,
                         					chi_C=chi_C,
-                        					chi_L=chi_L)
+                        					chi_L=chi_L,
+                        					growth_rate=growth_rate)
 
       hospital$totaldead<- hospital$Dead_at_ICU + hospital$Dead_in_ED + hospital$Dead_on_Floor+ hospital$Dead_waiting_for_Floor+ hospital$Dead_waiting_for_ICU+ hospital$Dead_with_mild_symptoms
       hospital$totalWC<- hospital$WC1 + hospital$WC2 + hospital$WC3
