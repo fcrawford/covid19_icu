@@ -36,10 +36,8 @@ ui <- fluidPage(
         tabPanel("Main", fluid=TRUE,
           includeMarkdown("content/instructions.md"),
           h4("Scenario:"),
-          sliderInput("initrep", "Initial cases per day", min=1, max=1e3, value=50),
-          sliderInput("finalrep", "Expected cases per day at time horizon", min=1, max=1e3, value=1000),
-          sliderInput("growth_rate", "Growth rate (exponential)", min=1.00, max=1.1, value=1.02),
           sliderInput("time", "Time Horizon",     min=30, max=120, value=60),
+          
           radioButtons("distrib", 
                        "Infection curve",
                        c("Exponential"="exponential",
@@ -49,6 +47,16 @@ ui <- fluidPage(
                          "Uniform"="uniform"),
                        inline=TRUE,
                        selected="exponential"),
+          sliderInput("initrep", "Initial cases per day", min=1, max=1e3, value=50),
+          conditionalPanel(
+            condition = "input.distrib=='geometric'||input.distrib=='ramp'||input.distrib=='logistic'",
+            sliderInput("finalrep", "Expected cases per day at time horizon", min=1, max=1e3, value=1000)
+            ),
+          conditionalPanel(
+            condition = "input.distrib == 'exponential'",
+            sliderInput("growth_rate", "Growth rate (exponential)", min=1.00, max=1.1, value=1.02)
+            ),
+
 		
           h4("Capacity:"),
 		includeMarkdown("content/capacity.md"),

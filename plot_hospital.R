@@ -1,17 +1,9 @@
-library(caTools)
 library(cowplot)
 library(plyr)
 library(dplyr)
 library(ggplot2)
 library(gridExtra)
-library(latex2exp)
-library(openxlsx)
-library(progress)
-library(Rcpp)
-library(reshape)
 library(reshape2)
-library(tidyr)
-library(zoo)
 
 
 
