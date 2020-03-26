@@ -1,7 +1,7 @@
 
 #### Instructions 
 
-This web application shows predicted utilization of ICU beds, floor beds, and patient deaths due to COVID-19.  Using the sliders below, select your scenario:  
+This web application shows predicted utilization of ICU beds, floor beds, and patient deaths due to COVID-19.
 
 **Initial cases per day** - the current number of COVID19+ patients presenting to the ED each day
 
