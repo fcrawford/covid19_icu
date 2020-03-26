@@ -3,6 +3,8 @@ source("plot_hospital.R")
 source("queueinputs.R")
 source("queuemodel-3-23.R")
 
+library(shinythemes)
+
 
 ####################
 
@@ -28,7 +30,7 @@ server <- function(input, output) {
 
 ####################
 
-ui <- fluidPage(
+ui <- fluidPage(theme=shinytheme("simplex"),
  titlePanel("COVID-19 ICU dynamics"),
   sidebarLayout(
     sidebarPanel(
@@ -36,7 +38,7 @@ ui <- fluidPage(
         tabPanel("Main", fluid=TRUE,
           includeMarkdown("content/instructions.md"),
           h4("Scenario:"),
-          sliderInput("time", "Time Horizon",     min=30, max=120, value=60),
+          sliderInput("time", "Time Horizon (days)",     min=30, max=120, value=60),
 
           radioButtons("distrib",                     "Infection curve",
                        c("Exponential"="exponential",
