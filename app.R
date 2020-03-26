@@ -19,7 +19,7 @@ server <- function(input, output) {
                   t= input$time,
                   chi_C=1/input$avgicudischargetime,
                   chi_L=1/input$avgfloordischargetime,
-                  growth_rate=log(input$growth_rate),
+                  growth_rate=log(2)/(input$doubling_time),
 			mu_C1 = input$ICUdeath_young,
 			mu_C2 = input$ICUdeath_medium,
 			mu_C3 = input$ICUdeath_old)
@@ -58,7 +58,7 @@ ui <- fluidPage(theme=shinytheme("simplex"),
             ),
           conditionalPanel(
             condition = "input.distrib == 'exponential'",
-            sliderInput("growth_rate", "Growth rate (exponential)", min=1.00, max=1.1, value=1.02)
+            sliderInput("doubling_time", "Doubling time (days)", min=7, max=28, value=14)
             ),
 
         ),
