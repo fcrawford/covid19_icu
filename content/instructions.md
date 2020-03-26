@@ -3,11 +3,4 @@
 
 This web application shows predicted utilization of ICU beds, floor beds, and patient deaths due to COVID-19.
 
-**Initial cases per day** - the current number of COVID19+ patients presenting to the ED each day
-
-**Final cases per day** - the anticipated peak number of COVID19+ patients presenting to the ED
-
-**Infection curve** - describes the trajectory of increasing cases
-
-&NewLine;
-&NewLine;
+Select your scenario below. See adjacent tabs "Capacity" and "Parameters" for additional options. 
