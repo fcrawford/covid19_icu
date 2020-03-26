@@ -76,7 +76,6 @@ library(deSolve)
 #setwd("~/R/Covid-19")
 
 
-
 hospital_queues<- function(initial_report= 1000,
             final_report = 10000,
             distribution= "exponential",
@@ -85,10 +84,13 @@ hospital_queues<- function(initial_report= 1000,
             slope=50,
             M=352,
             L=1781,
-		        t = 60,
-		        chi_C=0.1,
-		        chi_L=.142857,
-		        growth_rate=1
+		t = 60,
+		chi_C=0.1,
+		chi_L=.142857,
+		growth_rate=1,
+		mu_C1 = .1,
+		mu_C2 = .1,
+		mu_C3 = .1
 		        ){
   
 
@@ -222,7 +224,7 @@ hospital_queues<- function(initial_report= 1000,
         sigma_MS1=pars$sigma_MS1
         sigma_C1=pars$sigma_C1
         sigma_F1=pars$sigma_F1
-        chi_C1=chi_C#pars$chi_C1
+        chi_C1=chi_C#=pars$chi_C1
         chi_L1=chi_L#=pars$chi_L1
         theta_F1=pars$theta_F1
         eta1=pars$eta1
@@ -231,7 +233,7 @@ hospital_queues<- function(initial_report= 1000,
         mu_I1=pars$mu_I1
         mu_P1=pars$mu_P1
         mu_MS1=pars$mu_MS1
-        mu_C1=pars$mu_C1
+        mu_C1=mu_C1#=pars$mu_C1
         mu_F1=pars$mu_F1
         mu_WC1=pars$mu_WC1
         mu_WF1=pars$mu_WF1
@@ -253,7 +255,7 @@ hospital_queues<- function(initial_report= 1000,
         mu_I2=pars$mu_I2
         mu_P2=pars$mu_P2
         mu_MS2=pars$mu_MS2
-        mu_C2=pars$mu_C2
+        mu_C2=mu_C2#=pars$mu_C2
         mu_F2=pars$mu_F2
         mu_WC2=pars$mu_WC2
         mu_WF2=pars$mu_WF2
@@ -275,7 +277,7 @@ hospital_queues<- function(initial_report= 1000,
         mu_I3=pars$mu_I3
         mu_P3=pars$mu_P3
         mu_MS3=pars$mu_MS3
-        mu_C3=pars$mu_C3
+        mu_C3=mu_C3#=pars$mu_C3
         mu_F3=pars$mu_F3
         mu_WC3=pars$mu_WC3
         mu_WF3=pars$mu_WF3

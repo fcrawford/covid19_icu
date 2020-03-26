@@ -19,7 +19,10 @@ server <- function(input, output) {
                   t= input$time,
                   chi_C=1/input$avgicudischargetime,
                   chi_L=1/input$avgfloordischargetime,
-                  growth_rate=log(input$growth_rate))
+                  growth_rate=log(input$growth_rate),
+			mu_C1 = input$ICUdeath_young,
+			mu_C2 = input$ICUdeath_medium,
+			mu_C3 = input$ICUdeath_old)
 
 
     plot_grid(plots[[1]], plots[[2]],plots[[3]],plots[[4]], nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
@@ -68,6 +71,9 @@ ui <- fluidPage(theme=shinytheme("simplex"),
           includeMarkdown("content/parameters.md"),
           sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),
           sliderInput("avgicudischargetime", "Average time in ICU",     min=0, max=25, value=10),
+		sliderInput("ICUdeath_young", "Death rate in ICU (<18 years)",     min=0, max=1, value=.1),
+		sliderInput("ICUdeath_medium", "Death rate in ICU (18-64 years)",     min=0, max=1, value=.1),
+		sliderInput("ICUdeath_old", "Death rate in ICU (65+ years)",     min=0, max=1, value=.1),
         )),width=3),
     mainPanel(plotOutput("hospitalPlot",height="700px"))
   ),
