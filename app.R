@@ -42,7 +42,6 @@ ui <- fluidPage(theme=shinytheme("simplex"),
           includeMarkdown("content/instructions.md"),
           h4("Scenario:"),
           sliderInput("time", "Time Horizon (days)",     min=1, max=60, value=30),
-
           radioButtons("distrib",                     "Infection curve",
                        c("Exponential"="exponential",
                          "Linear"="ramp",
@@ -50,22 +49,21 @@ ui <- fluidPage(theme=shinytheme("simplex"),
                          "Flat"="uniform"),
                        inline=TRUE,
                        selected="exponential"),
-          sliderInput("initrep", "Initial cases per day", min=1, max=1e3, value=50),
+          sliderInput("initrep", "Initial cases per day", min=1, max=1e4, value=875),
           conditionalPanel(
             condition = "input.distrib=='geometric'||input.distrib=='ramp'||input.distrib=='logistic'",
             sliderInput("finalrep", "Expected cases per day at time horizon", min=1, max=1500, value=1000)
             ),
           conditionalPanel(
             condition = "input.distrib == 'exponential'",
-            sliderInput("doubling_time", "Doubling time (days)", min=2, max=28, value=14)
+            sliderInput("doubling_time", "Doubling time (days)", min=3, max=28, value=14)
             ),
 
         ),
         tabPanel("Capacity", fluid=TRUE,
 		      includeMarkdown("content/capacity.md"),
-          sliderInput("floorcap", "Floor capacity", min=0, max=2500, value=100),
-          sliderInput("icucap", "ICU capacity",     min=0, max=500, value=50)),
-
+          sliderInput("floorcap", "Floor capacity", min=0, max=15000, value=100),
+          sliderInput("icucap", "ICU capacity",     min=0, max=3000, value=1000)),
         tabPanel("Parameters", fluid=TRUE,
           includeMarkdown("content/parameters.md"),
           sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),
