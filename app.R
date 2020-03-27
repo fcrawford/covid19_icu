@@ -57,7 +57,7 @@ ui <- fluidPage(theme=shinytheme("simplex"),
             ),
 	conditionalPanel(
             condition = "input.distrib=='ramp'",
-            sliderInput("rampslope", "Rate of increase in new cases per day", min=1, max=5, value=1.2)
+            sliderInput("rampslope", "Rate of increase in new cases per day", min=1, max=5, value=1.2, step = .1)
             ),
           conditionalPanel(
             condition = "input.distrib == 'exponential'",
