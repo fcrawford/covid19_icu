@@ -22,7 +22,8 @@ server <- function(input, output) {
                   growth_rate=log(2)/(input$doubling_time),
 			mu_C1 = input$ICUdeath_young,
 			mu_C2 = input$ICUdeath_medium,
-			mu_C3 = input$ICUdeath_old)
+			mu_C3 = input$ICUdeath_old,
+			rampslope = input$rampslope)
 
 
     plot_grid(plots[[1]], plots[[2]],plots[[3]],plots[[4]], nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
@@ -51,8 +52,12 @@ ui <- fluidPage(theme=shinytheme("simplex"),
                        selected="exponential"),
           sliderInput("initrep", "Initial cases per day", min=1, max=1e3, value=50),
           conditionalPanel(
-            condition = "input.distrib=='geometric'||input.distrib=='ramp'||input.distrib=='logistic'",
+            condition = "input.distrib=='geometric'||input.distrib=='logistic'",
             sliderInput("finalrep", "Expected cases per day at time horizon", min=1, max=3000, value=1000)
+            ),
+	conditionalPanel(
+            condition = "input.distrib=='ramp'",
+            sliderInput("rampslope", "Rate of increase in new cases per day", min=1, max=5, value=1.2)
             ),
           conditionalPanel(
             condition = "input.distrib == 'exponential'",

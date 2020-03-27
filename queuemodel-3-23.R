@@ -27,7 +27,8 @@ report_rate<-function(t,
                       initial_report, 
                       final_report, 
                       distribution="uniform",
-                      growth_rate=1){
+                      growth_rate=1,
+				rampslope = 1.2){
   
   report_rate<-rep(0,t)
   if (distribution=="uniform"){
@@ -42,7 +43,8 @@ report_rate<-function(t,
     report_rate<-zzz+initial_report
   }
   if (distribution=="ramp"){
-    report_rate<- seq(initial_report, final_report, length.out= t+1)[2:(t+1)]	
+	times = seq(1, t, by=1)
+    report_rate<- initial_report + rampslope*times
   }
   
   if (distribution=="geometric"){
@@ -90,7 +92,8 @@ hospital_queues<- function(initial_report= 1000,
 		growth_rate=1,
 		mu_C1 = .1,
 		mu_C2 = .1,
-		mu_C3 = .1
+		mu_C3 = .1,
+		rampslope=1.2
 		        ){
   
 
@@ -165,7 +168,8 @@ hospital_queues<- function(initial_report= 1000,
       
       ############## RUN MODEL
       
-      reports <- approxfun(report_rate(t = t, initial_report = initial_report, final_report = final_report, distribution=distribution, growth_rate=growth_rate), rule=2)
+      reports <- approxfun(report_rate(t = t, initial_report = initial_report, final_report = final_report, distribution=distribution, 
+				growth_rate=growth_rate, rampslope=rampslope), rule=2)
       
       
       model_strat <- function (t, x , pars,...) {
