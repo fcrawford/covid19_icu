@@ -53,7 +53,7 @@ ui <- fluidPage(theme=shinytheme("simplex"),
           sliderInput("initrep", "Initial cases per day", min=1, max=1e3, value=50),
           conditionalPanel(
             condition = "input.distrib=='geometric'||input.distrib=='logistic'",
-            sliderInput("finalrep", "Expected cases per day at time horizon", min=1, max=3000, value=1000)
+            sliderInput("finalrep", "Peak number of cases", min=1, max=3000, value=1000)
             ),
 	conditionalPanel(
             condition = "input.distrib=='ramp'",
