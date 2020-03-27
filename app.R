@@ -49,7 +49,7 @@ ui <- fluidPage(theme=shinytheme("simplex"),
                          "Flat"="uniform"),
                        inline=TRUE,
                        selected="exponential"),
-          sliderInput("initrep", "Initial cases per day", min=1, max=1e4, value=875),
+          sliderInput("initrep", "Initial cases per day", min=1, max=1e3, value=875),
           conditionalPanel(
             condition = "input.distrib=='geometric'||input.distrib=='ramp'||input.distrib=='logistic'",
             sliderInput("finalrep", "Expected cases per day at time horizon", min=1, max=1500, value=1000)
