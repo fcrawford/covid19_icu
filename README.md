@@ -14,4 +14,6 @@ runApp()
 
 The live version of the app is hosted here: https://forrestcrawford.shinyapps.io/covid19_icu/
 
+The app is provided under the MIT license.
+
 
