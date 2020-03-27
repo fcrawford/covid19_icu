@@ -23,7 +23,9 @@ server <- function(input, output) {
 			mu_C1 = input$ICUdeath_young,
 			mu_C2 = input$ICUdeath_medium,
 			mu_C3 = input$ICUdeath_old,
-			rampslope = input$rampslope)
+			rampslope = input$rampslope,
+			Cinit = input$Cinit,
+			Finit = input$Finit)
 
 
     plot_grid(plots[[1]], plots[[2]],plots[[3]],plots[[4]], nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
@@ -68,7 +70,9 @@ ui <- fluidPage(theme=shinytheme("simplex"),
         tabPanel("Capacity", fluid=TRUE,
 		      includeMarkdown("content/capacity.md"),
           sliderInput("floorcap", "Floor capacity", min=0, max=15000, value=100),
-          sliderInput("icucap", "ICU capacity",     min=0, max=3000, value=50)),
+          sliderInput("icucap", "ICU capacity",     min=0, max=3000, value=50),
+		sliderInput("Cinit", "Percentage of ICU capacity occupied",     min=0, max=100, value=12),
+		sliderInput("Finit", "Percentage of floor capacity occupied",     min=0, max=100, value=56)),
         tabPanel("Parameters", fluid=TRUE,
           includeMarkdown("content/parameters.md"),
           sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),

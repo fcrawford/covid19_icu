@@ -80,7 +80,7 @@ library(deSolve)
 
 hospital_queues<- function(initial_report= 1000,
             final_report = 10000,
-            distribution= "exponential",
+            distribution= "ramp",
             young=.24,
             medium=.6,
             slope=50,
@@ -93,7 +93,9 @@ hospital_queues<- function(initial_report= 1000,
 		mu_C1 = .1,
 		mu_C2 = .1,
 		mu_C3 = .1,
-		rampslope=1.2
+		rampslope=1.2,
+		Cinit = 12,
+		Finit = 56
 		        ){
   
 
@@ -114,19 +116,27 @@ hospital_queues<- function(initial_report= 1000,
       params$old = 1- young - medium;
       
       params$slope = slope;
+
+	###Express percentages as decimals
+	Cinit_d = Cinit/100;
+	Finit_d = Finit/100;
+
       ##########
-      
-      
+     
       
       x = data.frame(
+
+		      
+
+
         # initial conditions young
         I1= 0,
         P1= initial_report*young,
         MS1 = 0,
         WC1= 0,
-        C1 =0,
+        C1 =params$M*Cinit_d*params$sigma_C1,
         WF1 =0,
-        F1 = 0,
+        F1 = params$L*Finit_d*params$sigma_F1,
         R1=0,
         D1=0,
         
@@ -135,9 +145,9 @@ hospital_queues<- function(initial_report= 1000,
         P2 = initial_report*medium,
         MS2 = 0,
         WC2= 0,
-        C2 = 0,
+        C2 = params$M*Cinit_d*params$sigma_C2,
         WF2 = 0,
-        F2= 0,
+        F2= params$L*Finit_d*params$sigma_F2,
         R2=0,
         D2 =0,
         
@@ -146,9 +156,9 @@ hospital_queues<- function(initial_report= 1000,
         P3= initial_report*old,
         MS3 = 0,
         WC3= 0,
-        C3 = 0,
+        C3 = params$M*Cinit_d*params$sigma_C3,
         WF3= 0,
-        F3 = 0,
+        F3 = params$L*Finit_d*params$sigma_F3,
         R3 =0,
         D3 =0,
       
@@ -161,9 +171,10 @@ hospital_queues<- function(initial_report= 1000,
         Dead_with_mild_symptoms=0,
         Dead_in_ED=0,
         Number_seen_at_ED=0,
-      
+
         FTotal=0,
         CTotal=0
+
       )
       
       ############## RUN MODEL
