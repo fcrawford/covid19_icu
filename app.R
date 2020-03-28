@@ -88,7 +88,7 @@ ui <- fluidPage(theme=shinytheme("simplex"),
        ), 
     tabPanel("About", fluid=TRUE,
        # CHANGE THIS
-       includeMarkdown("content/instructions.md")
+       includeMarkdown("content/queue_graphic.md")
        )
     )
   )),
