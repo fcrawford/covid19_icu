@@ -10,13 +10,12 @@ library(shinythemes)
 
 server <- function(input, output, session) {
     observe({
-        timehoriz <- input$time
-        updateSliderInput(session, "floorcapramp", max=timehoriz)
-        updateSliderInput(session, "icucapramp", max=timehoriz)
-        floor_start <- input$floorcap
-        updateSliderInput(session, "floorcaptarget", value=floor_start)
-        icu_start <- input$icucap
-        updateSliderInput(session, "icucaptarget", value=icu_start)
+        updateSliderInput(session, "floorcapramp", max=input$time)
+        updateSliderInput(session, "icucapramp", max=input$time)
+
+        # this causes double evaluation and plotting 
+        #updateSliderInput(session, "floorcaptarget", value=input$floorcap)
+        #updateSliderInput(session, "icucaptarget", value=input$icucap)
         
       })
   output$hospitalPlot <- renderPlot({
@@ -93,10 +92,17 @@ ui <- fluidPage(theme=shinytheme("simplex"),
 		sliderInput("Finit", "% of floor capacity occupied at time 0",     min=0, max=100, value=56)),
         tabPanel("Protocols", fluid=TRUE,
           includeMarkdown("content/protocols.md"),
-          sliderInput("icucaptarget",  "Target ICU capacity", min=0, max=3000, value=50),
-          sliderInput("icucapramp",  "ICU capacity scale-up (days)", min=0, max=30, value=c(10,20)),
-          sliderInput("floorcaptarget",  "Target floor capacity", min=0, max=15000, value=100),
-          sliderInput("floorcapramp",  "Floor capacity scale-up (days)", min=0, max=30, value=c(10,20))),
+          radioButtons("doprotocols", "Capacity expansion protocol",
+                       c("Off"=0, "On"=1),
+                       inline=TRUE,
+                       selected=0),
+          conditionalPanel(
+            condition = "input.doprotocols==1",
+            sliderInput("icucaptarget",  "Target ICU capacity", min=0, max=3000, value=50),
+            sliderInput("icucapramp",  "ICU capacity scale-up (days)", min=0, max=30, value=c(10,20)),
+            sliderInput("floorcaptarget",  "Target floor capacity", min=0, max=15000, value=100),
+            sliderInput("floorcapramp",  "Floor capacity scale-up (days)", min=0, max=30, value=c(10,20))
+          )),
           
         tabPanel("Parameters", fluid=TRUE,
           includeMarkdown("content/parameters.md"),
