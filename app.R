@@ -81,8 +81,17 @@ ui <- fluidPage(theme=shinytheme("simplex"),
 		sliderInput("ICUdeath_medium", "Death rate in ICU (18-64 years)",     min=0, max=1, value=.1),
 		sliderInput("ICUdeath_old", "Death rate in ICU (65+ years)",     min=0, max=1, value=.1),
         )),width=3),
-    mainPanel(plotOutput("hospitalPlot",height="700px"))
-  ),
+    mainPanel(
+    tabsetPanel(
+       tabPanel("Plots", fluid=TRUE,
+         plotOutput("hospitalPlot",height="700px")
+       ), 
+    tabPanel("About", fluid=TRUE,
+       # CHANGE THIS
+       includeMarkdown("content/instructions.md")
+       )
+    )
+  )),
   hr(),
   includeMarkdown("content/footer.md")
 )
