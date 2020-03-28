@@ -11,7 +11,7 @@ in the ICU, and post-discharge from the ED.
 
 <br/>
 
-<img src="Modelstructure1.png" width="900">
+<img src="Modelstructure1.png" width="700">
 
 <br/>
 

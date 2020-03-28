@@ -94,7 +94,7 @@ ui <- fluidPage(theme=shinytheme("simplex"),
 
 		sliderInput("Cinit", "% of ICU capacity occupied at time 0",     min=0, max=100, value=12),
 		sliderInput("Finit", "% of floor capacity occupied at time 0",     min=0, max=100, value=56)),
-        tabPanel("Possible protocols", fluid=TRUE,
+        tabPanel("Protocols", fluid=TRUE,
           includeMarkdown("content/parameters.md"),
           sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),
           sliderInput("avgicudischargetime", "Average time in ICU",     min=0, max=25, value=10),
