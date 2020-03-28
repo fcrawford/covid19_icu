@@ -78,11 +78,11 @@ ui <- fluidPage(theme=shinytheme("simplex"),
           # SOHEIL: I changed the var names and sliders below:
           sliderInput("floorcap", "Initial floor capacity", min=0, max=15000, value=100),
           sliderInput("floorcaptarget",  "Target floor capacity", min=0, max=15000, value=150),
-          sliderInput("floorcapramp",  "Floor capacity scale-up (days)", min=0, max=30, value=c(10,20)),
+          sliderInput("floorcapramp",  "Floor capacity scale-up (days)", min=0, max=30, value=c(10,20),step=1),
 
           sliderInput("icucap", "ICU capacity",     min=0, max=3000, value=50),
           sliderInput("icucaptarget",  "Target ICU capacity", min=0, max=3000, value=50),
-          sliderInput("icucapramp",  "ICU capacity scale-up (days)", min=0, max=30, value=c(10,20)),
+          sliderInput("icucapramp",  "ICU capacity scale-up (days)", min=0, max=30, value=c(10,20),step=1),
 
 
 
