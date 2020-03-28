@@ -25,16 +25,16 @@ server <- function(input, output, session) {
                   chi_C=1/input$avgicudischargetime,
                   chi_L=1/input$avgfloordischargetime,
                   growth_rate=log(2)/(input$doubling_time),
-			mu_C1 = input$ICUdeath_young,
-			mu_C2 = input$ICUdeath_medium,
-			mu_C3 = input$ICUdeath_old,
-			rampslope = input$rampslope,
-			Cinit = input$Cinit,
-			Finit = input$Finit,
-			Lfinal=input$floorcaptarget,
-			Lramp=input$floorcapramp,
-			Mfinal=input$icucaptarget,
-			Mramp=input$icucapramp
+            			mu_C1 = input$ICUdeath_young,
+            			mu_C2 = input$ICUdeath_medium,
+            			mu_C3 = input$ICUdeath_old,
+            			rampslope = input$rampslope,
+            			Cinit = input$Cinit,
+            			Finit = input$Finit,
+            			Lfinal=input$floorcaptarget,
+            			Lramp=input$floorcapramp,
+            			Mfinal=input$icucaptarget,
+            			Mramp=input$icucapramp
 			
 			)
 
@@ -83,7 +83,7 @@ ui <- fluidPage(theme=shinytheme("simplex"),
 
           # SOHEIL: I changed the var names and sliders below:
           sliderInput("floorcap", "Initial floor capacity", min=0, max=15000, value=100),
-          sliderInput("floorcaptarget",  "Target floor capacity", min=0, max=15000, value=150),
+          sliderInput("floorcaptarget",  "Target floor capacity", min=0, max=15000, value=100),
           sliderInput("floorcapramp",  "Floor capacity scale-up (days)", min=0, max=30, value=c(10,20)),
 
           sliderInput("icucap", "ICU capacity",     min=0, max=3000, value=50),
