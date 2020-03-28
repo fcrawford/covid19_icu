@@ -30,7 +30,10 @@ server <- function(input, output, session) {
 			mu_C3 = input$ICUdeath_old,
 			rampslope = input$rampslope,
 			Cinit = input$Cinit,
-			Finit = input$Finit)
+			Finit = input$Finit,
+			Lfinal=input$floorcaptarget,
+			Lramp=input$floorcapramp
+			)
 
 
     plot_grid(plots[[1]], plots[[2]],plots[[3]],plots[[4]], nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
