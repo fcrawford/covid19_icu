@@ -8,7 +8,11 @@ library(shinythemes)
 
 ####################
 
-server <- function(input, output) {
+server <- function(input, output, session) {
+    observe({
+        timehoriz <- input$time
+        updateSliderInput(session, "floorcapramp", max=timehoriz)
+      })
   output$hospitalPlot <- renderPlot({
     # put slider control values here as arguments
     plots<- plot_hospital(initial_report=input$initrep,
