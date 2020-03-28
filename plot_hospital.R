@@ -23,7 +23,9 @@ plot_hospital<- function(initial_report= 1000,
 					mu_C3 = .1,
 					rampslope=1.2,
 					Cinit = .25,
-					Finit = .5){
+					Finit = .5,
+					Lfinal=1781,
+					Lramp=c(0,0)){
   
       hospital <- hospital_queues(initial_report=initial_report,
                                   final_report = final_report,
@@ -41,7 +43,9 @@ plot_hospital<- function(initial_report= 1000,
 						mu_C3 = mu_C3,
 						rampslope=rampslope,
 						Cinit = Cinit,
-						Finit = Finit)
+						Finit = Finit,
+						Lfinal=Lfinal,
+						Lramp=Lramp)
 
       hospital$totaldead<- hospital$Dead_at_ICU + hospital$Dead_in_ED + hospital$Dead_on_Floor+ hospital$Dead_waiting_for_Floor+ hospital$Dead_waiting_for_ICU+ hospital$Dead_with_mild_symptoms
       hospital$totalWC<- hospital$WC1 + hospital$WC2 + hospital$WC3
@@ -89,9 +93,10 @@ plot_hospital<- function(initial_report= 1000,
         labs(x="Time (Day)", y="Patients")+
         ggtitle("ICU and floor utilization")+
         theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.75), legend.text=element_text(size=11),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent"))+
-        geom_hline(yintercept=M, linetype="dashed", color = "black", size=1.5)+
-        geom_hline(yintercept=L, linetype="dashed", color = "red", size=1.5)
-      
+        #geom_hline(yintercept=M, linetype="dashed", color = "black", size=1.5)+
+        #geom_hline(yintercept=L, linetype="dashed", color = "red", size=1.5)
+        geom_line(data= hospital_melt[hospital_melt$variable == "capacity_L",],size=1.5, linetype="dashed", color = "red")+
+        geom_line(data= hospital_melt[hospital_melt$variable == "capacity_M",],size=1.5, linetype="dashed", color = "black")
       ### determine when the hospital exceeds capacity
       
       #ICU queue 
