@@ -1,3 +1,3 @@
 #### Model structure
 
-![Model Structure](./Modelstructure1.pdf)
+<img src="Modelstructure1.png" width="900">
