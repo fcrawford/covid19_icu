@@ -13,6 +13,11 @@ server <- function(input, output, session) {
         timehoriz <- input$time
         updateSliderInput(session, "floorcapramp", max=timehoriz)
         updateSliderInput(session, "icucapramp", max=timehoriz)
+        floor_start <- input$floorcap
+        updateSliderInput(session, "floorcaptarget", value=floor_start)
+        icu_start <- input$icucap
+        updateSliderInput(session, "icucaptarget", value=icu_start)
+        
       })
   output$hospitalPlot <- renderPlot({
     # put slider control values here as arguments
