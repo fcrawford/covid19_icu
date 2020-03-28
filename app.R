@@ -12,6 +12,7 @@ server <- function(input, output, session) {
     observe({
         timehoriz <- input$time
         updateSliderInput(session, "floorcapramp", max=timehoriz)
+        updateSliderInput(session, "icucapramp", max=timehoriz)
       })
   output$hospitalPlot <- renderPlot({
     # put slider control values here as arguments
@@ -77,10 +78,14 @@ ui <- fluidPage(theme=shinytheme("simplex"),
           # SOHEIL: I changed the var names and sliders below:
           sliderInput("floorcap", "Initial floor capacity", min=0, max=15000, value=100),
           sliderInput("floorcaptarget",  "Target floor capacity", min=0, max=15000, value=150),
-          # Max should adapt to time horizon
           sliderInput("floorcapramp",  "Floor capacity scale-up (days)", min=0, max=30, value=c(10,20)),
 
           sliderInput("icucap", "ICU capacity",     min=0, max=3000, value=50),
+          sliderInput("icucaptarget",  "Target ICU capacity", min=0, max=3000, value=50),
+          sliderInput("icucapramp",  "ICU capacity scale-up (days)", min=0, max=30, value=c(10,20)),
+
+
+
 		sliderInput("Cinit", "% of ICU capacity occupied at time 0",     min=0, max=100, value=12),
 		sliderInput("Finit", "% of floor capacity occupied at time 0",     min=0, max=100, value=56)),
         tabPanel("Parameters", fluid=TRUE,
