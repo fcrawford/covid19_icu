@@ -45,11 +45,11 @@ server <- function(input, output, session) {
 ####################
 
 ui <- fluidPage(theme=shinytheme("simplex"),
- titlePanel("COVID-19 ICU dynamics"),
+ titlePanel("COVID-19 Hospital Capacity Model"),
   sidebarLayout(
     sidebarPanel(
       tabsetPanel(
-        tabPanel("Main", fluid=TRUE,
+        tabPanel("Scenario", fluid=TRUE,
           includeMarkdown("content/instructions.md"),
           h4("Scenario:"),
           sliderInput("time", "Time Horizon (days)",     min=1, max=60, value=30),
@@ -91,7 +91,7 @@ ui <- fluidPage(theme=shinytheme("simplex"),
 
 		sliderInput("Cinit", "% of ICU capacity occupied at time 0",     min=0, max=100, value=12),
 		sliderInput("Finit", "% of floor capacity occupied at time 0",     min=0, max=100, value=56)),
-        tabPanel("Parameters", fluid=TRUE,
+        tabPanel("Possible protocols", fluid=TRUE,
           includeMarkdown("content/parameters.md"),
           sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),
           sliderInput("avgicudischargetime", "Average time in ICU",     min=0, max=25, value=10),

@@ -21,6 +21,16 @@ Changing these inputs results in changes in the number of cases presenting to th
 
 **Doubling time (exponential infection curve)**: if cases are increasing exponentially, the number of days it will take for the number of cases presenting to the ED daily to double.
 
-**Rate of increase in new cases per day (linear infection curve)**: 
+**Rate of increase in new cases per day (linear infection curve)**: if cases are increasing linearly, the rate at which cases increase.
+
+**Peak number of cases (saturated infection curve)**: if cases are increasing exponentially and peaking, the number of cases you expect to see at the peak.
+
+**Flat curve**: the number of cases per day is the same throughout the scenario.
+
+
+
+**Inputs on the "Capacity" tab allow you to specify the current capacity of your hospital or hospital system.**
+
+
 
 
