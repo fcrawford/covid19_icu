@@ -69,7 +69,13 @@ ui <- fluidPage(theme=shinytheme("simplex"),
         ),
         tabPanel("Capacity", fluid=TRUE,
 		      includeMarkdown("content/capacity.md"),
-          sliderInput("floorcap", "Floor capacity", min=0, max=15000, value=100),
+
+          # SOHEIL: I changed the var names and sliders below:
+          sliderInput("floorcap", "Initial floor capacity", min=0, max=15000, value=100),
+          sliderInput("floorcaptarget",  "Target floor capacity", min=0, max=15000, value=150),
+          # Max should adapt to time horizon
+          sliderInput("floorcapramp",  "Floor capacity scale-up (days)", min=0, max=30, value=c(10,20)),
+
           sliderInput("icucap", "ICU capacity",     min=0, max=3000, value=50),
 		sliderInput("Cinit", "% of ICU capacity occupied at time 0",     min=0, max=100, value=12),
 		sliderInput("Finit", "% of floor capacity occupied at time 0",     min=0, max=100, value=56)),
