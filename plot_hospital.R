@@ -7,6 +7,15 @@ library(reshape2)
 
 
 
+darken <- function(color, factor=1.4){
+  col <- col2rgb(color)
+  col <- col/factor
+  col <- rgb(t(col), maxColorValue=255)
+  col
+}
+
+
+
 plot_hospital<- function(initial_report= 1000,
                            final_report = 10000,
                            distribution= "exponential",
