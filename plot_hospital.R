@@ -36,7 +36,8 @@ plot_hospital<- function(initial_report= 1000,
                 					Lfinal=1781,
                 					Lramp=c(0,0),
                 					Mfinal=352,
-                					Mramp=c(0,0)){
+                					Mramp=c(0,0),
+                          doprotocols=0){
   
       hospital <- hospital_queues(initial_report=initial_report,
                                   final_report = final_report,
@@ -58,7 +59,8 @@ plot_hospital<- function(initial_report= 1000,
                       						Lfinal=Lfinal,
                       						Lramp=Lramp,
                       						Mfinal=Mfinal,
-                      						Mramp=Mramp)
+                      						Mramp=Mramp,
+                                  doprotocols=doprotocols)
 
       hospital$totaldead<- hospital$Dead_at_ICU + hospital$Dead_in_ED + hospital$Dead_on_Floor+ hospital$Dead_waiting_for_Floor+ hospital$Dead_waiting_for_ICU+ hospital$Dead_with_mild_symptoms
       hospital$totalWC<- hospital$WC1 + hospital$WC2 + hospital$WC3

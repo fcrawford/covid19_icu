@@ -13,9 +13,12 @@ server <- function(input, output, session) {
         updateSliderInput(session, "floorcapramp", max=input$time)
         updateSliderInput(session, "icucapramp", max=input$time)
 
-        # this causes double evaluation and plotting 
-        #updateSliderInput(session, "floorcaptarget", value=input$floorcap)
-        #updateSliderInput(session, "icucaptarget", value=input$icucap)
+        if(input$floorcaptarget < input$floorcap) {
+          updateSliderInput(session, "floorcaptarget", value=input$floorcap)
+        }
+        if (input$icucaptarget < input$icucap) {
+          updateSliderInput(session, "icucaptarget", value=input$icucap)
+        }
         
       })
   output$hospitalPlot <- renderPlot({
@@ -38,7 +41,8 @@ server <- function(input, output, session) {
             			Lfinal=input$floorcaptarget,
             			Lramp=input$floorcapramp,
             			Mfinal=input$icucaptarget,
-            			Mramp=input$icucapramp
+            			Mramp=input$icucapramp,
+                  doprotocols=input$doprotocols
 			
 			)
 

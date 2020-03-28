@@ -115,8 +115,15 @@ hospital_queues<- function(initial_report= 1000,
 		Lfinal=1781,
 		Lramp=c(0,0),
 		Mfinal=352,
-		Mramp=c(0,0)
+		Mramp=c(0,0),
+    doprotocols=0
 		        ){
+
+      # SOHEIL: here is a quick fix: 
+      if(doprotocols==0) {
+        Mfinal=M
+        Lfinal=L
+      }
   
 
       # read in parameters
