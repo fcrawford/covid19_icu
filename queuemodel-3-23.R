@@ -63,15 +63,15 @@ report_rate<-function(t,
 
 
 # capacity ramp building
-capacity_ramping<-function(L=1781,
-                           Lfinal=1781,
-                           Lramp=c(0,0),
+capacity_ramping<-function(start=1781,
+                           finish=1781,
+                           ramp=c(0,0),
                            t=60){
   
-  capacity <- rep(L, t)
+  capacity <- rep(start, t)
   
-  capacity[Lramp[1]:Lramp[2]]= L + (Lfinal-L)* (0:(Lramp[2]-Lramp[1]))/(Lramp[2]-Lramp[1]);
-  capacity[Lramp[2]:t] = Lfinal;
+  capacity[ramp[1]:ramp[2]]= start + (finish-start)* (0:(ramp[2]-ramp[1]))/(ramp[2]-ramp[1]);
+  capacity[ramp[2]:t] = finish;
   
   
   capacity
@@ -113,7 +113,9 @@ hospital_queues<- function(initial_report= 1000,
 		Cinit = 12,
 		Finit = 56,
 		Lfinal=1781,
-		Lramp=c(0,0)
+		Lramp=c(0,0),
+		Mfinal=352,
+		Mramp=c(0,0)
 		        ){
   
 
@@ -210,9 +212,17 @@ hospital_queues<- function(initial_report= 1000,
       
       capacity_L <- approxfun(
         capacity_ramping(
-          L=L,
-          Lfinal=Lfinal,
-          Lramp=Lramp,
+          start=L,
+          finish=Lfinal,
+          ramp=Lramp,
+          t=t),
+        rule=2);
+      
+      capacity_M <- approxfun(
+        capacity_ramping(
+          start=M,
+          finish=Mfinal,
+          ramp=Mramp,
           t=t),
         rule=2);
       
@@ -356,9 +366,9 @@ hospital_queues<- function(initial_report= 1000,
         
         dMS1dt = sigma_MS1*P1 - (phi1 + mu_MS1 + xi_MS1)*MS1 
         
-        dWC1dt =  - (sigma_C1 * P1 + theta_F1 * F1 + theta_WF1 * WF1 +eta1 * WC1) *(1/(1+exp(slope*(CTotal -M)))) + (sigma_C1 * P1 + theta_F1 * F1 + theta_WF1 * WF1) -  (mu_WC1)*WC1 # icu queue
+        dWC1dt =  - (sigma_C1 * P1 + theta_F1 * F1 + theta_WF1 * WF1 +eta1 * WC1) *(1/(1+exp(slope*(CTotal -capacity_M(t))))) + (sigma_C1 * P1 + theta_F1 * F1 + theta_WF1 * WF1) -  (mu_WC1)*WC1 # icu queue
         
-        dC1dt = (sigma_C1 * P1 + theta_F1 * F1 + theta_WF1 * WF1 +eta1*WC1) *(1/(1+exp(slope*(CTotal -M)))) -  (mu_C1)*C1 - chi_C1 * C1 # icu
+        dC1dt = (sigma_C1 * P1 + theta_F1 * F1 + theta_WF1 * WF1 +eta1*WC1) *(1/(1+exp(slope*(CTotal -capacity_M(t))))) -  (mu_C1)*C1 - chi_C1 * C1 # icu
         
         dWF1dt = (sigma_F1 * P1 + chi_C1*C1) *(1- 1/(1+exp(slope*(FTotal -capacity_L(t)))))  - zeta1 * WF1 *(1/(1+exp(slope*(FTotal -capacity_L(t))))) - (mu_WF1+ theta_WF1)*WF1 # floor queue
         
@@ -377,9 +387,9 @@ hospital_queues<- function(initial_report= 1000,
         
         dMS2dt = sigma_MS2*P2 - (phi2 + mu_MS2 + xi_MS2)*MS2 
         
-        dWC2dt =  (sigma_C2 * P2 + theta_F2 * F2 + theta_WF2 * WF2) -  (mu_WC2)*WC2- (sigma_C2 * P2 + theta_F2 * F2 + theta_WF2 * WF2 +eta2 * WC2) *(1/(1+exp(slope*(CTotal -M)))) # icu queue
+        dWC2dt =  (sigma_C2 * P2 + theta_F2 * F2 + theta_WF2 * WF2) -  (mu_WC2)*WC2- (sigma_C2 * P2 + theta_F2 * F2 + theta_WF2 * WF2 +eta2 * WC2) *(1/(1+exp(slope*(CTotal -capacity_M(t))))) # icu queue
         
-        dC2dt = (sigma_C2 * P2 + theta_F2 * F2 + theta_WF2 * WF2 +eta2*WC2) *(1/(1+exp(slope*(CTotal -M)))) -  (mu_C2)*C2- chi_C2 * C2 # icu
+        dC2dt = (sigma_C2 * P2 + theta_F2 * F2 + theta_WF2 * WF2 +eta2*WC2) *(1/(1+exp(slope*(CTotal -capacity_M(t))))) -  (mu_C2)*C2- chi_C2 * C2 # icu
         
         dWF2dt = (sigma_F2 * P2 + chi_C2*C2)  - (mu_WF2+ theta_WF2)*WF2   - (zeta2 * WF2 + sigma_F2 * P2 + chi_C2*C2) *(1/(1+exp(slope*(FTotal -capacity_L(t)))))# floor queue
         
@@ -397,9 +407,9 @@ hospital_queues<- function(initial_report= 1000,
         # 
         dMS3dt = sigma_MS3 * P3 - (phi3 + mu_MS3 + xi_MS3)*MS3 
         # 
-        dWC3dt = (sigma_C3 * P3 + theta_F3 * F3 + theta_WF3 * WF3) *(1- 1/(1+exp(slope*(CTotal -M)))) -  (mu_WC3)*WC3 - eta3 * WC3 *(1/(1+exp(slope*(CTotal -M)))) # icu queue
+        dWC3dt = (sigma_C3 * P3 + theta_F3 * F3 + theta_WF3 * WF3) *(1- 1/(1+exp(slope*(CTotal -capacity_M(t))))) -  (mu_WC3)*WC3 - eta3 * WC3 *(1/(1+exp(slope*(CTotal -capacity_M(t))))) # icu queue
         # 
-        dC3dt =  (sigma_C3 * P3 + theta_F3 * F3 + theta_WF3 * WF3 + eta3*WC3) *(1/(1+exp(slope*(CTotal -M)))) -  (mu_C3)*C3- chi_C3 * C3 # icu
+        dC3dt =  (sigma_C3 * P3 + theta_F3 * F3 + theta_WF3 * WF3 + eta3*WC3) *(1/(1+exp(slope*(CTotal -capacity_M(t))))) -  (mu_C3)*C3- chi_C3 * C3 # icu
         # 
         dWF3dt = (sigma_F3 * P3 + chi_C3*C3) - (mu_WF3+ theta_WF3)*WF3  - (sigma_F3 * P3 + chi_C3*C3+ zeta3 * WF3) *(1/(1+exp(slope*(FTotal -capacity_L(t)))))  # floor queue
         # 
@@ -412,7 +422,7 @@ hospital_queues<- function(initial_report= 1000,
         # 
         dFTotaldt =   (sigma_F1 *P1 + zeta1* WF1+ chi_C1 * C1 + sigma_F2 *P2 + zeta2* WF2+ chi_C2 * C2 + sigma_F3 *P3 + zeta3* WF3+ chi_C3 * C3) *(1/(1+exp(slope*(FTotal -capacity_L(t)))))  - (chi_L1 + mu_F1 + theta_F1)*F1   - (chi_L2 + mu_F2 + theta_F2)*F2 + - (chi_L3 + mu_F3 + theta_F3)*F3 ;
         
-        dCTotaldt =  (sigma_C1 * P1 + theta_F1 * F1 + theta_WF1 * WF1 +eta1*WC1 + sigma_C2 * P2 + theta_F2 * F2 + theta_WF2 * WF2 +eta2*WC2 +sigma_C3 * P3 + theta_F3 * F3 + theta_WF3 * WF3 + eta3*WC3) *(1/(1+exp(slope*(CTotal -M)))) -  (mu_C1)*C1 - chi_C1 * C1 -  (mu_C2)*C2- chi_C2 * C2 -  (mu_C3)*C3- chi_C3 * C3;
+        dCTotaldt =  (sigma_C1 * P1 + theta_F1 * F1 + theta_WF1 * WF1 +eta1*WC1 + sigma_C2 * P2 + theta_F2 * F2 + theta_WF2 * WF2 +eta2*WC2 +sigma_C3 * P3 + theta_F3 * F3 + theta_WF3 * WF3 + eta3*WC3) *(1/(1+exp(slope*(CTotal -capacity_M(t))))) -  (mu_C1)*C1 - chi_C1 * C1 -  (mu_C2)*C2- chi_C2 * C2 -  (mu_C3)*C3- chi_C3 * C3;
         
         
         
@@ -452,7 +462,7 @@ hospital_queues<- function(initial_report= 1000,
       
       test$reports <- reports(1:t);
       test$capacity_L <- capacity_L(1:t);
-      test$capacity_M <- capacity_L(1:t);
+      test$capacity_M <- capacity_M(1:t);
 
       
       return(test)
