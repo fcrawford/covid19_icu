@@ -32,7 +32,10 @@ server <- function(input, output, session) {
 			Cinit = input$Cinit,
 			Finit = input$Finit,
 			Lfinal=input$floorcaptarget,
-			Lramp=input$floorcapramp
+			Lramp=input$floorcapramp,
+			Mfinal=input$icucaptarget,
+			Mramp=input$icucapramp
+			
 			)
 
 

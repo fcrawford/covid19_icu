@@ -14,18 +14,20 @@ plot_hospital<- function(initial_report= 1000,
                            medium=.6,
                            M=352,
                            L=1781,
-                			t = 60,
-                			chi_C=0.1,
-                			chi_L=.142857,
-                			growth_rate=1,
-					mu_C1 = .1,
-					mu_C2 = .1,
-					mu_C3 = .1,
-					rampslope=1.2,
-					Cinit = .25,
-					Finit = .5,
-					Lfinal=1781,
-					Lramp=c(0,0)){
+                    			t = 60,
+                    			chi_C=0.1,
+                    			chi_L=.142857,
+                    			growth_rate=1,
+                					mu_C1 = .1,
+                					mu_C2 = .1,
+                					mu_C3 = .1,
+                					rampslope=1.2,
+                					Cinit = .25,
+                					Finit = .5,
+                					Lfinal=1781,
+                					Lramp=c(0,0),
+                					Mfinal=352,
+                					Mramp=c(0,0)){
   
       hospital <- hospital_queues(initial_report=initial_report,
                                   final_report = final_report,
@@ -34,18 +36,20 @@ plot_hospital<- function(initial_report= 1000,
                                   medium=medium,
                                   M=M,
                                   L=L,
-                        		t=t,
-                        		chi_C=chi_C,
-                        		chi_L=chi_L,
-                        		growth_rate=growth_rate,
-						mu_C1 = mu_C1,
-						mu_C2 = mu_C2,
-						mu_C3 = mu_C3,
-						rampslope=rampslope,
-						Cinit = Cinit,
-						Finit = Finit,
-						Lfinal=Lfinal,
-						Lramp=Lramp)
+                              		t=t,
+                              		chi_C=chi_C,
+                              		chi_L=chi_L,
+                              		growth_rate=growth_rate,
+                      						mu_C1 = mu_C1,
+                      						mu_C2 = mu_C2,
+                      						mu_C3 = mu_C3,
+                      						rampslope=rampslope,
+                      						Cinit = Cinit,
+                      						Finit = Finit,
+                      						Lfinal=Lfinal,
+                      						Lramp=Lramp,
+                      						Mfinal=Mfinal,
+                      						Mramp=Mramp)
 
       hospital$totaldead<- hospital$Dead_at_ICU + hospital$Dead_in_ED + hospital$Dead_on_Floor+ hospital$Dead_waiting_for_Floor+ hospital$Dead_waiting_for_ICU+ hospital$Dead_with_mild_symptoms
       hospital$totalWC<- hospital$WC1 + hospital$WC2 + hospital$WC3
@@ -111,12 +115,12 @@ plot_hospital<- function(initial_report= 1000,
       
       if(sum(floorover)>0){
         floorover<- min(which(floorover))
-        p4 <- p4 +annotate(geom="label", x=floorover, y=L, label=paste("Day", as.character(floorover)), size=4, color="red")
+        p4 <- p4 +annotate(geom="label", x=floorover, y=hospital$capacity_L[floorover], label=paste("Day", as.character(floorover)), size=4, color="red")
       }
 
       if(sum(ICUover)>0){
         ICUover<- min(which(ICUover))
-        p4 <- p4 +annotate(geom="label", x=ICUover, y=M, label=paste("Day", as.character(ICUover)), size=4)
+        p4 <- p4 +annotate(geom="label", x=ICUover, y=hospital$capacity_M[ICUover], label=paste("Day", as.character(ICUover)), size=4)
       }
       list(p1, p2, p3, p4, ICUover, floorover)
       
