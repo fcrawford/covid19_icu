@@ -14,6 +14,7 @@
 # zeta = rate of movement to a floor bed from queue
 
 ############## Reporting rate function determines who shows up to the ED 3/23
+#' @export
 report_rate<-function(t,
                       initial_report, 
                       final_report, 
@@ -83,6 +84,7 @@ capacity_ramping<-function(start=1781,
 
 
 
+#' @export
 hospital_queues<- function(initial_report= 1000,
             final_report = 10000,
             distribution= "ramp",

@@ -50,6 +50,7 @@ server <- function(input, output, session) {
 
 ####################
 
+
 generate_ui <- function() {
 fluidPage(theme=shinytheme("simplex"),
  titlePanel("COVID-19 Hospital Capacity Model"),
@@ -128,7 +129,7 @@ fluidPage(theme=shinytheme("simplex"),
 )
 }
 
-
+#' @export
 runApp <- function() { 
   shinyApp(ui = generate_ui(), server = server)
 }

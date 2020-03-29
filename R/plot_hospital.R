@@ -1,10 +1,3 @@
-library(cowplot)
-library(plyr)
-library(dplyr)
-library(ggplot2)
-library(gridExtra)
-library(reshape2)
-
 
 
 darken <- function(color, factor=1.4){
@@ -15,7 +8,7 @@ darken <- function(color, factor=1.4){
 }
 
 
-
+#' @export
 plot_hospital<- function(initial_report= 1000,
                            final_report = 10000,
                            distribution= "exponential",
