@@ -1,9 +1,5 @@
-####Here is the ODE equation code I started coding with, but the queue parts (M*chi_M, L*chi_L, etc; the most important parts!) still aren't correct. I took out how I had it and just left in the "M" and "L". The S, E, and A compartments are the same as the epi model. I started with just coding the "medium" age: 
 
-
-start_time = Sys.time()
-
-#****************************** AGE-STRATIFIED COVID19 MODEL ******************************#
+#*************************** COVID-19 Hospital Queueing MODEL *****************************#
 #                                                                                          #
 #                                                                                          #
 #                                                                                          #
@@ -11,16 +7,11 @@ start_time = Sys.time()
 
 #************************************* MODEL FUNCTIONS ************************************#
 
-
-# k_inf = relative infectiousness for kids
-# k_susp = relative susceptibility for kids
-# k_report =relative testing rate for kids
-
 # lambda = rate of presenting for care
 # M = number of ICU beds
 # L = number of Floor beds
-# eta = rate you can be moved to an ICU bed from queue
-# zeta = rate you can be moved to an ICU bed from queue
+# eta = rate of movement to an ICU bed from queue
+# zeta = rate of movement to a floor bed from queue
 
 ############## Reporting rate function determines who shows up to the ED 3/23
 report_rate<-function(t,
@@ -87,20 +78,12 @@ capacity_ramping<-function(start=1781,
   
 }
 
-############## STRATIFIED MODEL
 
-
-############## RUN ODE
-
-
-############## IMPORT PARAMETERS
+############## run the queuing model
 
 # libraries
 library(tidyverse)
 library(deSolve)
-
-# set working directory
-#setwd("~/R/Covid-19")
 
 
 hospital_queues<- function(initial_report= 1000,
@@ -111,24 +94,23 @@ hospital_queues<- function(initial_report= 1000,
             slope=50,
             M=352,
             L=1781,
-		t = 60,
-		chi_C=0.1,
-		chi_L=.142857,
-		growth_rate=1,
-		mu_C1 = .1,
-		mu_C2 = .1,
-		mu_C3 = .1,
-		rampslope=1.2,
-		Cinit = 12,
-		Finit = 56,
-		Lfinal=1781,
-		Lramp=c(0,0),
-		Mfinal=352,
-		Mramp=c(0,0),
-    doprotocols=0
+        		t = 60,
+        		chi_C=0.1,
+        		chi_L=.142857,
+        		growth_rate=1,
+        		mu_C1 = .1,
+        		mu_C2 = .1,
+        		mu_C3 = .1,
+        		rampslope=1.2,
+        		Cinit = 12,
+        		Finit = 56,
+        		Lfinal=1781,
+        		Lramp=c(0,0),
+        		Mfinal=352,
+        		Mramp=c(0,0),
+            doprotocols=0
 		        ){
 
-      # SOHEIL: here is a quick fix: 
       if(doprotocols==0) {
         Mfinal=M
         Lfinal=L
@@ -137,11 +119,10 @@ hospital_queues<- function(initial_report= 1000,
 
       # read in parameters
       params = read.csv("queueinputs1.csv", stringsAsFactors=FALSE)[1,]
-      #attach(params)
-      
+
       ############## SET INITIAL CONDITIONS
       
-      # percentages in reporting to ED?
+      ### percentages in reporting to ED
       old = 1- young - medium
       
       params$young = young;
@@ -153,9 +134,9 @@ hospital_queues<- function(initial_report= 1000,
       
       params$slope = slope;
 
-	###Express percentages as decimals
-	Cinit_d = Cinit/100;
-	Finit_d = Finit/100;
+    	### Express percentages as decimals (initial occupation)
+    	Cinit_d = Cinit/100;
+    	Finit_d = Finit/100;
 
       ##########
      
@@ -213,8 +194,8 @@ hospital_queues<- function(initial_report= 1000,
 
       )
       
-      ############## RUN MODEL
-      
+      ### create functions for vector inputs
+
       reports <- approxfun(
         report_rate(
           t = t, 
@@ -242,10 +223,11 @@ hospital_queues<- function(initial_report= 1000,
           t=t),
         rule=2);
       
+      ### solver ODE function
       model_strat <- function (t, x , pars,...) {
         
         
-        # initial conditions young ###CHANGE YOUND PARAMS ######
+        # initial conditions young 
         I1<- x[1];
         P1 <- x[2];
         MS1 <- x[3];
@@ -298,8 +280,8 @@ hospital_queues<- function(initial_report= 1000,
         sigma_MS1=pars$sigma_MS1
         sigma_C1=pars$sigma_C1
         sigma_F1=pars$sigma_F1
-        chi_C1=chi_C#=pars$chi_C1
-        chi_L1=chi_L#=pars$chi_L1
+        chi_C1=chi_C
+        chi_L1=chi_L
         theta_F1=pars$theta_F1
         eta1=pars$eta1
         zeta1=pars$zeta1
@@ -307,7 +289,7 @@ hospital_queues<- function(initial_report= 1000,
         mu_I1=pars$mu_I1
         mu_P1=pars$mu_P1
         mu_MS1=pars$mu_MS1
-        mu_C1=mu_C1#=pars$mu_C1
+        mu_C1=mu_C1
         mu_F1=pars$mu_F1
         mu_WC1=pars$mu_WC1
         mu_WF1=pars$mu_WF1
@@ -320,8 +302,8 @@ hospital_queues<- function(initial_report= 1000,
         sigma_MS2=pars$sigma_MS2
         sigma_C2=pars$sigma_C2
         sigma_F2=pars$sigma_F2
-        chi_C2=chi_C#=pars$chi_C2
-        chi_L2=chi_L#=pars$chi_L2
+        chi_C2=chi_C
+        chi_L2=chi_L
         theta_F2=pars$theta_F2
         eta2=pars$eta2
         zeta2=pars$zeta2
@@ -329,7 +311,7 @@ hospital_queues<- function(initial_report= 1000,
         mu_I2=pars$mu_I2
         mu_P2=pars$mu_P2
         mu_MS2=pars$mu_MS2
-        mu_C2=mu_C2#=pars$mu_C2
+        mu_C2=mu_C2
         mu_F2=pars$mu_F2
         mu_WC2=pars$mu_WC2
         mu_WF2=pars$mu_WF2
@@ -342,8 +324,8 @@ hospital_queues<- function(initial_report= 1000,
         sigma_MS3=pars$sigma_MS3
         sigma_C3=pars$sigma_C3
         sigma_F3=pars$sigma_F3
-        chi_C3=chi_C#pars$chi_C3
-        chi_L3=chi_L#pars$chi_L3
+        chi_C3=chi_C
+        chi_L3=chi_L
         theta_F3=pars$theta_F3
         eta3=pars$eta3
         zeta3=pars$zeta3
@@ -351,16 +333,12 @@ hospital_queues<- function(initial_report= 1000,
         mu_I3=pars$mu_I3
         mu_P3=pars$mu_P3
         mu_MS3=pars$mu_MS3
-        mu_C3=mu_C3#=pars$mu_C3
+        mu_C3=mu_C3
         mu_F3=pars$mu_F3
         mu_WC3=pars$mu_WC3
         mu_WF3=pars$mu_WF3
         lambda3=pars$lambda3
         theta_WF3=pars$theta_WF3
-        
-        
-        #M = pars$M;
-        #L = pars$L;
         
         young =pars$young
         medium = pars$medium
@@ -368,10 +346,6 @@ hospital_queues<- function(initial_report= 1000,
         
         slope=pars$slope
         
-        #
-
-        #attach parameters into workspace
-        #attach(params)
         
         ######################### Equations ##############################
         ### YOUNG
@@ -461,9 +435,10 @@ hospital_queues<- function(initial_report= 1000,
                     dI2dt, dP2dt, dMS2dt, dWC2dt,dC2dt,dWF2dt, dF2dt, dR2dt, dD2dt,
                     dI3dt, dP3dt, dMS3dt, dWC3dt,dC3dt,dWF3dt, dF3dt, dR3dt, dD3dt,
                     dDead_at_ICUdt ,dDead_on_Floordt ,dDead_waiting_for_ICUdt,
-                    dDead_waiting_for_Floordt,dDead_with_mild_symptomsdt,dDead_in_EDdt,dNumber_seen_at_EDdt, dFTotaldt, dCTotaldt)
+                    dDead_waiting_for_Floordt,dDead_with_mild_symptomsdt,dDead_in_EDdt,
+                    dNumber_seen_at_EDdt, dFTotaldt, dCTotaldt)
         
-        # list it!
+        # list it
         list(output)
       }
       
