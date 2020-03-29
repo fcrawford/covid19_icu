@@ -1,7 +1,5 @@
 ##### Conversion of data to model inputs
 
-# hi testing github
-
 ########TOTAL NUMBER OF BEDS AVAILABLE ###########
 
 #Number of ICU beds available
