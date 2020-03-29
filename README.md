@@ -14,6 +14,8 @@ library(devtools) # or install.packages("devtools")
 # use devtools::load_all() for development or devtools::install() to be able to library(covid19icu)
 devtools::install()
 library(covid19icu)
+
+# after installing and loading covid19icu, run the app with 
 runApp()
 ```
 
