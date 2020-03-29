@@ -69,9 +69,18 @@ capacity_ramping<-function(start=1781,
                            t=60){
   
   capacity <- rep(start, t)
-  
-  capacity[ramp[1]:ramp[2]]= start + (finish-start)* (0:(ramp[2]-ramp[1]))/(ramp[2]-ramp[1]);
-  capacity[ramp[2]:t] = finish;
+  if (ramp[1]!=0){
+    capacity[ramp[1]:ramp[2]]= start + (finish-start)* (0:(ramp[2]-ramp[1]))/(ramp[2]-ramp[1]);
+    capacity[ramp[2]:t] = finish;
+  } else if (ramp[2]!=0){
+    capacity[(ramp[1]+1):ramp[2]]= start + (finish-start)* (1:(ramp[2]-ramp[1]))/(ramp[2]-ramp[1]);
+    capacity[ramp[2]:t] = finish;
+  } else{
+    capacity[1:t] = finish;
+    
+  }
+    
+
   
   
   capacity
