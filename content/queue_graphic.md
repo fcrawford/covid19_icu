@@ -50,7 +50,7 @@ and ICU and floor utilization (Plot D).
 
 <br/>
 
-##### **Inputs on the "Protocols" tab allow you specify changes to hospital capacity and length of stay which may affect utilization of floor and ICU beds.**
+##### **Inputs on the "Strategy" tab allow you specify changes to hospital capacity and length of stay which may affect utilization of floor and ICU beds.**
 
 **Target floor capacity**: the target number of floor beds.
 
