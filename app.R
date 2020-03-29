@@ -82,7 +82,7 @@ ui <- fluidPage(theme=shinytheme("simplex"),
             ),
           conditionalPanel(
             condition = "input.distrib == 'exponential'",
-            sliderInput("doubling_time", "Doubling time (days)", min=3, max=28, value=14)
+            sliderInput("doubling_time", "Doubling time (days)", min=2, max=28, value=14)
             ),
 
         ),
