@@ -80,6 +80,15 @@ mu_WC2: 2.272727
 # Ages: 65+
 mu_WC3: 2.272727
 
+# Death rate of symptomatic infectives prior to presenting to the ED
+# Ages: 0-18
+mu_I1: 0
+# Ages: 18-65
+mu_I2: 0
+# Ages: 65+
+mu_I3: 0
+
+
 # Proportion of patients dying on the floor
 # Ages: 0-18
 pmu_F1: .134
@@ -140,41 +149,16 @@ pmu_MS3: .0066
 
 
 # Death rate of symptomatic infectives at ED prior to triage
-#mu_P1: 0.0
-#mu_P2: 0.0
-#mu_P3: 0.0
+mu_P1: 0.0
+mu_P2: 0.0
+mu_P3: 0.0
 
 
 # Expected time to recovery pre-triage
-#d_phi = 14
+d_phi: 14
 
 # Expected time to death pre-triage
-# d_mu = 12
+d_mu: 12
 
 # Expected proportion which recover without treatment
-# p_phi = .85
-
-theta_F1: 0.0087535
-xi_MS1: 0.0127037
-mu_MS1: 0.000559
-mu_F1: 0.0234594
-mu_WF1: 0.0234594
-theta_WF1: 0.0026066
-
-
-
-theta_F2: 0.0087535
-xi_MS2: 0.0127037
-mu_MS2: 0.000559
-mu_F2: 0.0234594
-mu_WF2: 0.0234594
-theta_WF2: 0.0026066
-phi_I3: 0.0729927
-
-theta_F3: 0.0087535
-xi_MS3: 0.0127037
-mu_MS3: 0.000559
-mu_F3: 0.0234594
-mu_WF3: 0.0234594
-lambda3: 0.1151328
-theta_WF3: 0.0026066
+p_phi: .85

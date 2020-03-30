@@ -1,6 +1,7 @@
+#' @export
 update_inputs <- function() {
   
-  params = yaml.load_file("data_yaml.yaml")
+  params = yaml.load_file("content/data_yaml.yaml")
   
   ###solving set of linear equations for rate of stepping up from floor to ICU and
   ###death rate from floor
@@ -69,11 +70,7 @@ update_inputs <- function() {
   mu_MS3 = out32[2];
   
   # Readmission rate to the ICU from floor queue
-  
-  theta_WF1 = params$ptheta_WF1*params$mu_WF1/(1-params$ptheta_WF1)
-  theta_WF2 = params$ptheta_WF2*params$mu_WF2/(1-params$ptheta_WF2)
-  theta_WF3 = params$ptheta_WF3*params$mu_WF3/(1-params$ptheta_WF3)
-  
+
   #phi_I1 = 1/(params$p_phi1*params$d_phi1 + (1-params$p_phi1)*params$d_mu1);
   #lambda1 = (params$phi_I1 + params1$mu_I1)*params$p_lambda1/(1-params$p_lambda1)
   #phi_I2 = 1/(params$p_phi2*params$d_phi2 + (1-params$p_phi2)*params$d_mu2);
@@ -87,10 +84,35 @@ update_inputs <- function() {
   params$mu_WF2 =mu_WF2; 
   params$theta_F3 =theta_F3;
   params$mu_WF3 =mu_WF3; 
-  params$theta_WF1 =theta_WF1;
-  params$theta_WF2 =theta_WF2;
-  params$theta_WF3 =theta_WF3;
-         
+  
+  # step up rate is undifferentiated between floor and floor queue
+  params$theta_WF1 = params$ptheta_WF1*params$mu_WF1/(1-params$ptheta_WF1)
+  params$theta_WF2 = params$ptheta_WF2*params$mu_WF2/(1-params$ptheta_WF2)
+  params$theta_WF3 = params$ptheta_WF3*params$mu_WF3/(1-params$ptheta_WF3)
+  
+  params$theta_F1 = params$theta_F1
+  params$theta_F2 = params$theta_F2
+  params$theta_F3 = params$theta_F3
+  
+  # Death rate is also undifferentiated
+  params$mu_F1 = mu_WF1
+  params$mu_F2 = mu_WF2
+  params$mu_F3 = mu_WF3
+  
+  
+  
+  
+  params$xi_MS1 =xi_MS1;
+  params$mu_MS1 =mu_MS1; 
+  params$xi_MS2 =xi_MS2;
+  params$mu_MS2 =mu_MS2; 
+  params$xi_MS3 =xi_MS3;
+  params$mu_MS3 =mu_MS3; 
+  
+  params$phi_I1 = 1/(p_phi*d_phi + (1-p_phi)*d_mu);
+  params$phi_I2 = 1/(p_phi*d_phi + (1-p_phi)*d_mu);
+  params$phi_I3 = 1/(p_phi*d_phi + (1-p_phi)*d_mu);
+  
   params
   
   
