@@ -14,6 +14,7 @@
 # zeta = rate of movement to a floor bed from queue
 
 ############## Reporting rate function determines who shows up to the ED 3/23
+#' @export
 report_rate<-function(t,
                       initial_report, 
                       final_report, 
@@ -81,11 +82,9 @@ capacity_ramping<-function(start=1781,
 
 ############## run the queuing model
 
-# libraries
-library(tidyverse)
-library(deSolve)
 
 
+#' @export
 hospital_queues<- function(initial_report= 1000,
             final_report = 10000,
             distribution= "ramp",
@@ -118,7 +117,7 @@ hospital_queues<- function(initial_report= 1000,
   
 
       # read in parameters
-      params = read.csv("queueinputs1.csv", stringsAsFactors=FALSE)[1,]
+      params = read.csv(system.file("content/queueinputs1.csv", package='covid19icu'), stringsAsFactors=FALSE)[1,]
 
       ############## SET INITIAL CONDITIONS
       
@@ -460,6 +459,4 @@ hospital_queues<- function(initial_report= 1000,
 
 
 }
-
-end_time = Sys.time()
 

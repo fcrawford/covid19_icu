@@ -1,8 +1,24 @@
-Type: Shiny
+Package: covid19icu
 Title: COVID-19 ICU dynamics
 License: MIT
+Type: Shiny
+Version: 0.0.0.9000
 Author: Soheil Eshghi, Margret Erlendsdottir, Maile Thayer Phillips, Suzan Iloglu, and Forrest W. Crawford
 AuthorUrl: http://www.crawfordlab.io/
+Description: What the package does (one paragraph).
+Depends: R (>= 3.5.2)
+Imports: 
+  shiny,
+  shinythemes,
+  cowplot,
+  plyr,
+  dplyr,
+  ggplot2,
+  gridExtra,
+  reshape2,
+  tidyverse,
+  deSolve
+Encoding: UTF-8
+LazyData: true
 Tags: COVID-19
-DisplayMode: normal
-
+RoxygenNote: 6.1.1

@@ -6,9 +6,16 @@ To cite this web app:
 
 > Soheil Eshghi, Margret Erlendsdottir, Maile Thayer Phillips, Suzan Iloglu, and Forrest W. Crawford. "COVID-19 ICU Dynamics" 2020. 
 
-Run the app from the `covid19-icu` directory. Start `R`, then: 
+
+To install this package, you will need devtools
 ```
-library(shiny)
+library(devtools) # or install.packages("devtools")
+
+# use devtools::load_all() for development or devtools::install() to be able to library(covid19icu)
+devtools::install()
+library(covid19icu)
+
+# after installing and loading covid19icu, run the app with 
 runApp()
 ```
 

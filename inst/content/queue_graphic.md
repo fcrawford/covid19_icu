@@ -71,6 +71,3 @@ and ICU and floor utilization (Plot D).
 **Death rate in the ICU (age range)**: the average number of deaths per day which occur in the ICU in each age range.
 
 
-
-
-
