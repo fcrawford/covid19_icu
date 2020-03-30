@@ -1,0 +1,180 @@
+##### Bed Capacities
+# ICU
+M: 352
+# Floor
+L: 1781
+
+##### Triage Percentages
+# MS: Mild Symptoms, C:ICU, F: Floor
+# Ages: 0-18
+sigma_MS1: 0.984
+sigma_C1: 0.0
+sigma_F1: 0.016
+# Ages: 18-65
+sigma_MS2: 0.725
+sigma_C2: 0.058
+sigma_F2: 0.217
+# Ages: 65+
+sigma_MS3: 0.425
+sigma_C3: 0.163
+sigma_F3: 0.412
+
+##### Discharge Rates
+# Rate of stepping down from the floor (discharge) (1/avg # days spent on the floor)
+# Ages: 0-18
+chi_L1: 0.142857
+# Ages: 18-65
+chi_L2: 0.142857
+# Ages: 65+
+chi_L3: 0.142857
+
+##### Stepping Down Rates
+# Rate of stepping down from the ICU to the floor
+# Ages: 0-18
+chi_C1: 0.1
+# Ages: 18-65
+chi_C2: 0.1
+# Ages: 65+
+chi_C3: 0.1
+
+##### Recovery Rates
+# Recovery rate (1/days required to recovery if triaged as mild)
+# Ages: 0-18
+phi1: 0.0714286
+# Ages: 18-65
+phi2: 0.0714286
+# Ages: 65+
+phi3: 0.0714286
+
+##### Movement to beds from the queue
+# Rate at which patients are moved to the ICU from the ICU queue
+# Ages: 0-18
+eta1: 0.041667
+# Ages: 18-65
+eta2: 0.041667
+# Ages: 65+
+eta3: 0.041667
+
+# Rate at which patients are moved to the floor from the floor queue
+# Ages: 0-18
+zeta1: 0.041667
+# Ages: 18-65
+zeta2: 0.041667
+# Ages: 65+
+zeta3: 0.041667
+
+##### Death Rates
+#  Death rate of patients in the ICU
+# Ages: 0-18
+mu_C1: 0.1
+# Ages: 18-65
+mu_C2: 0.1
+# Ages: 65+
+mu_C3: 0.1
+
+# Death rate of patients waiting for an ICU bed
+# Ages: 0-18
+mu_WC1: 2.272727
+# Ages: 18-65
+mu_WC2: 2.272727
+# Ages: 65+
+mu_WC3: 2.272727
+
+# Proportion of patients dying on the floor
+# Ages: 0-18
+pmu_F1: .134
+# Ages: 18-65
+pmu_F2: .134
+# Ages: 65+
+pmu_F3: .134
+
+
+
+# Proportion of patients that step up from the floor queue to the ICU
+# Ages: 0-18
+ptheta_WF1: .1
+# Ages: 18-65
+ptheta_WF2: .1
+# Ages: 65+
+ptheta_WF3: .1
+
+# Proportion of patients stepping up from floor to ICU
+# Ages: 0-18
+ptheta_F1: .05
+# Ages: 18-65
+ptheta_F2: .05
+# Ages: 65+
+ptheta_F3: .05
+
+# Proportion of patients returning to the ED after being triaged as mild
+# Ages: 0-18
+pxi_MS1: .15
+# Ages: 18-65
+pxi_MS2: .15
+# Ages: 65+
+pxi_MS3: .15
+
+# Proportion of patients dying after after being triaged as mild
+# Ages: 0-18
+pmu_MS1: .0066
+# Ages: 18-65
+pmu_MS2: .0066
+# Ages: 65+
+pmu_MS3: .0066
+
+
+####### Not Operational
+
+# Proportion of symptomatic infectives presenting to ED
+# Ages: 0-18
+#p_lambda1: .106
+# Ages: 18-65
+#p_lambda2: .364
+# Ages: 65+
+#p_lambda3: .612
+
+# Death rate of symptomatic infectives prior to presenting to the ED
+#mu_I1: 0.0
+#mu_I2: 0.0
+#mu_I3: 0.0
+
+
+# Death rate of symptomatic infectives at ED prior to triage
+#mu_P1: 0.0
+#mu_P2: 0.0
+#mu_P3: 0.0
+
+
+# Expected time to recovery pre-triage
+#d_phi = 14
+
+# Expected time to death pre-triage
+# d_mu = 12
+
+# Expected proportion which recover without treatment
+# p_phi = .85
+
+theta_F1: 0.0087535
+xi_MS1: 0.0127037
+mu_MS1: 0.000559
+mu_F1: 0.0234594
+mu_WF1: 0.0234594
+theta_WF1: 0.0026066
+
+
+
+theta_F2: 0.0087535
+xi_MS2: 0.0127037
+mu_MS2: 0.000559
+mu_F2: 0.0234594
+mu_WF2: 0.0234594
+theta_WF2: 0.0026066
+phi_I3: 0.0729927
+
+theta_F3: 0.0087535
+xi_MS3: 0.0127037
+mu_MS3: 0.000559
+mu_F3: 0.0234594
+mu_WF3: 0.0234594
+lambda3: 0.1151328
+theta_WF3: 0.0026066
