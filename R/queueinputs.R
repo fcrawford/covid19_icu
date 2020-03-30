@@ -1,5 +1,5 @@
 
-update_inputs_csv <- function() {
+#update_inputs_csv <- function() {
 
 ##### Conversion of data to model inputs
 
@@ -399,6 +399,6 @@ param3 = cbind(parameters3, lambda3 = lambda3, theta_WF3 = theta_WF3)
 param_all = cbind(param1, param2, param3, M = M, L = L)
 
   
-write.csv(param_all,file.path(system.file("content/", package='covid19icu'), "queueinputs1.csv"))
+#write.csv(param_all,file.path(system.file("content/", package='covid19icu'), "queueinputs1.csv"))
 
-}
+#}
