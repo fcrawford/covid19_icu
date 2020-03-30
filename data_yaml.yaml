@@ -16,9 +16,42 @@ sigma_MS3: 0.425
 sigma_C3: 0.163
 sigma_F3: 0.412
 
-
-chi_C1: 0.1
+##### Discharge Rates
+# Rate of stepping down from the floor (discharge) (1/avg # days spent on the floor)
+# Ages: 0-18
 chi_L1: 0.142857
+# Ages: 18-65
+chi_L2: 0.142857
+# Ages: 65+
+chi_L3: 0.142857
+
+##### Stepping Down Rates
+# Rate of stepping down from the ICU to the floor
+# Ages: 0-18
+chi_C1: 0.1
+# Ages: 18-65
+chi_C2: 0.1
+# Ages: 65+
+chi_C3: 0.1
+
+##### Death Rates
+#  Death rate of patients in the ICU
+# Ages: 0-18
+mu_C1: 0.1
+# Ages: 18-65
+mu_C2: 0.1
+# Ages: 65+
+mu_C3: 0.1
+
+# Death rate of patients waiting for an ICU bed
+# Ages: 0-18
+mu_WC1: 2.272727
+# Ages: 18-65
+mu_WC2: 2.272727
+# Ages: 65+
+mu_WC3: 2.272727
+
+
 theta_F1: 0.0087535
 eta1: 0.041667
 zeta1: 0.041667
@@ -26,17 +59,13 @@ xi_MS1: 0.0127037
 mu_I1: 0.0
 mu_P1: 0.0
 mu_MS1: 0.000559
-mu_C1: 0.1
 mu_F1: 0.0234594
-mu_WC1: 2.272727
 mu_WF1: 0.0234594
 lambda1: 0.0086546
 theta_WF1: 0.0026066
 phi_I2: 0.0729927
 phi2: 0.0714286
 
-chi_C2: 0.1
-chi_L2: 0.142857
 theta_F2: 0.0087535
 eta2: 0.041667
 zeta2: 0.041667
@@ -44,17 +73,13 @@ xi_MS2: 0.0127037
 mu_I2: 0.0
 mu_P2: 0.0
 mu_MS2: 0.000559
-mu_C2: 0.1
 mu_F2: 0.0234594
-mu_WC2: 2.272727
 mu_WF2: 0.0234594
 lambda2: 0.0417757
 theta_WF2: 0.0026066
 phi_I3: 0.0729927
 phi3: 0.0714286
 
-chi_C3: 0.1
-chi_L3: 0.142857
 theta_F3: 0.0087535
 eta3: 0.041667
 zeta3: 0.041667
@@ -62,9 +87,7 @@ xi_MS3: 0.0127037
 mu_I3: 0.0
 mu_P3: 0.0
 mu_MS3: 0.000559
-mu_C3: 0.1
 mu_F3: 0.0234594
-mu_WC3: 2.272727
 mu_WF3: 0.0234594
 lambda3: 0.1151328
 theta_WF3: 0.0026066
