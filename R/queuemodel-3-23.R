@@ -117,7 +117,9 @@ hospital_queues<- function(initial_report= 1000,
   
 
       # read in parameters
-      params = read.csv(system.file("content/queueinputs1.csv", package='covid19icu'), stringsAsFactors=FALSE)[1,]
+      #params = read.csv(system.file("content/queueinputs1.csv", package='covid19icu'), stringsAsFactors=FALSE)[1,]
+
+      params = param_all 
 
       ############## SET INITIAL CONDITIONS
       
