@@ -1,7 +1,8 @@
 #' @export
 update_inputs <- function() {
   
-  params = yaml.load_file("content/data_yaml.yaml")
+  params = yaml.load_file( system.file("content/parameter_values.yaml", package='covid19icu') )
+
   
   ###solving set of linear equations for rate of stepping up from floor to ICU and
   ###death rate from floor
