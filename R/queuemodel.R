@@ -116,12 +116,12 @@ hospital_queues<- function(initial_report= 1000,
       }
   
 
-      # read in parameters
-      #params = read.csv(system.file("content/queueinputs1.csv", package='covid19icu'), stringsAsFactors=FALSE)[1,]
 
-      #params = yaml.load_file("data_yaml.yaml")
+      # read in fixed and derived parameters
 
-      params= update_inputs();
+      params = update_inputs();
+
+
       ############## SET INITIAL CONDITIONS
       
       ### percentages in reporting to ED
