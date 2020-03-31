@@ -40,11 +40,38 @@ server <- function(input, output, session) {
                   doprotocols=input$doprotocols
 			
 			)
+    
+
 
 
     plot_grid(plots[[1]], plots[[2]],plots[[3]],plots[[4]], nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
 
   })
+  
+  output$hospitalTable <- renderTable({ 
+    
+    text = text_hospital(initial_report=input$initrep,
+                  final_report=input$finalrep,
+                  L=input$floorcap,
+                  M=input$icucap,
+                  distribution=input$distrib,
+                  t= input$time,
+                  chi_C=1/input$avgicudischargetime,
+                  chi_L=1/input$avgfloordischargetime,
+                  growth_rate=log(2)/(input$doubling_time),
+                  mu_C1 = input$ICUdeath_young,
+                  mu_C2 = input$ICUdeath_medium,
+                  mu_C3 = input$ICUdeath_old,
+                  rampslope = input$rampslope,
+                  Cinit = input$Cinit,
+                  Finit = input$Finit,
+                  Lfinal=input$floorcaptarget,
+                  Lramp=input$floorcapramp,
+                  Mfinal=input$icucaptarget,
+                  Mramp=input$icucapramp,
+                  doprotocols=input$doprotocols)
+  })
+
 
 }
 
@@ -117,7 +144,10 @@ fluidPage(theme=shinytheme("simplex"),
     tabsetPanel(
        tabPanel("Plots", fluid=TRUE,
          plotOutput("hospitalPlot",height="700px")
-       ), 
+       ),
+       tabPanel("Summary", fluid=TRUE,
+                tableOutput("hospitalTable")
+                ),
        
     tabPanel("About", fluid=TRUE,
        includeMarkdown(system.file("content/queue_graphic.md", package='covid19icu'))
@@ -126,7 +156,7 @@ fluidPage(theme=shinytheme("simplex"),
              includeMarkdown(system.file("content/inputs.md", package='covid19icu'))
     ),
     tabPanel("Outputs", fluid=TRUE,
-             includeMarkdown(system.file("content/inputs.md", package='covid19icu'))
+             includeMarkdown(system.file("content/outputs.md", package='covid19icu'))
     )
     )
   )),
