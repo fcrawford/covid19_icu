@@ -118,10 +118,16 @@ fluidPage(theme=shinytheme("simplex"),
        tabPanel("Plots", fluid=TRUE,
          plotOutput("hospitalPlot",height="700px")
        ), 
+       
     tabPanel("About", fluid=TRUE,
-       # CHANGE THIS
        includeMarkdown(system.file("content/queue_graphic.md", package='covid19icu'))
-       )
+       ),
+    tabPanel("Inputs", fluid=TRUE,
+             includeMarkdown(system.file("content/inputs.md", package='covid19icu'))
+    ),
+    tabPanel("Outputs", fluid=TRUE,
+             includeMarkdown(system.file("content/inputs.md", package='covid19icu'))
+    )
     )
   )),
   hr(),
