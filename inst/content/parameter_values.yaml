@@ -1,8 +1,36 @@
 ##### Bed Capacities
 # ICU
-M: 352
+M: 50
+M_Max: 3000
+M_occupied: 12
+icucapramp1: 10
+icucapramp2: 20
+
 # Floor
-L: 1781
+L: 100
+L_Max: 15000
+L_occupied: 12
+floorcapramp1: 10
+floorcapramp2: 20
+
+##### Time Horizon
+
+T_Max: 60
+T: 30
+
+##### Scenarios
+# Cases per day
+I_init: 50
+I_initmax: 1000
+I_final: 1000
+I_finalmax: 3000
+doublingtime: 14
+doublingtime_min: 2
+doublingtime_max: 28
+rampslope: 1.2
+rampslope_min: 0
+rampslope_max: 5
+rampslope_step: 0.1
 
 ##### Triage Percentages
 # MS: Mild Symptoms, C:ICU, F: Floor
@@ -20,6 +48,14 @@ sigma_C3: 0.163
 sigma_F3: 0.412
 
 ##### Discharge Rates
+# App initializations:
+avgfloordischargetime: 7
+avgicudischargetime: 10
+maxfloordischargetime: 25
+maxicudischargetime: 25
+
+
+
 # Rate of stepping down from the floor (discharge) (1/avg # days spent on the floor)
 # Ages: 0-18
 chi_L1: 0.142857
