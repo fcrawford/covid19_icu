@@ -107,7 +107,7 @@ fluidPage(theme=shinytheme("simplex"),
             ),
           conditionalPanel(
             condition = "input.distrib == 'exponential'",
-            sliderInput("doubling_time", "Doubling time (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime)
+            sliderInput("doubling_time", "Doubling time (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime, step=0.1)
             ),
 
         ),
