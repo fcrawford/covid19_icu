@@ -78,7 +78,8 @@ server <- function(input, output, session) {
 ####################
 
 
-generate_ui <- function() {
+generate_ui <- function(params) {
+
 fluidPage(theme=shinytheme("simplex"),
  titlePanel("COVID-19 Hospital Capacity Model"),
   sidebarLayout(
@@ -87,7 +88,7 @@ fluidPage(theme=shinytheme("simplex"),
         tabPanel("Scenario", fluid=TRUE,
           includeMarkdown(system.file("content/instructions.md", package='covid19icu')),
           h4("Scenario:"),
-          sliderInput("time", "Time Horizon (days)",     min=1, max=60, value=30),
+          sliderInput("time", "Time Horizon (days)",     min=1, max=params$T_Max, value=params$T),
           radioButtons("distrib",                     "Infection curve",
                        c("Exponential"="exponential",
                          "Linear"="ramp",
@@ -95,18 +96,18 @@ fluidPage(theme=shinytheme("simplex"),
                          "Flat"="uniform"),
                        inline=TRUE,
                        selected="exponential"),
-          sliderInput("initrep", "Initial cases per day", min=1, max=1e3, value=50),
+          sliderInput("initrep", "Initial cases per day", min=1, max=params$I_initmax, value=params$I_init),
           conditionalPanel(
-            condition = "input.distrib=='geometric'||input.distrib=='logistic'",
-            sliderInput("finalrep", "Peak number of cases", min=1, max=3000, value=1000)
+            condition = "input.distrib=='logistic'",
+            sliderInput("finalrep", "Peak number of cases", min=1, max=params$I_finalmax, value=params$I_final)
             ),
 	conditionalPanel(
             condition = "input.distrib=='ramp'",
-            sliderInput("rampslope", "Rate of increase in new cases per day", min=0, max=5, value=1.2, step = .1)
+            sliderInput("rampslope", "Rate of increase in new cases per day", min=params$rampslope_min, max=params$rampslope_max, value=params$rampslope, step = params$rampslope_step)
             ),
           conditionalPanel(
             condition = "input.distrib == 'exponential'",
-            sliderInput("doubling_time", "Doubling time (days)", min=2, max=28, value=14)
+            sliderInput("doubling_time", "Doubling time (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime)
             ),
 
         ),
@@ -114,10 +115,10 @@ fluidPage(theme=shinytheme("simplex"),
 		      includeMarkdown(system.file("content/capacity.md", package='covid19icu')),
 
           	
-		sliderInput("icucap", "ICU capacity",     min=0, max=3000, value=50),
-		sliderInput("floorcap", "Initial floor capacity", min=0, max=15000, value=100),
-		sliderInput("Cinit", "% of ICU capacity occupied at time 0",     min=0, max=100, value=12),
-		sliderInput("Finit", "% of floor capacity occupied at time 0",     min=0, max=100, value=56)),
+		sliderInput("icucap", "ICU capacity",     min=0, max=params$M_Max, value=params$M),
+		sliderInput("floorcap", "Initial floor capacity", min=0, max=params$L_Max, value=params$L),
+		sliderInput("Cinit", "% of ICU capacity occupied at time 0",     min=0, max=100, value=params$M_occupied),
+		sliderInput("Finit", "% of floor capacity occupied at time 0",     min=0, max=100, value=params$L_occupied)),
         tabPanel("Strategy", fluid=TRUE,
           includeMarkdown(system.file("content/protocols.md", package='covid19icu')),
           radioButtons("doprotocols", "Capacity expansion strategy",
@@ -126,19 +127,19 @@ fluidPage(theme=shinytheme("simplex"),
                        selected=0),
           conditionalPanel(
             condition = "input.doprotocols==1",
-            sliderInput("icucaptarget",  "Target ICU capacity", min=0, max=3000, value=50),
-            sliderInput("icucapramp",  "ICU capacity scale-up (days)", min=0, max=30, value=c(10,20)),
-            sliderInput("floorcaptarget",  "Target floor capacity", min=0, max=15000, value=100),
-            sliderInput("floorcapramp",  "Floor capacity scale-up (days)", min=0, max=30, value=c(10,20))
+            sliderInput("icucaptarget",  "Target ICU capacity", min=0, max=params$M_Max, value=params$M),
+            sliderInput("icucapramp",  "ICU capacity scale-up (days)", min=0, max=30, value=c(params$icucapramp1,params$icucapramp2)),
+            sliderInput("floorcaptarget",  "Target floor capacity", min=0, max=params$L_Max, value=params$L),
+            sliderInput("floorcapramp",  "Floor capacity scale-up (days)", min=0, max=30, value=c(params$floorcapramp1,params$floorcapramp2))
           )),
           
         tabPanel("Parameters", fluid=TRUE,
           includeMarkdown(system.file("content/parameters.md", package='covid19icu')),
-          sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=25, value=7),
-          sliderInput("avgicudischargetime", "Average time in ICU",     min=0, max=25, value=10),
-		sliderInput("ICUdeath_young", "Death rate in ICU (<18 years)",     min=0, max=1, value=.1),
-		sliderInput("ICUdeath_medium", "Death rate in ICU (18-64 years)",     min=0, max=1, value=.1),
-		sliderInput("ICUdeath_old", "Death rate in ICU (65+ years)",     min=0, max=1, value=.1),
+          sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=params$maxfloordischargetime, value=params$avgfloordischargetime),
+          sliderInput("avgicudischargetime", "Average time in ICU",     min=0, max=params$maxicudischargetime, value=params$avgicudischargetime),
+		sliderInput("ICUdeath_young", "Death rate in ICU (<18 years)",     min=0, max=1, value=params$mu_C1),
+		sliderInput("ICUdeath_medium", "Death rate in ICU (18-64 years)",     min=0, max=1, value=params$mu_C2),
+		sliderInput("ICUdeath_old", "Death rate in ICU (65+ years)",     min=0, max=1, value=params$mu_C3),
         )),width=4),
     mainPanel(
     tabsetPanel(
@@ -167,5 +168,6 @@ fluidPage(theme=shinytheme("simplex"),
 
 #' @export
 runApp <- function() { 
-  shinyApp(ui = generate_ui(), server = server)
+  params = yaml.load_file( system.file("content/parameter_values.yaml", package='covid19icu') )
+  shinyApp(ui = generate_ui(params), server = server)
 }
