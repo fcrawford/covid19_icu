@@ -82,22 +82,22 @@ phi2: 0.0714286
 # Ages: 65+
 phi3: 0.0714286
 
-##### Movement to beds from the queue
+##### Movement to beds from the queue (1 hr)
 # Rate at which patients are moved to the ICU from the ICU queue
 # Ages: 0-18
-eta1: 0.041667
+eta1: 24
 # Ages: 18-65
-eta2: 0.041667
+eta2: 24
 # Ages: 65+
-eta3: 0.041667
+eta3: 24
 
-# Rate at which patients are moved to the floor from the floor queue
+# Rate at which patients are moved to the floor from the floor queue (1 hr)
 # Ages: 0-18
-zeta1: 0.041667
+zeta1: 24
 # Ages: 18-65
-zeta2: 0.041667
+zeta2: 24
 # Ages: 65+
-zeta3: 0.041667
+zeta3: 24
 
 ##### Death Rates
 #  Death rate of patients in the ICU
