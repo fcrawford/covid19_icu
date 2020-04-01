@@ -95,3 +95,6 @@ text_hospital = function(initial_report= 1000,
                                 format(ceiling(ICU_WC), scientific = FALSE)))
 
 }
+
+
+

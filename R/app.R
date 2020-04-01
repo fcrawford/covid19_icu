@@ -72,6 +72,42 @@ server <- function(input, output, session) {
                   doprotocols=input$doprotocols)
   })
 
+  output$keypoints <- renderText({
+    dat = text_hospital(initial_report=input$initrep,
+                  final_report=input$finalrep,
+                  L=input$floorcap,
+                  M=input$icucap,
+                  distribution=input$distrib,
+                  t= input$time,
+                  chi_C=1/input$avgicudischargetime,
+                  chi_L=1/input$avgfloordischargetime,
+                  growth_rate=log(2)/(input$doubling_time),
+                  mu_C1 = input$ICUdeath_young,
+                  mu_C2 = input$ICUdeath_medium,
+                  mu_C3 = input$ICUdeath_old,
+                  rampslope = input$rampslope,
+                  Cinit = input$Cinit,
+                  Finit = input$Finit,
+                  Lfinal=input$floorcaptarget,
+                  Lramp=input$floorcapramp,
+                  Mfinal=input$icucaptarget,
+                  Mramp=input$icucapramp,
+                  doprotocols=input$doprotocols)
+
+    rownames(dat) = dat$Variable
+
+    paste("Key points: Under the specified capacities and expansion strategy, the model predicts that ICU beds will reach capacity in ", 
+          dat["Days to ICU overflow","Value"], 
+          " days, and floor beds in ",
+          dat["Days to floor overflow","Value"], 
+          " days. The model predicts ", 
+          dat["Total deaths","Value"], 
+          " deaths and a hospital case-fatality rate of ",
+          dat["Case fatality ratio","Value"], 
+          ".", sep="")
+
+  })
+
 
 }
 
@@ -88,7 +124,7 @@ fluidPage(theme=shinytheme("simplex"),
         tabPanel("Scenario", fluid=TRUE,
           includeMarkdown(system.file("content/instructions.md", package='covid19icu')),
           h4("Scenario:"),
-          sliderInput("time", "Time Horizon (days)",     min=1, max=params$T_Max, value=params$T),
+          sliderInput("time", "Time Horizon (days)",     min=1, max=params$T_Max, step=1, value=params$T),
           radioButtons("distrib",                     "Infection curve",
                        c("Exponential"="exponential",
                          "Linear"="ramp",
@@ -166,6 +202,8 @@ fluidPage(theme=shinytheme("simplex"),
        )
     )
   )),
+  textOutput("keypoints"),
+
   hr(),
   includeMarkdown(system.file("content/footer.md", package='covid19icu'))
 )
