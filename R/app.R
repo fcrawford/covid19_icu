@@ -4,24 +4,50 @@
 ####################
 
 server <- function(input, output, session) {
+
+    params = yaml.load_file( system.file("content/parameter_values.yaml", package='covid19icu') )
+
     observe({
         updateSliderInput(session, "floorcapramp", max=input$time)
         updateSliderInput(session, "icucapramp", max=input$time)
 
-        if(input$floorcaptarget < input$floorcap) {
+        # check if numeric inputs are NA
+        if(is.na(input$floorcap)) { 
+          updateNumericInput(session, "floorcap", value=params$L)
+         } 
+        if(is.na(input$icucap)) { 
+          updateNumericInput(session, "icucap", value=params$M)
+        }
+
+
+
+
+        if(is.na(input$floorcaptarget)) { 
+          updateNumericInput(session, "floorcaptarget", value=params$L)
+         } 
+
+        if(!is.na(input$floorcaptarget) && !is.na(input$floorcap) && input$floorcaptarget<input$floorcap) {
           updateNumericInput(session, "floorcaptarget", value=input$floorcap)
         }
-        if (input$icucaptarget < input$icucap) {
+
+
+        if(is.na(input$icucaptarget)) { 
+          updateNumericInput(session, "icucaptarget", value=params$M)
+        } 
+
+       if(!is.na(input$icucaptarget) && !is.na(input$icucap) && input$icucaptarget<input$icucap) { 
           updateNumericInput(session, "icucaptarget", value=input$icucap)
         }
         
       })
+
+
   output$hospitalPlot <- renderPlot({
     # put slider control values here as arguments
     plots<- plot_hospital(initial_report=input$initrep,
                   final_report=input$finalrep,
-                  L=input$floorcap,
-                  M=input$icucap,
+                  L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
+                  M=ifelse(is.na(input$icucap),params$M,input$icucap),
                   distribution=input$distrib,
                   t= input$time,
                   chi_C=1/input$avgicudischargetime,
@@ -33,9 +59,9 @@ server <- function(input, output, session) {
             			rampslope = input$rampslope,
             			Cinit = input$Cinit,
             			Finit = input$Finit,
-            			Lfinal=input$floorcaptarget,
+            			Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
             			Lramp=input$floorcapramp,
-            			Mfinal=input$icucaptarget,
+            			Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
             			Mramp=input$icucapramp,
                   doprotocols=input$doprotocols
 			
@@ -52,8 +78,8 @@ server <- function(input, output, session) {
     
     text = text_hospital(initial_report=input$initrep,
                   final_report=input$finalrep,
-                  L=input$floorcap,
-                  M=input$icucap,
+                  L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
+                  M=ifelse(is.na(input$icucap),params$M,input$icucap),
                   distribution=input$distrib,
                   t= input$time,
                   chi_C=1/input$avgicudischargetime,
@@ -65,9 +91,9 @@ server <- function(input, output, session) {
                   rampslope = input$rampslope,
                   Cinit = input$Cinit,
                   Finit = input$Finit,
-                  Lfinal=input$floorcaptarget,
+            			Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
                   Lramp=input$floorcapramp,
-                  Mfinal=input$icucaptarget,
+            			Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
                   Mramp=input$icucapramp,
                   doprotocols=input$doprotocols)
   })
@@ -75,8 +101,8 @@ server <- function(input, output, session) {
   output$keypoints <- renderText({
     dat = text_hospital(initial_report=input$initrep,
                   final_report=input$finalrep,
-                  L=input$floorcap,
-                  M=input$icucap,
+                  L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
+                  M=ifelse(is.na(input$icucap),params$M,input$icucap),
                   distribution=input$distrib,
                   t= input$time,
                   chi_C=1/input$avgicudischargetime,
@@ -88,9 +114,9 @@ server <- function(input, output, session) {
                   rampslope = input$rampslope,
                   Cinit = input$Cinit,
                   Finit = input$Finit,
-                  Lfinal=input$floorcaptarget,
+            			Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
                   Lramp=input$floorcapramp,
-                  Mfinal=input$icucaptarget,
+            			Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
                   Mramp=input$icucapramp,
                   doprotocols=input$doprotocols)
 
