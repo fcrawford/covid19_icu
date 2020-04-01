@@ -51,3 +51,13 @@ This plot depicts **ICU and floor utilization** on a given day.
 	exceeds the maximum floor capacity.  Maximum capacity changes depending on the capacity expansion specified by the user.
 
 * **Waiting for floor beds (pink):** the number of patients who are in the floor queue on a given day.
+
+<br/> 
+
+#### **Summary of model outputs**
+
+* **Case fatality ratio:** the total number of deaths occuring in the simulations divided by the total number of ED visits.
+
+* **Number of ICU beds needed:** the number of ICU beds needed to ensure that there will never be a queue for ICU beds.
+
+* **Number of floor beds needed:** the number of floor beds needed to ensure that there will never be a queue for floor beds.
