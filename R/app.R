@@ -9,10 +9,10 @@ server <- function(input, output, session) {
         updateSliderInput(session, "icucapramp", max=input$time)
 
         if(input$floorcaptarget < input$floorcap) {
-          updateSliderInput(session, "floorcaptarget", value=input$floorcap)
+          updateNumericInput(session, "floorcaptarget", value=input$floorcap)
         }
         if (input$icucaptarget < input$icucap) {
-          updateSliderInput(session, "icucaptarget", value=input$icucap)
+          updateNumericInput(session, "icucaptarget", value=input$icucap)
         }
         
       })
@@ -116,8 +116,9 @@ fluidPage(theme=shinytheme("simplex"),
 
           	
 
-		sliderInput("icucap", "ICU capacity",     min=0, max=params$M_Max, value=params$M),
-		sliderInput("floorcap", "Initial floor capacity", min=0, max=params$L_Max, value=params$L),
+		numericInput("icucap", "Initial ICU capacity (number of beds)",  min=0, max=params$M_Max, step=1, value=params$M),
+		numericInput("floorcap", "Initial floor capacity (number of beds)", min=0, max=params$L_Max, step=1, value=params$L),
+
 		sliderInput("Cinit", "% of ICU capacity occupied at time 0",     min=0, max=100, value=params$M_occupied),
 		sliderInput("Finit", "% of floor capacity occupied at time 0",     min=0, max=100, value=params$L_occupied)),
 
@@ -129,9 +130,11 @@ fluidPage(theme=shinytheme("simplex"),
                        selected=0),
           conditionalPanel(
             condition = "input.doprotocols==1",
-            sliderInput("icucaptarget",  "Target ICU capacity", min=0, max=params$M_Max, value=params$M),
+            numericInput("icucaptarget",  "Target ICU capacity", min=0, max=params$M_Max, step=1, value=params$M),
+
             sliderInput("icucapramp",  "ICU capacity scale-up (days)", min=0, max=30, value=c(params$icucapramp1,params$icucapramp2)),
-            sliderInput("floorcaptarget",  "Target floor capacity", min=0, max=params$L_Max, value=params$L),
+            numericInput("floorcaptarget",  "Target floor capacity", min=0, max=params$L_Max, step=1, value=params$L),
+
             sliderInput("floorcapramp",  "Floor capacity scale-up (days)", min=0, max=30, value=c(params$floorcapramp1,params$floorcapramp2))
           )),
           
