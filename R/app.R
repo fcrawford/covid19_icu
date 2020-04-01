@@ -48,7 +48,7 @@ server <- function(input, output, session) {
 
   })
   
-  output$hospitalTable <- renderTable({ 
+  output$hospitalTable <- renderTable({
     
     text = text_hospital(initial_report=input$initrep,
                   final_report=input$finalrep,
@@ -114,9 +114,9 @@ fluidPage(theme=shinytheme("simplex"),
 		      includeMarkdown(system.file("content/capacity.md", package='covid19icu')),
 
           	
-		sliderInput("icucap", "ICU capacity",     min=0, max=3000, value=50),
+		sliderInput("icucap", "ICU capacity",     min=0, max=3000, value=90),
 		sliderInput("floorcap", "Initial floor capacity", min=0, max=15000, value=100),
-		sliderInput("Cinit", "% of ICU capacity occupied at time 0",     min=0, max=100, value=12),
+		sliderInput("Cinit", "% of ICU capacity occupied at time 0",     min=0, max=100, value=44),
 		sliderInput("Finit", "% of floor capacity occupied at time 0",     min=0, max=100, value=56)),
         tabPanel("Strategy", fluid=TRUE,
           includeMarkdown(system.file("content/protocols.md", package='covid19icu')),
@@ -146,18 +146,18 @@ fluidPage(theme=shinytheme("simplex"),
          plotOutput("hospitalPlot",height="700px")
        ),
        tabPanel("Summary", fluid=TRUE,
+			includeMarkdown(system.file("content/summary.md", package='covid19icu')),
                 tableOutput("hospitalTable")
                 ),
-       
-    tabPanel("About", fluid=TRUE,
-       includeMarkdown(system.file("content/queue_graphic.md", package='covid19icu'))
-       ),
     tabPanel("Inputs", fluid=TRUE,
              includeMarkdown(system.file("content/inputs.md", package='covid19icu'))
     ),
     tabPanel("Outputs", fluid=TRUE,
              includeMarkdown(system.file("content/outputs.md", package='covid19icu'))
-    )
+    ),
+	    tabPanel("About", fluid=TRUE,
+       includeMarkdown(system.file("content/queue_graphic.md", package='covid19icu'))
+       )
     )
   )),
   hr(),

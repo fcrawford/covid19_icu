@@ -50,33 +50,46 @@ text_hospital = function(initial_report= 1000,
     hospital$totalWC<- hospital$WC1 + hospital$WC2 + hospital$WC3
     hospital$totalWF<- hospital$WF1 + hospital$WF2 + hospital$WF3
     
-    #ICU queue 
+    #ICU queue
     ICUover = (hospital$WC1+hospital$WC2+hospital$WC3>=1)
-    
-    
+
+
     #floor queue
     floorover = (hospital$WF1+hospital$WF2+hospital$WF3>=1)
-    
+
     #day that you run out of beds
     if(sum(floorover)>0){
       floorover<- min(which(floorover))
-    }
-    else(floorover = "No shortage")
-    
+    } else{floorover = "No shortage"}
+
     if(sum(ICUover)>0){
       ICUover<- min(which(ICUover))
-    }
-    else(floorover = "No shortage")
-    
-    #max number that are in the queue at any given time
-    ICU_WC = max(hospital$WC1 + hospital$WC2 + hospital$WC3)
-    floor_WF = max(hospital$WF1 + hospital$WF2 + hospital$WF3)
-    
+    } else{ICUover = "No shortage"}
 
-    text = data.table(floorover, ICUover, 
-                      format(ceiling(floor_WF), scientific=FALSE), 
-                      format(ceiling(ICU_WC), scientific = FALSE))
-    names(text) = c("Days to floor overflow", "Days to ICU overflow", "Floor beds needed", "ICU beds needed")
-    
-    text = xtable(text)
+    #max number that are in the queue at any given time
+    ICU_WC = max(hospital$totalWC)
+    floor_WF = max(hospital$totalWF)
+
+
+    text = data.frame(Variable = c("Total ED visits",
+                                    "Total deaths",
+                                    "Deaths in the ICU",
+                                    "Deaths on the floor",
+                                    "Deaths waiting for ICU beds",
+                                    "Deaths waiting for floor beds",
+                                    "Days to floor overflow", 
+                                   "Days to ICU overflow", 
+                                   "Floor beds needed", 
+                                   "ICU beds needed"),
+                      Value = c(ceiling(sum(hospital$P1 + hospital$P2 + hospital$P3)),
+                                ceiling(sum(hospital$totaldead)),
+                                ceiling(sum(hospital$Dead_at_ICU)),
+                                ceiling(sum(hospital$Dead_on_Floor)),
+                                ceiling(sum(hospital$Dead_waiting_for_ICU)),
+                                ceiling(sum(hospital$Dead_waiting_for_Floor)),
+                                floorover, 
+                                ICUover, 
+                                format(ceiling(floor_WF), scientific=FALSE), 
+                                format(ceiling(ICU_WC), scientific = FALSE)))
+
 }
