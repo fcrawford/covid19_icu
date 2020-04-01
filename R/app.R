@@ -96,15 +96,16 @@ server <- function(input, output, session) {
 
     rownames(dat) = dat$Variable
 
-    paste("Key points: Under the specified capacities and expansion strategy, the model predicts that ICU beds will reach capacity in ", 
+    paste("<h4> </br> <b> Key points: </b> Under the specified capacities and expansion strategy, 
+          the model predicts that <b> ICU beds will reach capacity in ", 
           dat["Days to ICU overflow","Value"], 
-          " days, and floor beds in ",
+          " days</b>, and <b> floor beds in ",
           dat["Days to floor overflow","Value"], 
-          " days. The model predicts ", 
+          " days </b>. The model predicts <b>", 
           dat["Total deaths","Value"], 
-          " deaths and a hospital case-fatality rate of ",
+          " deaths </b> and a hospital <b> case-fatality rate of ",
           dat["Case fatality ratio","Value"], 
-          ".", sep="")
+          " </b>. </h4>", sep="")
 
   })
 
@@ -202,7 +203,7 @@ fluidPage(theme=shinytheme("simplex"),
        )
     )
   )),
-  textOutput("keypoints"),
+  htmlOutput("keypoints"),
 
   hr(),
   includeMarkdown(system.file("content/footer.md", package='covid19icu'))
