@@ -35,17 +35,21 @@ rampslope_step: 0.1
 ##### Triage Percentages
 # MS: Mild Symptoms, C:ICU, F: Floor
 # Ages: 0-18
-sigma_MS1: 0.984
-sigma_C1: 0.0
-sigma_F1: 0.016
+percentage_MS1: 0.984
+percentage_C1: 0.0
+percentage_F1: 0.016
 # Ages: 18-65
-sigma_MS2: 0.725
-sigma_C2: 0.058
-sigma_F2: 0.217
+percentage_MS2: 0.725
+percentage_C2: 0.058
+percentage_F2: 0.217
 # Ages: 65+
-sigma_MS3: 0.425
-sigma_C3: 0.163
-sigma_F3: 0.412
+percentage_MS3: 0.425
+percentage_C3: 0.163
+percentage_F3: 0.412
+
+# Average time to triage in days (currently, undifferentiated by age)
+t_Triage: 0.125
+
 
 ##### Discharge Rates
 # App initializations:

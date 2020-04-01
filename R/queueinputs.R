@@ -110,6 +110,19 @@ update_inputs <- function() {
   params$xi_MS3 =xi_MS3;
   params$mu_MS3 =mu_MS3; 
   
+  
+  
+  params$sigma_MS1= params$percentage_MS1 * 1/params$t_Triage;
+  params$sigma_MS2= params$percentage_MS2 * 1/params$t_Triage;
+  params$sigma_MS3= params$percentage_MS3 * 1/params$t_Triage;
+  params$sigma_F1= params$percentage_F1 * 1/params$t_Triage;
+  params$sigma_F2= params$percentage_F2 * 1/params$t_Triage;
+  params$sigma_F3= params$percentage_F3 * 1/params$t_Triage;
+  params$sigma_C1= params$percentage_C1 * 1/params$t_Triage;
+  params$sigma_C2= params$percentage_C2 * 1/params$t_Triage;
+  params$sigma_C3= params$percentage_C3 * 1/params$t_Triage;
+  
+  
   params$phi_I1 = 1/(params$p_phi*params$d_phi + (1-params$p_phi)*params$d_mu);
   params$phi_I2 = 1/(params$p_phi*params$d_phi + (1-params$p_phi)*params$d_mu);
   params$phi_I3 = 1/(params$p_phi*params$d_phi + (1-params$p_phi)*params$d_mu);
