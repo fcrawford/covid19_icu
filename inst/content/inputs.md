@@ -2,9 +2,9 @@
 
 <br/>
 
-**<h4> This model is intended to represent the movements of COVID19+ patients through a hospital system.
+<h4> **Notice:** This model is intended to represent the movements of COVID19+ patients through a hospital system.
 Inputs for ED visits, capacity, capacity expansion, and length of stay should be specific to COVID19+ patients
-and exclude ED visits, beds, and lengths of stay for patients who do not have COVID19. </h>**
+and exclude ED visits, beds, and lengths of stay for patients who do not have COVID19. </h>
 
 <br/>
 
