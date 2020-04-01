@@ -95,13 +95,23 @@ server <- function(input, output, session) {
                   doprotocols=input$doprotocols)
 
     rownames(dat) = dat$Variable
+    
+    dat$Value = as.character(dat$Value)
+    
+    if (dat["Days to floor overflow","Value"] == "No shortage"){
+      dat["Days to floor overflow","Value"] = "a time beyond the simulation"
+    } else {dat["Days to floor overflow","Value"] = paste(dat["Days to floor overflow","Value"], " days")}
+    
+    if (dat["Days to ICU overflow","Value"] == "No shortage"){
+      dat["Days to ICU overflow","Value"] = "a time beyond the simulation"
+    } else {dat["Days to ICU overflow","Value"] = paste(dat["Days to ICU overflow","Value"], " days")}
 
     paste("<h4> </br> <b> Key points: </b> Under the specified capacities and expansion strategy, 
-          the model predicts that <b> ICU beds will reach capacity in ", 
+          the model predicts that <b> ICU beds will reach capacity at ", 
           dat["Days to ICU overflow","Value"], 
-          " days</b>, and <b> floor beds in ",
+          "</b>, and <b> floor beds at ",
           dat["Days to floor overflow","Value"], 
-          " days </b>. The model predicts <b>", 
+          "</b>. The model predicts <b>", 
           dat["Total deaths","Value"], 
           " deaths </b> and a hospital <b> case-fatality rate of ",
           dat["Case fatality ratio","Value"], 
