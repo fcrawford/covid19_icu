@@ -69,8 +69,7 @@ and exclude ED visits, beds, and lengths of stay for patients who do not have CO
 
 **Average time in ICU**: the average length of stay in the ICU for all patients, including those who die, step down from the ICU, or are discharged.
 
-**Probability of death on the floor (age range)**: the probability that a person entering the floor will die while on the floor, given the average time on the floor.  Reducing average time on the floor increases the probability that a person entering the floor will die during their stay on any given day.
+**Probability of death on the floor (age range)**: the probability that a person entering the floor will die while on the floor, given the average time on the floor.  Reducing average time on the floor while keeping this probability constant increases the per-day risk of death on the floor.
 
-**Probability of death in the ICU (age range)**: the probability that a person entering the ICU will die while in the ICU, given the average time in the ICU.  Reducing average time in the ICU increases the probability that a person entering the ICU will die while in the ICU on any given day.
-
+**Probability of death in the ICU (age range)**: the probability that a person entering the ICU will die while in the ICU, given the average time in the ICU.  Reducing average time in the ICU while keeping this probability constant increases the per-day risk of death in the ICU.
 
