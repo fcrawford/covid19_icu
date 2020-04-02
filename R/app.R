@@ -51,7 +51,7 @@ server <- function(input, output, session) {
                   distribution=input$distrib,
                   t= input$time,
                   avg_LOS_ICU=input$avgicudischargetime,
-                  avg_LOS_Floor=1/input$avgfloordischargetime,
+                  avg_LOS_Floor=input$avgfloordischargetime,
                   growth_rate=log(2)/(input$doubling_time),
                   p_death_ICU1 = input$ICUdeath_young,
                   p_death_ICU2 = input$ICUdeath_medium,
