@@ -69,6 +69,7 @@ and exclude ED visits, beds, and lengths of stay for patients who do not have CO
 
 **Average time in ICU**: the average length of stay in the ICU for all patients, including those who die, step down from the ICU, or are discharged.
 
-**Death rate in the ICU (age range)**: the average number of deaths per day which occur in the ICU in each age range.
+**Probability of death in the ICU (age range)**: the probability that a person entering the ICU will die while in the ICU.
+
 
 
