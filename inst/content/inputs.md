@@ -71,6 +71,5 @@ and exclude ED visits, beds, and lengths of stay for patients who do not have CO
 
 **Probability of death in the ICU (age range)**: the probability that a person entering the ICU will die while in the ICU.
 
-**Probability of death on the floor (age range)**: the probability that a person on the floor will die while on the floor.
 
 

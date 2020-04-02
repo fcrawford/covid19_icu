@@ -215,9 +215,9 @@ fluidPage(theme=shinytheme("simplex"),
           includeMarkdown(system.file("content/parameters.md", package='covid19icu')),
           sliderInput("avgfloordischargetime", "Average time on floor", min=0, max=params$maxfloordischargetime, value=params$avgfloordischargetime),
           sliderInput("avgicudischargetime", "Average time in ICU",     min=0, max=params$maxicudischargetime, value=params$avgicudischargetime),
-		sliderInput("ICUdeath_young", "Death rate in ICU (<18 years)",     min=0, max=1, value=params$mu_C1),
-		sliderInput("ICUdeath_medium", "Death rate in ICU (18-64 years)",     min=0, max=1, value=params$mu_C2),
-		sliderInput("ICUdeath_old", "Death rate in ICU (65+ years)",     min=0, max=1, value=params$mu_C3),
+		sliderInput("ICUdeath_young", "Probability of death in ICU (<18 years)",     min=0, max=1, value=params$mu_C1),
+		sliderInput("ICUdeath_medium", "Probability of death in ICU (18-64 years)",     min=0, max=1, value=params$mu_C2),
+		sliderInput("ICUdeath_old", "Probability of death in ICU (65+ years)",     min=0, max=1, value=params$mu_C3),
         )),width=4),
     mainPanel(
     tabsetPanel(
