@@ -97,9 +97,11 @@ hospital_queues_new<- function(initial_report= 1000,
         		avg_LOS_ICU,
         		avg_LOS_Floor,
         		growth_rate=1,
-        		p_death_ICU1 ,
+        		p_death_ICU1=0,
         		p_death_ICU2,
         		p_death_ICU3,
+        		p_death_floor2,
+        		p_death_floor3,
         		rampslope=1.2,
         		Cinit = 12,
         		Finit = 56,
@@ -118,7 +120,7 @@ hospital_queues_new<- function(initial_report= 1000,
 
       # read in fixed and derived parameters
 
-      params = update_inputs_new(avg_LOS_ICU, avg_LOS_Floor, p_death_ICU1 ,p_death_ICU2, p_death_ICU3);
+      params = update_inputs_new(avg_LOS_ICU, avg_LOS_Floor, p_death_ICU1 ,p_death_ICU2, p_death_ICU3, p_death_floor2, p_death_floor3);
       ############## SET INITIAL CONDITIONS
       
       ### percentages in reporting to ED
