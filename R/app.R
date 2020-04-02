@@ -78,53 +78,55 @@ server <- function(input, output, session) {
   
   output$hospitalTable <- renderTable({
     
-    # text = text_hospital(initial_report=input$initrep,
-    #               final_report=input$finalrep,
-    #               L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-    #               M=ifelse(is.na(input$icucap),params$M,input$icucap),
-    #               distribution=input$distrib,
-    #               t= input$time,
-    #               chi_C=1/input$avgicudischargetime,
-    #               chi_L=1/input$avgfloordischargetime,
-    #               growth_rate=log(2)/(input$doubling_time),
-    #               mu_C1 = input$ICUdeath_young,
-    #               mu_C2 = input$ICUdeath_medium,
-    #               mu_C3 = input$ICUdeath_old,
-    #               rampslope = input$rampslope,
-    #               Cinit = input$Cinit,
-    #               Finit = input$Finit,
-    #         			Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
-    #               Lramp=input$floorcapramp,
-    #         			Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
-    #               Mramp=input$icucapramp,
-    #               doprotocols=input$doprotocols)
+     text = text_hospital(initial_report=input$initrep,
+                    final_report=input$finalrep,
+                    L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
+                    M=ifelse(is.na(input$icucap),params$M,input$icucap),
+                    distribution=input$distrib,
+                    t= input$time,
+                    avg_LOS_ICU=input$avgicudischargetime,
+                    avg_LOS_Floor=input$avgfloordischargetime,
+                    growth_rate=log(2)/(input$doubling_time),
+                    p_death_ICU2 = input$ICUdeath_medium,
+                    p_death_ICU3 = input$ICUdeath_old,
+                    p_death_floor2 = input$floordeath_medium,
+                    p_death_floor3 = input$floordeath_old,
+                    rampslope = input$rampslope,
+                    Cinit = input$Cinit,
+                    Finit = input$Finit,
+              			Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
+                    Lramp=input$floorcapramp,
+              			Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
+                    Mramp=input$icucapramp,
+                    doprotocols=input$doprotocols)
   })
 
   output$keypoints <- renderText({
-    # dat = text_hospital(initial_report=input$initrep,
-    #               final_report=input$finalrep,
-    #               L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-    #               M=ifelse(is.na(input$icucap),params$M,input$icucap),
-    #               distribution=input$distrib,
-    #               t= input$time,
-    #               chi_C=input$avgicudischargetime,
-    #               chi_L=input$avgfloordischargetime,
-    #               growth_rate=log(2)/(input$doubling_time),
-    #               mu_C1 = input$ICUdeath_young,
-    #               mu_C2 = input$ICUdeath_medium,
-    #               mu_C3 = input$ICUdeath_old,
-    #               rampslope = input$rampslope,
-    #               Cinit = input$Cinit,
-    #               Finit = input$Finit,
-    #         			Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
-    #               Lramp=input$floorcapramp,
-    #         			Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
-    #               Mramp=input$icucapramp,
-    #               doprotocols=input$doprotocols)
-    # 
-    # rownames(dat) = dat$Variable
-    # 
-    # dat$Value = as.character(dat$Value)
+     dat = text_hospital(initial_report=input$initrep,
+                    final_report=input$finalrep,
+                    L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
+                    M=ifelse(is.na(input$icucap),params$M,input$icucap),
+                    distribution=input$distrib,
+                    t= input$time,
+                    avg_LOS_ICU=input$avgicudischargetime,
+                    avg_LOS_Floor=input$avgfloordischargetime,
+                    growth_rate=log(2)/(input$doubling_time),
+                    p_death_ICU2 = input$ICUdeath_medium,
+                    p_death_ICU3 = input$ICUdeath_old,
+                    p_death_floor2 = input$floordeath_medium,
+                    p_death_floor3 = input$floordeath_old,
+                    rampslope = input$rampslope,
+                    Cinit = input$Cinit,
+                    Finit = input$Finit,
+                    Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
+                    Lramp=input$floorcapramp,
+                    Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
+                    Mramp=input$icucapramp,
+                    doprotocols=input$doprotocols)
+    
+    rownames(dat) = dat$Variable
+     
+    dat$Value = as.character(dat$Value)
     
     if (dat["Days to floor overflow","Value"] == "No shortage"){
       dat["Days to floor overflow","Value"] = "a time beyond the simulation"
