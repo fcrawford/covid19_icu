@@ -38,6 +38,8 @@ rampslope_step: 0.1
 # App initializations:
 avgfloordischargetime: 7
 avgicudischargetime: 10
+minfloordischargetime: 0.5
+minfloordischargetime: 0.5
 maxfloordischargetime: 25
 maxicudischargetime: 25
 
