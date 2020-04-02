@@ -113,7 +113,7 @@ plot_hospital<- function(initial_report= 1000,
       
       #ICU queue 
       
-      ICUover = (hospital$WC1+hospital$WC2+hospital$WC3>=1)
+      ICUover = (hospital$WC1+hospital$WC2+hospital$WC3>=0.1)
       
       
       #floor queue
