@@ -1,7 +1,23 @@
 #' @export
-update_inputs_new <- function() {
+update_inputs_new <- function(avg_LOS_ICU, avg_LOS_Floor, p_death_ICU1 ,p_death_ICU2, p_death_ICU3) {
   
   params = yaml.load_file( system.file("content/parameter_values1.yaml", package='covid19icu') )
+  
+  if(!missing(avg_LOS_ICU)) 
+  {
+      params$avg_LOS_ICU1=avg_LOS_ICU;
+      params$avg_LOS_ICU2=avg_LOS_ICU;
+      params$avg_LOS_ICU3=avg_LOS_ICU;
+  }
+  if(!missing(avg_LOS_Floor)) 
+  {
+    params$avg_LOS_Floor1=avg_LOS_Floor;
+    params$avg_LOS_Floor2=avg_LOS_Floor;
+    params$avg_LOS_Floor3=avg_LOS_Floor;
+  }
+  if(!missing(p_death_ICU1)) params$p_death_ICU1=p_death_ICU1;
+  if(!missing(p_death_ICU2)) params$p_death_ICU2=p_death_ICU2;
+  if(!missing(p_death_ICU3)) params$p_death_ICU3=p_death_ICU3;
 
   
   ## Leaving ED
