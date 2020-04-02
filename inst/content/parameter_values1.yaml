@@ -185,9 +185,9 @@ avg_T_exit3: 10
 #p_lambda3: .612
 
 # Death rate of symptomatic infectives prior to presenting to the ED
-#mu_I1: 0.0
-#mu_I2: 0.0
-#mu_I3: 0.0
+mu_I1: 0.0
+mu_I2: 0.0
+mu_I3: 0.0
 
 
 # Death rate of symptomatic infectives at ED prior to triage

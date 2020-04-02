@@ -119,7 +119,6 @@ hospital_queues_new<- function(initial_report= 1000,
       # read in fixed and derived parameters
 
       params = update_inputs_new(avg_LOS_ICU, avg_LOS_Floor, p_death_ICU1 ,p_death_ICU2, p_death_ICU3);
-print(params)
       ############## SET INITIAL CONDITIONS
       
       ### percentages in reporting to ED
@@ -226,7 +225,6 @@ print(params)
       ### solver ODE function
       model_strat <- function (t, x , pars,...) {
         
-        
         # initial conditions young 
         I1<- x[1];
         P1 <- x[2];
@@ -280,7 +278,7 @@ print(params)
         sigma_MS1=pars$sigma_MS1
         sigma_C1=pars$sigma_C1
         sigma_F1=pars$sigma_F1
-        chi_C1=par$chi_C1
+        chi_C1=pars$chi_C1
         chi_L1=pars$chi_L1
         theta_F1=pars$theta_F1
         eta1=pars$eta1
@@ -345,7 +343,6 @@ print(params)
         old = pars$old
         
         slope=pars$slope
-        
         
         ######################### Equations ##############################
         ### YOUNG
