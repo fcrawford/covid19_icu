@@ -20,6 +20,9 @@ update_inputs_new <- function(avg_LOS_ICU, avg_LOS_Floor, p_death_ICU1 ,p_death_
   if(!missing(p_death_ICU3)) params$p_death_ICU3=p_death_ICU3;
   if(!missing(p_death_floor2)) params$p_death_Floor2=p_death_floor2;
   if(!missing(p_death_floor3)) params$p_death_Floor3=p_death_floor3;
+  
+  if(!missing(p_death_floor2)) params$p_death_WF2=p_death_floor2;
+  if(!missing(p_death_floor3)) params$p_death_WF3=p_death_floor3;
 
   
   ## Leaving ED
