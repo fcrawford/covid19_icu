@@ -56,7 +56,7 @@ This plot depicts **ICU and floor utilization** on a given day.
 
 #### **Summary of model outputs**
 
-* **Case fatality ratio:** the total number of deaths occuring in the simulations divided by the total number of ED visits, expressed as a percentage.
+* **Case fatality ratio:** the total number of deaths occuring in the simulations divided by the sum of the initial patients in the hospital and the the total number of ED visits, expressed as a percentage.
 
 * **Number of ICU beds needed:** the number of ICU beds needed to ensure that there will never be a queue for ICU beds.
 
