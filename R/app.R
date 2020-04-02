@@ -213,7 +213,7 @@ fluidPage(theme=shinytheme("simplex"),
           
         tabPanel("Parameters", fluid=TRUE,
           includeMarkdown(system.file("content/parameters.md", package='covid19icu')),
-          sliderInput("avgfloordischargetime", "Average time on floor", min=params$minfloordischargetime, max=params$maxfloordischargetime, value=params$avgfloordischargetime),
+          sliderInput("avgfloordischargetime", "Average time on floor", min= params$minfloordischargetime, max=params$maxfloordischargetime, value=params$avgfloordischargetime),
           sliderInput("avgicudischargetime", "Average time in ICU",     min=params$minicudischargetime, max=params$maxicudischargetime, value=params$avgicudischargetime),
 		sliderInput("ICUdeath_young", "Probability of death in ICU (<18 years)",     min=0, max=1, value=params$mu_C1),
 		sliderInput("ICUdeath_medium", "Probability of death in ICU (18-64 years)",     min=0, max=1, value=params$mu_C2),
@@ -248,6 +248,6 @@ fluidPage(theme=shinytheme("simplex"),
 
 #' @export
 runApp <- function() { 
-  params = yaml.load_file( system.file("content/parameter_values.yaml", package='covid19icu') )
+  params = yaml.load_file( system.file("content/parameter_values1.yaml", package='covid19icu') )
   shinyApp(ui = generate_ui(params), server = server)
 }
