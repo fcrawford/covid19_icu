@@ -69,6 +69,9 @@ text_hospital = function(initial_report= 1000,
     #max number that are in the queue at any given time
     ICU_WC = max(hospital$totalWC)
     floor_WF = max(hospital$totalWF)
+    
+    #initial number of patients in the ICU and on the floor
+    pt_init = sum((hospital %>% select(C1, C2, C3, F1, F2, F3))[1,])
 
 
     text = data.frame(Variable = c("Total ED visits",
@@ -84,7 +87,7 @@ text_hospital = function(initial_report= 1000,
                                    "ICU beds needed"),
                       Value = c(ceiling(tail(hospital$Number_seen_at_ED, n=1)),
                                 ceiling(tail(hospital$totaldead, n=1)),
-                                paste(signif(tail(hospital$totaldead, n=1)/tail(hospital$Number_seen_at_ED, n=1), digits=3)*100, "%"),
+                                paste(signif(tail(hospital$totaldead, n=1)/(pt_init + tail(hospital$Number_seen_at_ED, n=1)), digits=3)*100, "%"),
                                 ceiling(tail(hospital$Dead_at_ICU, n=1)),
                                 ceiling(tail(hospital$Dead_on_Floor, n=1)),
                                 ceiling(tail(hospital$Dead_waiting_for_ICU,n=1)),
