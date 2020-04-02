@@ -20,7 +20,7 @@ update_inputs_new <- function() {
   params$mu_C1= params$p_death_ICU1 * 1/params$avg_LOS_ICU1;
   params$chi_C1= (1-params$p_death_ICU1) * 1/params$avg_LOS_ICU1;
 
-  params$mu_2= params$p_death_ICU2 * 1/params$avg_LOS_ICU2;
+  params$mu_C2= params$p_death_ICU2 * 1/params$avg_LOS_ICU2;
   params$chi_C2= (1-params$p_death_ICU2) * 1/params$avg_LOS_ICU2;
   
   params$mu_C3= params$p_death_ICU3 * 1/params$avg_LOS_ICU3;
