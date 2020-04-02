@@ -32,7 +32,7 @@ plot_hospital<- function(initial_report= 1000,
                 					Mramp=c(0,0),
                           doprotocols=0){
   
-      hospital <- hospital_queues(initial_report=initial_report,
+      hospital <- hospital_queues_new(initial_report=initial_report,
                                   final_report = final_report,
                                   distribution= distribution,
                                   young=young,
