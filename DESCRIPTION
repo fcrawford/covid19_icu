@@ -3,7 +3,7 @@ Title: COVID-19 ICU dynamics
 License: MIT
 Type: Shiny
 Version: 0.0.0.9000
-Author: This app implements a model for utilization of ICU beds, floor beds, and patient deaths due to COVID-19. The model was developed by the COVID-19 Statistics, Policy modeling and Epidemiology Collective (C-SPEC). The app was written by Soheil Eshghi, Margret Erlendsdottir, Maile Thayer Phillips, Suzan Iloglu and Forrest W. Crawford using the R shiny framework.
+Author: This app implements a model for utilization of ICU beds, floor beds, and patient deaths due to COVID-19. The model was developed by the COVID-19 Statistics, Policy modeling and Epidemiology Collective (C-SPEC). The app was written by Soheil Eshghi, Margret Erlendsdottir, Maile Thayer Phillips, Suzan Iloglu, Christian Testa and Forrest W. Crawford using the R shiny framework.
 AuthorUrl: http://www.crawfordlab.io/
 Description: What the package does (one paragraph).
 Depends: R (>= 3.5.2)
