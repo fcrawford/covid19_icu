@@ -297,7 +297,7 @@ fluidPage(theme=shinytheme("simplex"),
           
         tabPanel("Parameters", fluid=TRUE,
           includeMarkdown(system.file("content/parameters.md", package='covid19icu')),
-          sliderInput("ages",  "Age breakdown of COVID+ admissions (0-18), (18-65), (65+) ", min=0, max=1, value=c(params$young,params$medium)),
+          sliderInput("ages",  "Age breakdown of COVID+ admissions (0-18), (18-65), (65+) ", min=0, max=1, value=c(params$young,params$medium+params$young)),
           tableOutput("agebands"),
           sliderInput("avgfloordischargetime", "Average time on floor for COVID19+ patients", min= params$minfloordischargetime, max=params$maxfloordischargetime, value=params$avgfloordischargetime),
           sliderInput("avgicudischargetime", "Average time in ICU for COVID19+ patients",     min=params$minicudischargetime, max=params$maxicudischargetime, value=params$avgicudischargetime),
