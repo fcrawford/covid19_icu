@@ -118,61 +118,6 @@ update_inputs_reimplemented <- function(t,
   params$mu_C3= params$p_death_ICU3 * 1/params$avg_LOS_ICU3;
   params$chi_C3= (1-params$p_death_ICU3) * 1/params$avg_LOS_ICU3;
   
-  # if (params$p_death_ICU1!=0)
-  # {
-  #     M_C1 = matrix(
-  #       c(
-  #         1-params$p_death_ICU1, - params$p_death_ICU1,
-  #         params$avg_LOS_ICU1, params$avg_LOS_ICU1
-  #       ),
-  #      ncol=2            
-  #     )
-  #     
-  #     out_C1 <- solve(M_C1, c(0,1))
-  #     params$mu_C1 <- out_C1[1];
-  #     params$chi_C1 <- out_C1[2];
-  # } else {
-  #   params$mu_C1 <- 0;
-  #   params$chi_C1 <- 1/params$avg_LOS_ICU1;
-  # 
-  # }
-  # if (params$p_death_ICU2!=0)
-  # {
-  #     M_C2 = matrix(
-  #       c(
-  #         1-params$p_death_ICU2, - params$p_death_ICU2,
-  #         params$avg_LOS_ICU2, params$avg_LOS_ICU2
-  #       ),
-  #       ncol=2            
-  #     )
-  #     
-  #     out_C2 <- solve(M_C2, c(0,1))
-  #     params$mu_C2 <- out_C2[1];
-  #     params$chi_C2 <- out_C2[2];
-  # } else {
-  #   params$mu_C2 <- 0;
-  #   params$chi_C2 <- 1/params$avg_LOS_ICU2;
-  #   
-  # }
-  # 
-  # if (params$p_death_ICU3!=0)
-  # {
-  #       M_C3 = matrix(
-  #         c(
-  #           1-params$p_death_ICU3, - params$p_death_ICU3,
-  #           params$avg_LOS_ICU3, params$avg_LOS_ICU3
-  #         ),
-  #         ncol=2            
-  #       )
-  #       
-  #       out_C3 <- solve(M_C3, c(0,1))
-  #       params$mu_C3 <- out_C3[1];
-  #       params$chi_C3 <- out_C3[2];
-  # } else {
-  #   params$mu_C3 <- 0;
-  #   params$chi_C3 <- 1/params$avg_LOS_ICU3;
-  #   
-  # }
   ######################
   # Leaving Floor
   params$mu_F1= params$p_death_Floor1 * 1/params$avg_LOS_Floor1;
@@ -187,50 +132,7 @@ update_inputs_reimplemented <- function(t,
   params$theta_F3= params$p_stepup_Floor3 * 1/params$avg_LOS_Floor3;
   params$chi_L3= (1-params$p_death_Floor3 - params$p_stepup_Floor3 )* 1/params$avg_LOS_Floor3;
 
-  # 
-  # M_F1 = matrix(
-  #   c(
-  #     1-params$p_death_Floor1, - params$p_death_Floor1, - params$p_death_Floor1,
-  #     -params$p_stepup_Floor1, 1- params$p_stepup_Floor1, - params$p_stepup_Floor1,
-  #     params$avg_LOS_Floor1, params$avg_LOS_Floor1, params$avg_LOS_Floor1
-  #   ),
-  #   ncol=3            
-  # )
-  # 
-  # out_F1 <- solve(M_F1, c(0,0,1))
-  # params$mu_F1 <- out_F1[1];
-  # params$theta_F1 <- out_F1[2];
-  # params$chi_L1 <- out_F1[3];
-  # 
-  # M_F2 = matrix(
-  #   c(
-  #     1-params$p_death_Floor2, - params$p_death_Floor2, - params$p_death_Floor2,
-  #     -params$p_stepup_Floor2, 1- params$p_stepup_Floor2, - params$p_stepup_Floor2,
-  #     params$avg_LOS_Floor2, params$avg_LOS_Floor2, params$avg_LOS_Floor2
-  #   ),
-  #   ncol=3            
-  # )
-  # 
-  # out_F2 <- solve(M_F2, c(0,0,1))
-  # params$mu_F2 <- out_F2[1];
-  # params$theta_F2 <- out_F2[2];
-  # params$chi_L2 <- out_F2[3];
-  # 
-  # 
-  # M_F3 = matrix(
-  #   c(
-  #     1-params$p_death_Floor3, - params$p_death_Floor3, - params$p_death_Floor3,
-  #     -params$p_stepup_Floor3, 1- params$p_stepup_Floor3, - params$p_stepup_Floor3,
-  #     params$avg_LOS_Floor3, params$avg_LOS_Floor3, params$avg_LOS_Floor3
-  #   ),
-  #   ncol=3            
-  # )
-  # 
-  # out_F3 <- solve(M_F3, c(0,0,1))
-  # params$mu_F3 <- out_F3[1];
-  # params$theta_F3 <- out_F3[2];
-  # params$chi_L3 <- out_F3[3];
-  
+
   ######################
   # Leaving MS
   params$mu_MS1= params$p_death_MS1 * 1/params$avg_T_exit1;
@@ -244,50 +146,6 @@ update_inputs_reimplemented <- function(t,
   params$mu_MS3= params$p_death_MS3 * 1/params$avg_T_exit3;
   params$xi_MS3= params$p_return_MS3 * 1/params$avg_T_exit3;
   params$phi3= (1-params$p_death_MS3 - params$p_return_MS3 )* 1/params$avg_T_exit3;
-  
-  # 
-  # M_MS1 = matrix(
-  #   c(
-  #     1-params$p_death_MS1, - params$p_death_MS1, - params$p_death_MS1,
-  #     -params$p_return_MS1, 1- params$p_return_MS1, - params$p_return_MS1,
-  #     params$avg_T_exit1, params$avg_T_exit1, params$avg_T_exit1
-  #   ),
-  #   ncol=3            
-  # )
-  # 
-  # out_MS1 <- solve(M_MS1, c(0,0,1))
-  # params$mu_MS1 <- out_MS1[1];
-  # params$xi_MS1 <- out_MS1[2];
-  # params$phi1 <- out_MS1[3];
-  # 
-  # M_MS2 = matrix(
-  #   c(
-  #     1-params$p_death_MS2, - params$p_death_MS2, - params$p_death_MS2,
-  #     -params$p_return_MS2, 1- params$p_return_MS2, - params$p_return_MS2,
-  #     params$avg_T_exit2, params$avg_T_exit2, params$avg_T_exit2
-  #   ),
-  #   ncol=3            
-  # )
-  # 
-  # out_MS2 <- solve(M_MS2, c(0,0,1))
-  # params$mu_MS2 <- out_MS2[1];
-  # params$xi_MS2 <- out_MS2[2];
-  # params$phi2 <- out_MS2[3];
-  # 
-  # 
-  # M_MS3 = matrix(
-  #   c(
-  #     1-params$p_death_MS3, - params$p_death_MS3, - params$p_death_MS3,
-  #     -params$p_return_MS3, 1- params$p_return_MS3, - params$p_return_MS3,
-  #     params$avg_T_exit3, params$avg_T_exit3, params$avg_T_exit3
-  #   ),
-  #   ncol=3            
-  # )
-  # 
-  # out_MS3 <- solve(M_MS3, c(0,0,1))
-  # params$mu_MS3 <- out_MS3[1];
-  # params$xi_MS3 <- out_MS3[2];
-  # params$phi3 <- out_MS3[3];
   
   ######################
   # Leaving FL Queue
@@ -303,50 +161,7 @@ update_inputs_reimplemented <- function(t,
   params$theta_WF3= params$p_stepup_WF3 * 1/params$avg_LOS_FloorQ3;
   params$chi_LQ3= (1-params$p_death_WF3 - params$p_stepup_WF3 )* 1/params$avg_LOS_FloorQ3;
   
-  # 
-  # M_WF1 = matrix(
-  #   c(
-  #     1-params$p_death_WF1, - params$p_death_WF1, - params$p_death_WF1,
-  #     -params$p_stepup_WF1, 1- params$p_stepup_WF1, - params$p_stepup_WF1,
-  #     params$avg_LOS_FloorQ1, params$avg_LOS_FloorQ1, params$avg_LOS_FloorQ1
-  #   ),
-  #   ncol=3            
-  # )
-  # 
-  # 
-  # out_WF1 <- solve(M_WF1, c(0,0,1))
-  # params$mu_WF1 <- out_WF1[1];
-  # params$theta_WF1 <- out_WF1[2];
-  # params$chi_LQ1 <- out_WF1[3];
-  # 
-  # M_WF2 = matrix(
-  #   c(
-  #     1-params$p_death_WF2, - params$p_death_WF2, - params$p_death_WF2,
-  #     -params$p_stepup_WF2, 1- params$p_stepup_WF2, - params$p_stepup_WF2,
-  #     params$avg_LOS_FloorQ2, params$avg_LOS_FloorQ2, params$avg_LOS_FloorQ2
-  #   ),
-  #   ncol=3            
-  # )
-  # 
-  # out_WF2 <- solve(M_WF2, c(0,0,1))
-  # params$mu_WF2 <- out_WF2[1];
-  # params$theta_WF2 <- out_WF2[2];
-  # params$chi_LQ2 <- out_WF2[3];
-  # 
-  # M_WF3 = matrix(
-  #   c(
-  #     1-params$p_death_WF3, - params$p_death_WF3, - params$p_death_WF3,
-  #     -params$p_stepup_WF3, 1- params$p_stepup_WF3, - params$p_stepup_WF3,
-  #     params$avg_LOS_FloorQ3, params$avg_LOS_FloorQ3, params$avg_LOS_FloorQ3
-  #   ),
-  #   ncol=3            
-  # )
-  # 
-  # out_WF3 <- solve(M_WF3, c(0,0,1))
-  # params$mu_WF3 <- out_WF3[1];
-  # params$theta_WF3 <- out_WF3[2];
-  # params$chi_LQ3 <- out_WF3[3];
-  
+
   ## Fast emptying of queue
   params$zeta1 <- params$p_tofloor1 * (params$mu_WF1+params$theta_WF1+ params$chi_LQ1)/(1- params$p_tofloor1)
   params$zeta2 <- params$p_tofloor2 * (params$mu_WF2+params$theta_WF2+ params$chi_LQ2)/(1- params$p_tofloor2)
@@ -367,6 +182,38 @@ update_inputs_reimplemented <- function(t,
   params$phi_I1 = 1/(params$p_phi*params$d_phi + (1-params$p_phi)*params$d_mu);
   params$phi_I2 = 1/(params$p_phi*params$d_phi + (1-params$p_phi)*params$d_mu);
   params$phi_I3 = 1/(params$p_phi*params$d_phi + (1-params$p_phi)*params$d_mu);
+  
+  ### Create vectors for inputs
+  
+  params$sigma_MS <- c(params$sigma_MS1,params$sigma_MS2,params$sigma_MS3) 
+  params$sigma_C <- c(params$sigma_C1,params$sigma_C2,params$sigma_C3) 
+  params$sigma_F <- c(params$sigma_F1,params$sigma_F2,params$sigma_F3) 
+  
+  params$mu_P <- c(params$mu_P1,params$mu_P2,params$mu_P3) 
+  params$mu_MS <- c(params$mu_MS1,params$mu_MS2,params$mu_MS3) 
+  params$mu_I <- c(params$mu_I1,params$mu_I2,params$mu_I3) 
+  params$mu_WC <- c(params$mu_WC1,params$mu_WC2,params$mu_WC3) 
+  params$mu_C <- c(params$mu_C1,params$mu_C2,params$mu_C3) 
+  params$mu_WF <- c(params$mu_WF1,params$mu_WF2,params$mu_WF3) 
+  params$mu_F <- c(params$mu_F1,params$mu_F2,params$mu_F3) 
+  
+  
+  params$xi_MS <- c(params$xi_MS1,params$xi_MS2,params$xi_MS3) 
+  
+  params$theta_WF <- c(params$theta_WF1,params$theta_WF2,params$theta_WF3) 
+  params$theta_F <- c(params$theta_F1,params$theta_F2,params$theta_F3) 
+  
+  params$eta <- c(params$eta1,params$eta2,params$eta3) 
+  params$zeta <- c(params$zeta1,params$zeta2,params$zeta3) 
+  
+  params$chi_L <- c(params$chi_L1,params$chi_L2,params$chi_L3) 
+  params$chi_LQ <- c(params$chi_LQ1,params$chi_LQ2,params$chi_LQ3) 
+  params$chi_C <- c(params$chi_C1,params$chi_C2,params$chi_C3) 
+  
+  params$phi <- c(params$phi1,params$phi2,params$phi3) 
+  params$phi_I <- c(params$phi_I1,params$phi_I2,params$phi_I3) 
+  
+  params$age <- c(params$young, params$medium, params$old)
   
   params
   

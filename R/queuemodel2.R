@@ -220,37 +220,7 @@ hospital_queues_reimplemented<- function(t,
     rule=2);
   
   
-  ### Create vectors for inputs
   
-  params$sigma_MS <- c(params$sigma_MS1,params$sigma_MS2,params$sigma_MS3) 
-  params$sigma_C <- c(params$sigma_C1,params$sigma_C2,params$sigma_C3) 
-  params$sigma_F <- c(params$sigma_F1,params$sigma_F2,params$sigma_F3) 
-
-  params$mu_P <- c(params$mu_P1,params$mu_P2,params$mu_P3) 
-  params$mu_MS <- c(params$mu_MS1,params$mu_MS2,params$mu_MS3) 
-  params$mu_I <- c(params$mu_I1,params$mu_I2,params$mu_I3) 
-  params$mu_WC <- c(params$mu_WC1,params$mu_WC2,params$mu_WC3) 
-  params$mu_C <- c(params$mu_C1,params$mu_C2,params$mu_C3) 
-  params$mu_WF <- c(params$mu_WF1,params$mu_WF2,params$mu_WF3) 
-  params$mu_F <- c(params$mu_F1,params$mu_F2,params$mu_F3) 
-  
-  
-  params$xi_MS <- c(params$xi_MS1,params$xi_MS2,params$xi_MS3) 
-  
-  params$theta_WF <- c(params$theta_WF1,params$theta_WF2,params$theta_WF3) 
-  params$theta_F <- c(params$theta_F1,params$theta_F2,params$theta_F3) 
-  
-  params$eta <- c(params$eta1,params$eta2,params$eta3) 
-  params$zeta <- c(params$zeta1,params$zeta2,params$zeta3) 
-  
-  params$chi_L <- c(params$chi_L1,params$chi_L2,params$chi_L3) 
-  params$chi_LQ <- c(params$chi_LQ1,params$chi_LQ2,params$chi_LQ3) 
-  params$chi_C <- c(params$chi_C1,params$chi_C2,params$chi_C3) 
-  
-  params$phi <- c(params$phi1,params$phi2,params$phi3) 
-  params$phi_I <- c(params$phi_I1,params$phi_I2,params$phi_I3) 
-  
-  params$age <- c(params$young, params$medium, params$old)
   
   model <- function(time, state, parameters) {
     with(as.list(c(state, parameters)), {
