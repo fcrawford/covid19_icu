@@ -218,8 +218,7 @@ fluidPage(theme=shinytheme("simplex"),
             condition = "input.distrib == 'exponential'",
             sliderInput("doubling_time", "Doubling time for COVID19+ presentations to the health system per day (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime, step=0.1)
             ),
-	      sliderInput("ages",  "Age breakdown of COVID+ admissions (0-18), (18-65), (65+) ", min=0, max=1, value=c(params$young,params$medium)),
-	      tableOutput("agebands")
+	      
 	
 
         ),
@@ -252,6 +251,8 @@ fluidPage(theme=shinytheme("simplex"),
           
         tabPanel("Parameters", fluid=TRUE,
           includeMarkdown(system.file("content/parameters.md", package='covid19icu')),
+          sliderInput("ages",  "Age breakdown of COVID+ admissions (0-18), (18-65), (65+) ", min=0, max=1, value=c(params$young,params$medium)),
+          tableOutput("agebands")
           sliderInput("avgfloordischargetime", "Average time on floor for COVID19+ patients", min= params$minfloordischargetime, max=params$maxfloordischargetime, value=params$avgfloordischargetime),
           sliderInput("avgicudischargetime", "Average time in ICU for COVID19+ patients",     min=params$minicudischargetime, max=params$maxicudischargetime, value=params$avgicudischargetime),
 		#sliderInput("ICUdeath_young", "Probability of death in ICU (<18 years)",     min=0, max=1, value=params$p_death_ICU1),
