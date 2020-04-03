@@ -45,6 +45,8 @@ server <- function(input, output, session) {
   output$hospitalPlot <- renderPlot({
     # put slider control values here as arguments
     plots<-plot_hospital(t=input$time,
+                         young=input$ages[1],
+                         medium=input$ages[2]-input$ages[1],
                                            #######################
                                            I_init=input$initrep,
                                            I_final=input$finalrep,
@@ -83,6 +85,8 @@ server <- function(input, output, session) {
   output$hospitalTable <- renderTable({
     
      text = text_hospital(t=input$time,
+                          young=input$ages[1],
+                          medium=input$ages[2]-input$ages[1],
                           #######################
                           I_init=input$initrep,
                           I_final=input$finalrep,
@@ -112,6 +116,9 @@ server <- function(input, output, session) {
 
   output$keypoints <- renderText({
      dat = text_hospital(t=input$time,
+                         young=input$ages[1],
+                         medium=input$ages[2]-input$ages[1],
+                         
                                        #######################
                                        I_init=input$initrep,
                                        I_final=input$finalrep,
@@ -162,6 +169,17 @@ server <- function(input, output, session) {
           " </b>. </h4>", sep="")
 
   })
+  
+  output$agebands <- renderText({
+   agebands <- c(input$ages) 
+   paste("<p> 0-18 years: ", 
+         agebands[1]*100, 
+         "% <br>18-65 years: ",
+         (agebands[2]-agebands[1])*100, 
+         "% <br>65+ years: ", 
+         (1-agebands[2])*100, 
+         " %</p>", sep="")  
+  })
 
 
 }
@@ -200,6 +218,9 @@ fluidPage(theme=shinytheme("simplex"),
             condition = "input.distrib == 'exponential'",
             sliderInput("doubling_time", "Doubling time (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime, step=0.1)
             ),
+	      sliderInput("ages",  "Age breakdown of COVID+ admisions (0-18), (18-65), (65+) ", min=0, max=1, value=c(params$young,params$medium)),
+	      tableOutput("agebands")
+	
 
         ),
         tabPanel("Capacity", fluid=TRUE,
