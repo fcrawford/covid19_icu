@@ -198,25 +198,25 @@ fluidPage(theme=shinytheme("simplex"),
           includeMarkdown(system.file("content/instructions.md", package='covid19icu')),
           h4("Scenario:"),
           sliderInput("time", "Time Horizon (days)",     min=1, max=params$t_Max, step=1, value=params$t),
-          radioButtons("distrib",                     "Infection curve",
+          radioButtons("distrib",                     "Change in number of COVID19+ presentations to the health system per day",
                        c("Exponential"="exponential",
                          "Linear"="ramp",
                          "Saturated"="logistic",
                          "Flat"="uniform"),
                        inline=TRUE,
                        selected="exponential"),
-          sliderInput("initrep", "Initial cases per day", min=1, max=params$I_initmax, value=params$I_init),
+          sliderInput("initrep", "Number of COVID19+ presentations to the health system per day", min=1, max=params$I_initmax, value=params$I_init),
           conditionalPanel(
             condition = "input.distrib=='logistic'",
-            sliderInput("finalrep", "Peak number of cases", min=1, max=params$I_finalmax, value=params$I_final)
+            sliderInput("finalrep", "Peak number of COVID19+ presentations to the health system per day", min=1, max=params$I_finalmax, value=params$I_final)
             ),
 	conditionalPanel(
             condition = "input.distrib=='ramp'",
-            sliderInput("rampslope", "Rate of increase in new cases per day", min=params$rampslope_min, max=params$rampslope_max, value=params$rampslope, step = params$rampslope_step)
+            sliderInput("rampslope", "Rate of increase in number of COVID19+ presentations to the health system per day", min=params$rampslope_min, max=params$rampslope_max, value=params$rampslope, step = params$rampslope_step)
             ),
           conditionalPanel(
             condition = "input.distrib == 'exponential'",
-            sliderInput("doubling_time", "Doubling time (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime, step=0.1)
+            sliderInput("doubling_time", "Doubling time for COVID19+ presentations to the health system per day (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime, step=0.1)
             ),
 	      sliderInput("ages",  "Age breakdown of COVID+ admisions (0-18), (18-65), (65+) ", min=0, max=1, value=c(params$young,params$medium)),
 	      tableOutput("agebands")
@@ -228,8 +228,8 @@ fluidPage(theme=shinytheme("simplex"),
 
           	
 
-		numericInput("icucap", "Initial ICU capacity (number of beds)",  min=0, max=params$M_Max, step=1, value=params$M),
-		numericInput("floorcap", "Initial floor capacity (number of beds)", min=0, max=params$L_Max, step=1, value=params$L),
+		numericInput("icucap", "Initial ICU capacity for COVID19+ patients (number of beds) ",  min=0, max=params$M_Max, step=1, value=params$M),
+		numericInput("floorcap", "Initial floor capacity for COVID19+ patients (number of beds)", min=0, max=params$L_Max, step=1, value=params$L),
 
 		sliderInput("M_occupied", "% of ICU capacity occupied at time 0",     min=0, max=100, value=params$M_occupied),
 		sliderInput("L_occupied", "% of floor capacity occupied at time 0",     min=0, max=100, value=params$L_occupied)),
@@ -242,10 +242,10 @@ fluidPage(theme=shinytheme("simplex"),
                        selected=0),
           conditionalPanel(
             condition = "input.doprotocols==1",
-            numericInput("icucaptarget",  "Target ICU capacity", min=0, max=params$M_Max, step=1, value=params$M),
+            numericInput("icucaptarget",  "Target ICU capacity for COVID19+ patients (number of beds)", min=0, max=params$M_Max, step=1, value=params$M),
 
             sliderInput("icucapramp",  "ICU capacity scale-up (days)", min=0, max=30, value=c(params$icucapramp1,params$icucapramp2)),
-            numericInput("floorcaptarget",  "Target floor capacity", min=0, max=params$L_Max, step=1, value=params$L),
+            numericInput("floorcaptarget",  "Target floor capacity for COVID19+ patients (number of beds)", min=0, max=params$L_Max, step=1, value=params$L),
 
             sliderInput("floorcapramp",  "Floor capacity scale-up (days)", min=0, max=30, value=c(params$floorcapramp1,params$floorcapramp2))
           )),
