@@ -172,11 +172,11 @@ server <- function(input, output, session) {
   
   output$agebands <- renderText({
    agebands <- c(input$ages) 
-   paste("<p> 0-18 years: ", 
+   paste("<p> <b>0-18 years:</b> ", 
          agebands[1]*100, 
-         "% <br>18-65 years: ",
+         "% <b>- 18-65 years:</b>  ",
          (agebands[2]-agebands[1])*100, 
-         "% <br>65+ years: ", 
+         "% <b>- 65+ years:</b> ", 
          (1-agebands[2])*100, 
          " %</p>", sep="")  
   })
