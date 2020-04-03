@@ -264,9 +264,11 @@ fluidPage(theme=shinytheme("simplex"),
           conditionalPanel(
             condition = "input.distrib == 'exponential'",
             sliderInput("doubling_time", "Doubling time for COVID19+ presentations to the health system per day (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime, step=0.1)
-            ),
-        hr(),
-        downloadButton("report", "Download scenario report")
+            )
+          # DOWNLOAD BUTTON, hidden for now. 
+          #,
+        #hr(),
+        #downloadButton("report", "Download scenario report")
         ),
         tabPanel("Capacity", fluid=TRUE,
 		      includeMarkdown(system.file("content/capacity.md", package='covid19icu')),
