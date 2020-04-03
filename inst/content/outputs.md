@@ -37,7 +37,7 @@ This plot depicts **cumulative deaths of COVID19+ patients by location**, the to
 
 This plot depicts **ICU and floor utilization by COVID19+ patients** on a given day. 
 
-* **Maximum ICU capacity for COVID19+ patients (black dashed):** the maximum ICU capacity of your health system which is available to COVID19+ patients. A tag appears with the day on which capacity is exceeded when the number of COVID19+ patients requiring ICU care in the simulation
+* **Maximum ICU capacity (black dashed):** the maximum ICU capacity of your health system which is available to COVID19+ patients. A tag appears with the day on which capacity is exceeded when the number of COVID19+ patients requiring ICU care in the simulation
 	exceeds the maximum ICU capacity available to COVID19+ patients.  Maximum capacity changes depending on the capacity expansion specified by the user.
 
 * **In ICU (black):** the number of COVID19+ patients who are in the ICU on a given day.
