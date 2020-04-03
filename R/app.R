@@ -44,85 +44,99 @@ server <- function(input, output, session) {
 
   output$hospitalPlot <- renderPlot({
     # put slider control values here as arguments
-    plots<- plot_hospital(initial_report=input$initrep,
-                  final_report=input$finalrep,
-                  L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-                  M=ifelse(is.na(input$icucap),params$M,input$icucap),
-                  distribution=input$distrib,
-                  t= input$time,
-                  avg_LOS_ICU=input$avgicudischargetime,
-                  avg_LOS_Floor=input$avgfloordischargetime,
-                  growth_rate=log(2)/(input$doubling_time),
-                  #p_death_ICU1 = input$ICUdeath_young,
-                  p_death_ICU2 = input$ICUdeath_medium,
-                  p_death_ICU3 = input$ICUdeath_old,
-                  p_death_floor2 = input$floordeath_medium,
-                  p_death_floor3 = input$floordeath_old,
-            			rampslope = input$rampslope,
-            			Cinit = input$Cinit,
-            			Finit = input$Finit,
-            			Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
-            			Lramp=input$floorcapramp,
-            			Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
-            			Mramp=input$icucapramp,
-                  doprotocols=input$doprotocols
-			
-			)
+    plots<-plot_hospital(t=input$time,
+                                           #######################
+                                           I_init=input$initrep,
+                                           I_final=input$finalrep,
+                                           distribution=input$distrib,
+                                           doublingtime=input$doubling_time,
+                                           rampslope=input$rampslope,
+                                           #######################
+                                           M=ifelse(is.na(input$icucap),params$M,input$icucap),
+                                           L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
+                                           L_occupied=input$L_occupied,
+                                           M_occupied=input$M_occupied,
+                                           Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
+                                           Lramp=input$floorcapramp,
+                                           Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
+                                           Mramp=input$icucapramp,
+                                           ######################
+                                           avg_LOS_ICU=input$avgicudischargetime,
+                                           avg_LOS_Floor=input$avgfloordischargetime,
+                                           #####################
+                                           p_death_ICU2 = input$ICUdeath_medium,
+                                           p_death_ICU3= input$ICUdeath_old,
+                                           p_death_floor2=input$floordeath_medium,
+                                           p_death_floor3= input$floordeath_old,
+                                           #####################
+                                           doprotocols=input$doprotocols)
     
-
-
-
+    
+    
+    
+    
+    
     plot_grid(plots[[1]], plots[[2]],plots[[3]],plots[[4]], nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
 
   })
   
   output$hospitalTable <- renderTable({
     
-     text = text_hospital(initial_report=input$initrep,
-                    final_report=input$finalrep,
-                    L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-                    M=ifelse(is.na(input$icucap),params$M,input$icucap),
-                    distribution=input$distrib,
-                    t= input$time,
-                    avg_LOS_ICU=input$avgicudischargetime,
-                    avg_LOS_Floor=input$avgfloordischargetime,
-                    growth_rate=log(2)/(input$doubling_time),
-                    p_death_ICU2 = input$ICUdeath_medium,
-                    p_death_ICU3 = input$ICUdeath_old,
-                    p_death_floor2 = input$floordeath_medium,
-                    p_death_floor3 = input$floordeath_old,
-                    rampslope = input$rampslope,
-                    Cinit = input$Cinit,
-                    Finit = input$Finit,
-              			Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
-                    Lramp=input$floorcapramp,
-              			Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
-                    Mramp=input$icucapramp,
-                    doprotocols=input$doprotocols)
+     text = text_hospital(t=input$time,
+                          #######################
+                          I_init=input$initrep,
+                          I_final=input$finalrep,
+                          distribution=input$distrib,
+                          doublingtime=input$doubling_time,
+                          rampslope=input$rampslope,
+                          #######################
+                          M=ifelse(is.na(input$icucap),params$M,input$icucap),
+                          L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
+                          L_occupied=input$L_occupied,
+                          M_occupied=input$M_occupied,
+                          Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
+                          Lramp=input$floorcapramp,
+                          Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
+                          Mramp=input$icucapramp,
+                          #####################
+                          avg_LOS_ICU=input$avgicudischargetime,
+                          avg_LOS_Floor=input$avgfloordischargetime,
+                          #####################
+                          p_death_ICU2 = input$ICUdeath_medium,
+                          p_death_ICU3= input$ICUdeath_old,
+                          p_death_floor2=input$floordeath_medium,
+                          p_death_floor3= input$floordeath_old,
+                          #####################
+                          doprotocols=input$doprotocols)
   })
 
   output$keypoints <- renderText({
-     dat = text_hospital(initial_report=input$initrep,
-                    final_report=input$finalrep,
-                    L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-                    M=ifelse(is.na(input$icucap),params$M,input$icucap),
-                    distribution=input$distrib,
-                    t= input$time,
-                    avg_LOS_ICU=input$avgicudischargetime,
-                    avg_LOS_Floor=input$avgfloordischargetime,
-                    growth_rate=log(2)/(input$doubling_time),
-                    p_death_ICU2 = input$ICUdeath_medium,
-                    p_death_ICU3 = input$ICUdeath_old,
-                    p_death_floor2 = input$floordeath_medium,
-                    p_death_floor3 = input$floordeath_old,
-                    rampslope = input$rampslope,
-                    Cinit = input$Cinit,
-                    Finit = input$Finit,
-                    Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
-                    Lramp=input$floorcapramp,
-                    Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
-                    Mramp=input$icucapramp,
-                    doprotocols=input$doprotocols)
+     dat = text_hospital(t=input$time,
+                                       #######################
+                                       I_init=input$initrep,
+                                       I_final=input$finalrep,
+                                       distribution=input$distrib,
+                                       doublingtime=input$doubling_time,
+                                       rampslope=input$rampslope,
+                                       #######################
+                                       M=ifelse(is.na(input$icucap),params$M,input$icucap),
+                                       L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
+                                       L_occupied=input$L_occupied,
+                                       M_occupied=input$M_occupied,
+                                       Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
+                                       Lramp=input$floorcapramp,
+                                       Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
+                                       Mramp=input$icucapramp,
+                                       ######################
+                                       avg_LOS_ICU=input$avgicudischargetime,
+                                       avg_LOS_Floor=input$avgfloordischargetime,
+                                       #####################
+                                       p_death_ICU2 = input$ICUdeath_medium,
+                                       p_death_ICU3= input$ICUdeath_old,
+                                       p_death_floor2=input$floordeath_medium,
+                                       p_death_floor3= input$floordeath_old,
+                                       #####################
+                                       doprotocols=input$doprotocols)
     
     rownames(dat) = dat$Variable
      
@@ -165,7 +179,7 @@ fluidPage(theme=shinytheme("simplex"),
         tabPanel("Scenario", fluid=TRUE,
           includeMarkdown(system.file("content/instructions.md", package='covid19icu')),
           h4("Scenario:"),
-          sliderInput("time", "Time Horizon (days)",     min=1, max=params$T_Max, step=1, value=params$T),
+          sliderInput("time", "Time Horizon (days)",     min=1, max=params$t_Max, step=1, value=params$t),
           radioButtons("distrib",                     "Infection curve",
                        c("Exponential"="exponential",
                          "Linear"="ramp",
@@ -196,8 +210,8 @@ fluidPage(theme=shinytheme("simplex"),
 		numericInput("icucap", "Initial ICU capacity (number of beds)",  min=0, max=params$M_Max, step=1, value=params$M),
 		numericInput("floorcap", "Initial floor capacity (number of beds)", min=0, max=params$L_Max, step=1, value=params$L),
 
-		sliderInput("Cinit", "% of ICU capacity occupied at time 0",     min=0, max=100, value=params$M_occupied),
-		sliderInput("Finit", "% of floor capacity occupied at time 0",     min=0, max=100, value=params$L_occupied)),
+		sliderInput("M_occupied", "% of ICU capacity occupied at time 0",     min=0, max=100, value=params$M_occupied),
+		sliderInput("L_occupied", "% of floor capacity occupied at time 0",     min=0, max=100, value=params$L_occupied)),
 
         tabPanel("Strategy", fluid=TRUE,
           includeMarkdown(system.file("content/protocols.md", package='covid19icu')),
@@ -254,6 +268,6 @@ fluidPage(theme=shinytheme("simplex"),
 
 #' @export
 runApp <- function() { 
-  params = yaml.load_file( system.file("content/parameter_values1.yaml", package='covid19icu') )
+  params = yaml.load_file( system.file("content/parameter_values.yaml", package='covid19icu') )
   shinyApp(ui = generate_ui(params), server = server)
 }

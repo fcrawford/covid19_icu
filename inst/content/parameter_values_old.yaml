@@ -1,0 +1,204 @@
+##### Bed Capacities
+# ICU
+M: 50
+M_Max: 3000
+M_occupied: 12
+icucapramp1: 10
+icucapramp2: 20
+
+# Floor
+L: 100
+L_Max: 15000
+L_occupied: 12
+floorcapramp1: 10
+floorcapramp2: 20
+
+##### Time Horizon
+
+T_Max: 60
+T: 30
+
+##### Scenarios
+# Cases per day
+I_init: 50
+I_initmax: 1000
+I_final: 1000
+I_finalmax: 3000
+doublingtime: 14
+doublingtime_min: 2
+doublingtime_max: 28
+rampslope: 1.2
+rampslope_min: 0
+rampslope_max: 5
+rampslope_step: 0.1
+
+##### Triage Percentages
+# MS: Mild Symptoms, C:ICU, F: Floor
+# Ages: 0-18
+percentage_MS1: 0.984
+percentage_C1: 0.0
+percentage_F1: 0.016
+# Ages: 18-65
+percentage_MS2: 0.725
+percentage_C2: 0.058
+percentage_F2: 0.217
+# Ages: 65+
+percentage_MS3: 0.425
+percentage_C3: 0.163
+percentage_F3: 0.412
+
+# Average time to triage in days (currently, undifferentiated by age)
+t_Triage: 0.125
+
+
+##### Discharge Rates
+# App initializations:
+avgfloordischargetime: 7
+avgicudischargetime: 10
+maxfloordischargetime: 25
+maxicudischargetime: 25
+
+
+
+# Rate of stepping down from the floor (discharge) (1/avg # days spent on the floor)
+# Ages: 0-18
+chi_L1: 0.142857
+# Ages: 18-65
+chi_L2: 0.142857
+# Ages: 65+
+chi_L3: 0.142857
+
+##### Stepping Down Rates
+# Rate of stepping down from the ICU to the floor
+# Ages: 0-18
+chi_C1: 0.1
+# Ages: 18-65
+chi_C2: 0.1
+# Ages: 65+
+chi_C3: 0.1
+
+##### Recovery Rates
+# Recovery rate (1/days required to recovery if triaged as mild)
+# Ages: 0-18
+phi1: 0.0714286
+# Ages: 18-65
+phi2: 0.0714286
+# Ages: 65+
+phi3: 0.0714286
+
+##### Movement to beds from the queue (1 hr)
+# Rate at which patients are moved to the ICU from the ICU queue
+# Ages: 0-18
+eta1: 24
+# Ages: 18-65
+eta2: 24
+# Ages: 65+
+eta3: 24
+
+# Rate at which patients are moved to the floor from the floor queue (1 hr)
+# Ages: 0-18
+zeta1: 24
+# Ages: 18-65
+zeta2: 24
+# Ages: 65+
+zeta3: 24
+
+##### Death Rates
+#  Death rate of patients in the ICU
+# Ages: 0-18
+mu_C1: 0.1
+# Ages: 18-65
+mu_C2: 0.1
+# Ages: 65+
+mu_C3: 0.1
+
+# Death rate of patients waiting for an ICU bed
+# Ages: 0-18
+mu_WC1: 2.272727
+# Ages: 18-65
+mu_WC2: 2.272727
+# Ages: 65+
+mu_WC3: 2.272727
+
+# Death rate of symptomatic infectives prior to presenting to the ED
+# Ages: 0-18
+mu_I1: 0
+# Ages: 18-65
+mu_I2: 0
+# Ages: 65+
+mu_I3: 0
+
+
+# Proportion of patients dying on the floor
+# Ages: 0-18
+pmu_F1: .134
+# Ages: 18-65
+pmu_F2: .134
+# Ages: 65+
+pmu_F3: .134
+
+
+
+# Proportion of patients that step up from the floor queue to the ICU
+# Ages: 0-18
+ptheta_WF1: .1
+# Ages: 18-65
+ptheta_WF2: .1
+# Ages: 65+
+ptheta_WF3: .1
+
+# Proportion of patients stepping up from floor to ICU
+# Ages: 0-18
+ptheta_F1: .05
+# Ages: 18-65
+ptheta_F2: .05
+# Ages: 65+
+ptheta_F3: .05
+
+# Proportion of patients returning to the ED after being triaged as mild
+# Ages: 0-18
+pxi_MS1: .15
+# Ages: 18-65
+pxi_MS2: .15
+# Ages: 65+
+pxi_MS3: .15
+
+# Proportion of patients dying after after being triaged as mild
+# Ages: 0-18
+pmu_MS1: .0066
+# Ages: 18-65
+pmu_MS2: .0066
+# Ages: 65+
+pmu_MS3: .0066
+
+
+####### Not Operational
+
+# Proportion of symptomatic infectives presenting to ED
+# Ages: 0-18
+#p_lambda1: .106
+# Ages: 18-65
+#p_lambda2: .364
+# Ages: 65+
+#p_lambda3: .612
+
+# Death rate of symptomatic infectives prior to presenting to the ED
+#mu_I1: 0.0
+#mu_I2: 0.0
+#mu_I3: 0.0
+
+
+# Death rate of symptomatic infectives at ED prior to triage
+mu_P1: 0.0
+mu_P2: 0.0
+mu_P3: 0.0
+
+
+# Expected time to recovery pre-triage
+d_phi: 14
+
+# Expected time to death pre-triage
+d_mu: 12
+
+# Expected proportion which recover without treatment
+p_phi: .85

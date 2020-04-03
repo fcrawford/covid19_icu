@@ -1,61 +1,72 @@
 #' @export
 
-text_hospital = function(initial_report= 1000,
-                         final_report = 10000,
-                         distribution= "exponential",
-                         young=.24,
-                         medium=.6,
-                         M=352,
-                         L=1781,
-                         t = 14,
-                         avg_LOS_ICU=10,
-                         avg_LOS_Floor=7,
-                         growth_rate=1,
-                         p_death_ICU1,
-                         p_death_ICU2 ,
-                         p_death_ICU3,
-                         p_death_floor2 ,
-                         p_death_floor3,
-                         rampslope=1.2,
-                         Cinit = .25,
-                         Finit = .5,
-                         Lfinal=1781,
-                         Lramp=c(0,0),
-                         Mfinal=352,
-                         Mramp=c(0,0),
-                         doprotocols=0){
+text_hospital = function(t,
+                                       young,
+                                       medium,
+                                       #######################
+                                       I_init,
+                                       I_final,
+                                       distribution,
+                                       doublingtime,
+                                       rampslope,
+                                       #######################
+                                       M,
+                                       L,
+                                       L_occupied,
+                                       M_occupied,
+                                       Lfinal,
+                                       Lramp,
+                                       Mfinal,
+                                       Mramp,
+                                       ######################
+                                       avg_LOS_ICU,
+                                       avg_LOS_Floor,
+                                       #####################
+                                       p_death_ICU2,
+                                       p_death_ICU3,
+                                       p_death_floor2,
+                                       p_death_floor3,
+                                       #####################
+                                       slope,
+                                       doprotocols=0,
+                                       ...){
 
-    hospital <- hospital_queues_new(initial_report=initial_report,
-                                final_report = final_report,
-                                distribution= distribution,
-                                young=young,
-                                medium=medium,
-                                M=M,
-                                L=L,
-                                t=t,
-                                avg_LOS_ICU=avg_LOS_ICU,
-                                avg_LOS_Floor=avg_LOS_Floor,
-                                growth_rate=growth_rate,
-                                p_death_ICU1 = p_death_ICU1,
-                                p_death_ICU2 = p_death_ICU2,
-                                p_death_ICU3 = p_death_ICU3,
-                                p_death_floor2=p_death_floor2,
-                                p_death_floor3=p_death_floor3,
-                                rampslope=rampslope,
-                                Cinit = Cinit,
-                                Finit = Finit,
-                                Lfinal=Lfinal,
-                                Lramp=Lramp,
-                                Mfinal=Mfinal,
-                                Mramp=Mramp,
-                                doprotocols=doprotocols)
+    hospital <- hospital_queues(t=t,
+                                              young=young,
+                                              medium=medium,
+                                              #######################
+                                              I_init=I_init,
+                                              I_final=I_final,
+                                              distribution=distribution,
+                                              doublingtime=doublingtime,
+                                              rampslope=rampslope,
+                                              #######################
+                                              M=M,
+                                              L=L,
+                                              L_occupied=L_occupied,
+                                              M_occupied=M_occupied,
+                                              Lfinal=Lfinal,
+                                              Lramp=Lramp,
+                                              Mfinal=Mfinal,
+                                              Mramp= Mramp,
+                                              ######################
+                                              avg_LOS_ICU=avg_LOS_ICU,
+                                              avg_LOS_Floor=avg_LOS_Floor,
+                                              #####################
+                                              p_death_ICU2=p_death_ICU2,
+                                              p_death_ICU3=p_death_ICU3,
+                                              p_death_floor2=p_death_floor2,
+                                              p_death_floor3=p_death_floor3,
+                                              #####################
+                                              slope=slope,
+                                              doprotocols=doprotocols)
     
     hospital$totaldead<- hospital$Dead_at_ICU + hospital$Dead_in_ED + hospital$Dead_on_Floor+ hospital$Dead_waiting_for_Floor+ hospital$Dead_waiting_for_ICU+ hospital$Dead_with_mild_symptoms
     hospital$totalWC<- hospital$WC1 + hospital$WC2 + hospital$WC3
     hospital$totalWF<- hospital$WF1 + hospital$WF2 + hospital$WF3
     
     #ICU queue
-    ICUover = (hospital$WC1+hospital$WC2+hospital$WC3>=0.1)
+    ICUover = (hospital$WC1+hospital$WC2+hospital$WC3>=0.001)
 
 
     #floor queue
@@ -75,7 +86,7 @@ text_hospital = function(initial_report= 1000,
     floor_WF = max(hospital$totalWF)
     
     #initial number of patients in the ICU and on the floor
-    pt_init = sum((hospital %>% select(C1, C2, C3, F1, F2, F3))[1,])
+    pt_init = sum((hospital %>% select(C1, C2, C3, FL1, FL2, FL3))[1,])
 
 
     text = data.frame(Variable = c("Total ED visits",
