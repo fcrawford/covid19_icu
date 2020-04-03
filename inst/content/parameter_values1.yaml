@@ -17,8 +17,8 @@ floorcapramp2: 20
 
 ##### Time Horizon
 
-T_Max: 60
-T: 30
+t_Max: 60
+t: 30
 
 ##### Scenarios
 # Cases per day
@@ -33,6 +33,7 @@ rampslope: 1.2
 rampslope_min: 0
 rampslope_max: 5
 rampslope_step: 0.1
+distribution: "exponential"
 
 ##### Discharge Rates
 # App initializations:
@@ -42,6 +43,14 @@ minfloordischargetime: 0.5
 minicudischargetime: 0.5
 maxfloordischargetime: 25
 maxicudischargetime: 25
+
+##### Age structure of ED Visits
+# Ages: 0-18
+young: .24
+# Ages: 18-65
+medium: .6
+
+
 
 ##### Triage Percentages
 # MS: Mild Symptoms, C:ICU, F: Floor
@@ -178,6 +187,9 @@ avg_T_exit2: 10
 
 # Ages: 65+
 avg_T_exit3: 10
+
+##### Sigmoid slope
+slope: 50
 
 
 ####### Not Operational
