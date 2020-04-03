@@ -77,7 +77,7 @@ plot_hospital<- function(t,
         geom_bar(size=1.5, stat="identity")+
       theme_bw(base_size=14) +
         labs(x="Time (Day)", y="Patients")+
-        ggtitle("ED visits per day")+
+        ggtitle("Number of COVID19+ presentations to the health system")+
         theme(panel.border = element_blank(), axis.line = element_line(colour = "black"))      
       
      
@@ -88,7 +88,7 @@ plot_hospital<- function(t,
         theme_bw(base_size=14) +
         scale_color_manual( name=element_blank(), values=c("black", "red"), labels=c("Number_seen_at_ED"="ED throughput", "totaldead"="Deaths"))+
         labs(x="Time (Day)", y="Patients")+
-        ggtitle("Cumulative ED triages and deaths")+
+        ggtitle("Cumulative COVID19+ presentations and deaths")+
         theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.75), legend.text=element_text(size=11),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent"))
        
       p3 <-ggplot(hospital_melt,
@@ -97,7 +97,7 @@ plot_hospital<- function(t,
         theme_bw(base_size=14)+
         scale_fill_manual( name=element_blank(), values=(c("black", "yellow", "red",  "pink", "grey", "orange")), labels=c("Dead_at_ICU"="In ICU", "Dead_waiting_for_ICU"="Waiting for ICU beds", "Dead_on_Floor"= "On floor", "Dead_waiting_for_Floor"="Waiting for floor beds", "Dead_with_mild_symptoms"="Post discharge from ED", "Dead_in_ED"="In ED"))+
         labs(x="Time (Day)", y="Patients")+
-        ggtitle("Cumulative deaths by location")+
+        ggtitle("Cumulative deaths of COVID19+ patients by location")+
         theme(panel.border = element_blank(), axis.line = element_line(colour = "black"), legend.position = c(0.25, 0.65), legend.text=element_text(size=11),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent")) 
   
       
@@ -107,7 +107,7 @@ plot_hospital<- function(t,
         theme_bw(base_size=14) +
         scale_color_manual( name=element_blank(), values=c("black", "red", "grey", "pink"), labels=c("CTotal"="In ICU", "FTotal"= "On floor", "totalWC" ="Waiting for ICU beds", "totalWF"="Waiting for floor beds"))+
         labs(x="Time (Day)", y="Patients")+
-        ggtitle("ICU and floor utilization")+
+        ggtitle("ICU and floor utilization by COVID19+ patients")+
         theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.75), legend.text=element_text(size=11),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent"))+
         #geom_hline(yintercept=M, linetype="dashed", color = "black", size=1.5)+
         #geom_hline(yintercept=L, linetype="dashed", color = "red", size=1.5)
