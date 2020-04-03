@@ -181,6 +181,53 @@ server <- function(input, output, session) {
          " %</p>", sep="")  
   })
 
+  output$report <- downloadHandler(
+      # For PDF output, change this to "report.pdf"
+      filename = "ScenarioReport.pdf",
+      content = function(file) {
+        # Copy the report file to a temporary directory before processing it, in
+        # case we don't have write permissions to the current working dir (which
+        # can happen when deployed).
+        tempReport <- file.path(tempdir(), "ScenarioReport.Rmd")
+        file.copy("ScenarioReport.Rmd", tempReport, overwrite = TRUE)
+
+        # Set up parameters to pass to Rmd document
+        params <- list(t=input$time,
+                         young=input$ages[1],
+                         medium=input$ages[2]-input$ages[1],
+                         I_init=input$initrep,
+                         I_final=input$finalrep,
+                         distribution=input$distrib,
+                         doublingtime=input$doubling_time,
+                         rampslope=input$rampslope,
+                         M=ifelse(is.na(input$icucap),params$M,input$icucap),
+                         L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
+                         L_occupied=input$L_occupied,
+                         M_occupied=input$M_occupied,
+                         Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
+                         Lramp=input$floorcapramp,
+                         Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
+                         Mramp=input$icucapramp,
+                         avg_LOS_ICU=input$avgicudischargetime,
+                         avg_LOS_Floor=input$avgfloordischargetime,
+                         p_death_ICU2 = input$ICUdeath_medium,
+                         p_death_ICU3= input$ICUdeath_old,
+                         p_death_floor2=input$floordeath_medium,
+                         p_death_floor3= input$floordeath_old,
+                         doprotocols=input$doprotocols)
+
+
+        # Knit the document, passing in the `params` list, and eval it in a
+        # child of the global environment (this isolates the code in the document
+        # from the code in this app).
+        rmarkdown::render(tempReport, output_file = file,
+          params = params,
+          envir = new.env(parent = globalenv())
+        )
+      }
+    )
+
+
 
 }
 
@@ -219,9 +266,9 @@ fluidPage(theme=shinytheme("simplex"),
             sliderInput("doubling_time", "Doubling time (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime, step=0.1)
             ),
 	      sliderInput("ages",  "Age breakdown of COVID+ admisions (0-18), (18-65), (65+) ", min=0, max=1, value=c(params$young,params$medium)),
-	      tableOutput("agebands")
-	
-
+	      tableOutput("agebands"),
+        hr(),
+        downloadButton("report", "Download scenario report")
         ),
         tabPanel("Capacity", fluid=TRUE,
 		      includeMarkdown(system.file("content/capacity.md", package='covid19icu')),

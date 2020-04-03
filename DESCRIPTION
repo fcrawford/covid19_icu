@@ -18,6 +18,7 @@ Imports:
   reshape2,
   tidyverse,
   deSolve,
+  rmarkdown,
   yaml
 Encoding: UTF-8
 LazyData: true

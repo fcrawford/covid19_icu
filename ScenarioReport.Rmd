@@ -1,0 +1,42 @@
+
+---
+title: "Scenario Report: COVID-19 Hospital Capacity"
+output: pdf_document
+params:
+  t: NA
+  young: NA
+  medium: NA
+  I_init: NA
+  I_final: NA
+  distribution: NA
+  doublingtime: NA
+  rampslope: NA
+  M: NA
+  L: NA
+  L_occupied: NA 
+  M_occupied: NA 
+  Lfinal: NA 
+  Lramp: NA 
+  Mfinal: NA 
+  Mramp: NA 
+  avg_LOS_ICU: NA
+  avg_LOS_Floor: NA
+  p_death_ICU2: NA
+  p_death_ICU3: NA
+  p_death_floor2: NA
+  p_death_floor3: NA
+  doprotocols: NA
+---
+
+```{r}
+# The `params` object is available in the document.
+params$I_init
+```
+
+A plot of `params$I_init` random points.
+
+```{r}
+plot(rnorm(params$I_init), rnorm(params$I_init))
+```
+
+
