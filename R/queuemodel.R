@@ -166,7 +166,7 @@ hospital_queues<- function(t,
   
   
   
-  ptm <- proc.time()
+  #ptm <- proc.time()
   
   ##########
   
@@ -221,7 +221,6 @@ hospital_queues<- function(t,
   
   
   
-  
   model <- function(time, state, parameters) {
     with(as.list(c(state, parameters)), {
       I = state[1:3]
@@ -247,15 +246,15 @@ hospital_queues<- function(t,
       F_capped = 1-1/(1+exp(slope*(FTotal -capacity_L(time))))
       
       
-      dI <- c(0,0,0) # - lambda* I - phi_I * I - mu_I * I 
-      dP <- -(sigma_MS+sigma_C+sigma_F+mu_P)*P + xi_MS * MS + age * reports(time) # + lambda_I * I
+      dI  <- c(0,0,0) # - lambda* I - phi_I * I - mu_I * I 
+      dP  <- -(sigma_MS+sigma_C+sigma_F+mu_P)*P + xi_MS * MS + age * reports(time) # + lambda_I * I
       dMS <- sigma_MS * P - (phi + mu_MS + xi_MS)* MS
       dWC <- (theta_WF * WF + theta_F * FL + sigma_C * P)*C_capped - eta*WC *(1-C_capped) -mu_WC * WC
-      dC <-  (theta_WF * WF + theta_F * FL + sigma_C * P + eta*WC)* (1-C_capped) - mu_C*C - chi_C *C
+      dC  <- (theta_WF * WF + theta_F * FL + sigma_C * P + eta*WC)* (1-C_capped) - mu_C*C - chi_C *C
       dWF <- (sigma_F* P + chi_C*C) * F_capped - zeta * WF * (1-F_capped) - (mu_WF+ theta_WF+chi_LQ)* WF
-      dFL <-  (sigma_F* P + chi_C*C + zeta*WF) * (1-F_capped) - (mu_F+ theta_F+chi_L)* FL
-      dR <- phi* MS + chi_L* FL + phi_I * I + chi_LQ * WF
-      dD <- mu_C * C+ mu_F * FL + mu_I * I + mu_MS *MS + mu_WF * WF + mu_WC * WC + mu_P * P
+      dFL <- (sigma_F* P + chi_C*C + zeta*WF) * (1-F_capped) - (mu_F + theta_F+chi_L)* FL
+      dR  <- phi* MS + chi_L* FL + phi_I * I + chi_LQ * WF
+      dD  <- mu_C * C+ mu_F * FL + mu_I * I + mu_MS *MS + mu_WF * WF + mu_WC * WC + mu_P * P
 
       dDead_at_ICU = mu_C %*% C;
       dDead_on_Floor = mu_F %*% FL ;
@@ -285,7 +284,7 @@ hospital_queues<- function(t,
   
   out <- as.data.frame(ode(y=init, times= c(1:params$t), func=model, parms=params, method="lsodes"))
   names(out)[2:ncol(out)] = names(init)
-  print(proc.time() - ptm)
+  #print(proc.time() - ptm)
   
   out$reports <- reports(1:params$t);
   out$capacity_L <- capacity_L(1:params$t);

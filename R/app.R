@@ -252,7 +252,7 @@ fluidPage(theme=shinytheme("simplex"),
                          "Flat"="uniform"),
                        inline=TRUE,
                        selected="exponential"),
-          sliderInput("initrep", "Number of COVID19+ presentations to the health system per day", min=1, max=params$I_initmax, value=params$I_init),
+          sliderInput("initrep", "Initial COVID19+ presentations to the health system per day", min=1, max=params$I_initmax, value=params$I_init),
           conditionalPanel(
             condition = "input.distrib=='logistic'",
             sliderInput("finalrep", "Peak number of COVID19+ presentations to the health system per day", min=1, max=params$I_finalmax, value=params$I_final)
@@ -266,9 +266,8 @@ fluidPage(theme=shinytheme("simplex"),
             sliderInput("doubling_time", "Doubling time for COVID19+ presentations to the health system per day (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime, step=0.1)
             )
           # DOWNLOAD BUTTON, hidden for now. 
-          #,
-        #hr(),
-        #downloadButton("report", "Download scenario report")
+          , hr(),
+        downloadButton("report", "Download scenario report")
         ),
         tabPanel("Capacity", fluid=TRUE,
 		      includeMarkdown(system.file("content/capacity.md", package='covid19icu')),
