@@ -72,6 +72,8 @@ knitr::kable(txt_params)
 
 # Plots 
 
+## Margret's edits
+
 
 ```{r, echo=FALSE}
 plots<-plot_hospital(t=params$t,

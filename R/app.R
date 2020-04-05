@@ -166,7 +166,11 @@ server <- function(input, output, session) {
           dat["Total deaths","Value"], 
           " deaths </b> and a hospital <b> case-fatality rate of ",
           dat["Case fatality ratio","Value"], 
-          " </b>. </h4>", sep="")
+          " </b>. ", "An additional <b>",
+          dat["Extra floor beds needed for COVID19+ patients", "Value"],
+          " floor beds </b> and <b>",
+          dat["Extra ICU beds needed for COVID19+ patients", "Value"],
+          " ICU beds </b> would be needed to accommodate all COVID19+ patients who present to the health system. </h4>", sep="")
 
   })
   

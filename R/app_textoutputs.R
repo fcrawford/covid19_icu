@@ -60,6 +60,7 @@ text_hospital = function(t,
                                               slope=slope,
                                               doprotocols=doprotocols)
     
+
     hospital$totaldead<- hospital$Dead_at_ICU + hospital$Dead_in_ED + hospital$Dead_on_Floor+ hospital$Dead_waiting_for_Floor+ hospital$Dead_waiting_for_ICU+ hospital$Dead_with_mild_symptoms
     hospital$totalWC<- hospital$WC1 + hospital$WC2 + hospital$WC3
     hospital$totalWF<- hospital$WF1 + hospital$WF2 + hospital$WF3
@@ -86,6 +87,54 @@ text_hospital = function(t,
     
     #initial number of patients in the ICU and on the floor
     pt_init = sum((hospital %>% select(C1, C2, C3, FL1, FL2, FL3))[1,])
+    
+    ###calculate initial utilization by percentage
+    M_inf = 3e15
+    M_occupied_inf = M*M_occupied/(100*M_inf)
+    L_inf = 3e15
+    L_occupied_inf = L*L_occupied/(100*L_inf)
+    
+    
+    ###calculate max utilization
+    hospital_inf <- hospital_queues(t=t,
+                                young=young,
+                                medium=medium,
+                                #######################
+                                I_init=I_init,
+                                I_final=I_final,
+                                distribution=distribution,
+                                doublingtime=doublingtime,
+                                rampslope=rampslope,
+                                #######################
+                                M=M_inf,
+                                L=L_inf,
+                                L_occupied=L_occupied_inf,
+                                M_occupied=M_occupied_inf,
+                                Lfinal=L_inf,
+                                Lramp=c(0,0),
+                                Mfinal=M_inf,
+                                Mramp=c(0,0),
+                                ######################
+                                avg_LOS_ICU=avg_LOS_ICU,
+                                avg_LOS_Floor=avg_LOS_Floor,
+                                #####################
+                                p_death_ICU2=p_death_ICU2,
+                                p_death_ICU3=p_death_ICU3,
+                                p_death_floor2=p_death_floor2,
+                                p_death_floor3=p_death_floor3,
+                                #####################
+                                slope=slope,
+                                doprotocols=0)
+    
+    if(max(hospital_inf$CTotal)-M>0){
+      C_needed = max(hospital_inf$CTotal) - M
+    } else {C_needed = 0}
+    
+    
+    if(max(hospital_inf$FTotal)-L>0){
+      F_needed = max(hospital_inf$FTotal) - L
+    } else {F_needed = 0}
+    
 
 
     text = data.frame(Variable = c("Total number of COVID19+ presentations to the health system",
@@ -97,8 +146,8 @@ text_hospital = function(t,
                                     "Deaths of COVID19+ patients waiting for floor beds",
                                     "Days to floor overflow", 
                                    "Days to ICU overflow", 
-                                   "Floor beds needed to accomodate all COVID19+ patients", 
-                                   "ICU beds needed to accomodate all COVID19+ patients"),
+                                   "Extra floor beds needed for COVID19+ patients", 
+                                   "Extra ICU beds needed for COVID19+ patients"),
                       Value = c(ceiling(tail(hospital$Number_seen_at_ED, n=1)),
                                 ceiling(tail(hospital$totaldead, n=1)),
                                 paste(signif(tail(hospital$totaldead, n=1)/(pt_init + tail(hospital$Number_seen_at_ED, n=1)), digits=3)*100, "%"),
@@ -108,8 +157,8 @@ text_hospital = function(t,
                                 ceiling(tail(hospital$Dead_waiting_for_Floor, n=1)),
                                 floorover, 
                                 ICUover, 
-                                format(ceiling(floor_WF), scientific=FALSE), 
-                                format(ceiling(ICU_WC), scientific = FALSE)))
+                                format(ceiling(F_needed), scientific=FALSE), 
+                                format(ceiling(C_needed), scientific = FALSE)))
 
 }
 
@@ -144,7 +193,7 @@ text_parameters = function(t,
                                        p_death_floor3,
                                        #####################
                                        slope,
-                                       doprotocols=0,
+                                       doprotocols=doprotocols,
                                        ...){
 
 df = data.frame(t=c("Time horizon", t),
