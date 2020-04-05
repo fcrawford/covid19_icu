@@ -1,5 +1,5 @@
 #' @export
-update_inputs <- function(t,
+update_inputs <- function(              t,
                                         young,#
                                         medium,#
                                         #######################
@@ -25,10 +25,33 @@ update_inputs <- function(t,
                                         p_death_floor3,#
                                         #####################
                                         slope,
+                                        #####################
+                                        percentage_MS1,
+                                        percentage_MS2,
+                                        percentage_MS3,
+                                        percentage_F1,
+                                        percentage_F2,
+                                        percentage_F3,
+                                        percentage_C1,
+                                        percentage_C2,
+                                        percentage_C3,
+                                        t_Triage,
+                                        #avg_LOS_ICU1,
+                                        avg_LOS_ICU2,
+                                        avg_LOS_ICU3,
+                                        avg_LOS_Floor1,
+                                        avg_LOS_Floor2,
+                                        avg_LOS_Floor3,
+                                        avg_LOS_FloorQ1,
+                                        avg_LOS_FloorQ2,
+                                        avg_LOS_FloorQ3,
+                                        p_stepup_Floor1,
+                                        p_stepup_Floor2,
+                                        p_stepup_Floor3,
                                         ... #
                                         ) {
   
-  params = yaml.load_file( system.file("content/parameter_values.yaml", package='covid19icu') )
+  params = yaml.load_file( "parameter_values.yaml")
   
   
   #### Initializing the parameters not set
@@ -79,6 +102,9 @@ update_inputs <- function(t,
     params$avg_LOS_Floor1=avg_LOS_Floor;
     params$avg_LOS_Floor2=avg_LOS_Floor;
     params$avg_LOS_Floor3=avg_LOS_Floor;
+    params$avg_LOS_FloorQ1=avg_LOS_Floor;
+    params$avg_LOS_FloorQ2=avg_LOS_Floor;
+    params$avg_LOS_FloorQ3=avg_LOS_Floor;
   }
   
   ###########################################
@@ -94,7 +120,39 @@ update_inputs <- function(t,
   ###########################################
 
   if(!missing(slope)) params$slope=slope;
+  ###########################################
   
+  if(!missing(percentage_MS1)) params$percentage_MS1=percentage_MS1;
+  if(!missing(percentage_MS2)) params$percentage_MS2=percentage_MS2;
+  if(!missing(percentage_MS3)) params$percentage_MS3=percentage_MS3;
+  
+  if(!missing(percentage_F1)) paraF$percentage_F1=percentage_F1;
+  if(!missing(percentage_F2)) paraF$percentage_F2=percentage_F2;
+  if(!missing(percentage_F3)) paraF$percentage_F3=percentage_F3;
+
+  if(!missing(percentage_C1)) params$percentage_C1=percentage_C1;
+  if(!missing(percentage_C2)) params$percentage_C2=percentage_C2;
+  if(!missing(percentage_C3)) params$percentage_C3=percentage_C3;
+
+  if(!missing(t_Triage)) params$t_Triage=t_Triage;
+  
+  if(!missing(avg_LOS_Floor1)) params$avg_LOS_Floor1=avg_LOS_Floor1;
+  if(!missing(avg_LOS_Floor2)) params$avg_LOS_Floor2=avg_LOS_Floor2; 
+  if(!missing(avg_LOS_Floor3)) params$avg_LOS_Floor3=avg_LOS_Floor3;
+  
+  if(!missing(avg_LOS_FloorQ1)) params$avg_LOS_FloorQ1=avg_LOS_FloorQ1;
+  if(!missing(avg_LOS_FloorQ2)) params$avg_LOS_FloorQ2=avg_LOS_FloorQ2; 
+  if(!missing(avg_LOS_FloorQ3)) params$avg_LOS_FloorQ3=avg_LOS_FloorQ3;
+  
+  if(!missing(avg_LOS_ICU2)) params$avg_LOS_ICU2=avg_LOS_ICU2; 
+  if(!missing(avg_LOS_ICU3)) params$avg_LOS_ICU3=avg_LOS_ICU3;
+  
+  if(!missing(p_stepup_Floor1)) params$p_stepup_Floor1=p_stepup_Floor1; 
+  if(!missing(p_stepup_Floor2)) params$p_stepup_Floor1=p_stepup_Floor2; 
+  if(!missing(p_stepup_Floor3)) params$p_stepup_Floor1=p_stepup_Floor3; 
+  
+  
+  ###########################################
   
   ## Leaving ED
   
