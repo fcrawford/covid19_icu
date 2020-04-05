@@ -108,11 +108,11 @@ plot_hospital<- function(t,
         scale_color_manual( name=element_blank(), values=c("black", "red", "grey", "pink"), labels=c("CTotal"="In ICU", "FTotal"= "On floor", "totalWC" ="Waiting for ICU beds", "totalWF"="Waiting for floor beds"))+
         labs(x="Time (Day)", y="Patients")+
         ggtitle("ICU and floor utilization by COVID19+ patients")+
-        theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.85), legend.text=element_text(size=11),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent"))+
+        theme(panel.border = element_blank(), axis.line = element_line(colour = "black"),  legend.position = c(0.25, 0.75), legend.text=element_text(size=11),    legend.title=element_text(size=8),legend.background = element_rect(fill="transparent"))+
         #geom_hline(yintercept=M, linetype="dashed", color = "black", size=1.5)+
         #geom_hline(yintercept=L, linetype="dashed", color = "red", size=1.5)
-        geom_line(data= hospital_melt[hospital_melt$variable == "capacity_L",],size=1.5, linetype="dashed", color = "orangered4", alpha=0.9)+
-        geom_line(data= hospital_melt[hospital_melt$variable == "capacity_M",],size=1.5, linetype="dashed", color = "gray41", alpha=0.9)
+        geom_line(data= hospital_melt[hospital_melt$variable == "capacity_L",],size=1.5, linetype="dashed", color = "red")+
+        geom_line(data= hospital_melt[hospital_melt$variable == "capacity_M",],size=1.5, linetype="dashed", color = "black")
       ### determine when the hospital exceeds capacity
       
       #ICU queue 
