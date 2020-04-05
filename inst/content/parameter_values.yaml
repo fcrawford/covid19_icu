@@ -85,15 +85,15 @@ p_death_ICU3: 0.41
 #  On the Floor (death or step-up or discharge)
 # Ages: 0-18
 p_death_Floor1: 0
-p_stepup_Floor1: 0.1
+p_stepup_Floor1: 0.5
 max_p_death_Floor1: 0.9
 # Ages: 18-65
 p_death_Floor2: 0.008
-p_stepup_Floor2: 0.1
+p_stepup_Floor2: 0.33
 max_p_death_Floor2: 0.9
 # Ages: 65+
 p_death_Floor3: 0.032
-p_stepup_Floor3: 0.1
+p_stepup_Floor3: 0.44
 max_p_death_Floor3: 0.9
 
 
