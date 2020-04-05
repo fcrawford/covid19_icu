@@ -1,5 +1,4 @@
 #' @export
-
 text_hospital = function(t,
                                        young,
                                        medium,
@@ -113,6 +112,71 @@ text_hospital = function(t,
                                 format(ceiling(ICU_WC), scientific = FALSE)))
 
 }
+
+####################################
+
+#' @export
+text_parameters = function(t,
+                                       young,
+                                       medium,
+                                       #######################
+                                       I_init,
+                                       I_final,
+                                       distribution,
+                                       doublingtime,
+                                       rampslope,
+                                       #######################
+                                       M,
+                                       L,
+                                       L_occupied,
+                                       M_occupied,
+                                       Lfinal,
+                                       Lramp,
+                                       Mfinal,
+                                       Mramp,
+                                       ######################
+                                       avg_LOS_ICU,
+                                       avg_LOS_Floor,
+                                       #####################
+                                       p_death_ICU2,
+                                       p_death_ICU3,
+                                       p_death_floor2,
+                                       p_death_floor3,
+                                       #####################
+                                       slope,
+                                       doprotocols=0,
+                                       ...){
+
+df = data.frame(t=c("Time horizon", t),
+                young=c("<18 yo", young),
+                medium=c("18-65 yo",medium),
+                I_init=c("Initial infections per day", I_init),
+                     I_final=c("Final infections per day", I_final),
+                     distribution=c("ED presentation curve", distribution),
+                     doublingtime=c("doubling time", doublingtime),
+                     rampslope=c("Ramp slope", rampslope),
+                     M=c("ICU capacity", M),
+                     L=c("Floor capacity", L),
+                     L_occupied=c("Floor occupancy %", L_occupied),
+                     M_occupied=c("ICU occupancy &", M_occupied),
+                     Lfinal=c("Target floor capacity", Lfinal),
+                     Lramp=c("Floor ramp", paste(Lramp[1],"--",Lramp[2])),
+                     Mfinal=c("ICU target capacity", Mfinal),
+                     Mramp=c("ICU ramp", paste(Mramp[1],"--",Mramp[2])),
+                     avg_LOS_ICU=c("Avg ICU LOS", avg_LOS_ICU),
+                     avg_LOS_Floor=c("Avg Floor LOS", avg_LOS_Floor),
+                     p_death_ICU2=c("Probability of death in ICU 18-65yo", p_death_ICU2),
+                     p_death_ICU3=c("Probability of death in ICU 65+ yo", p_death_ICU3),
+                     p_death_floor2=c("Probability of death on floor 18-65 yo", p_death_floor2),
+                     p_death_floor3=c("Probability of death on floor 65+ yo", p_death_floor3))
+
+
+df = t(df)
+
+
+}
+
+
 
 
 

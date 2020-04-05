@@ -1,7 +1,17 @@
 
 ---
 title: "Scenario Report: COVID-19 Hospital Capacity"
-output: pdf_document
+date: "Generated on `r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  pdf_document:
+    df_print: kable
+    latex_engine: xelatex
+header-includes:
+  - \usepackage{helvet}
+  - \usepackage[T1]{fontenc}
+  - \renewcommand\familydefault{\sfdefault} 
+fontsize: 11pt
+geometry: margin=1in
 params:
   t: NA
   young: NA
@@ -28,15 +38,123 @@ params:
   doprotocols: NA
 ---
 
-```{r}
-# The `params` object is available in the document.
-params$I_init
+
+# Parameter Values 
+
+```{r, echo=FALSE}
+txt_params = text_parameters(t=params$t,
+                     young=params$young,
+                     medium=params$medium,
+                     I_init=params$I_init,
+                     I_final=params$I_final,
+                     distribution=params$distribution,
+                     doublingtime=params$doublingtime,
+                     rampslope=params$rampslope,
+                     M=params$M,
+                     L=params$L,
+                     L_occupied=params$L_occupied,
+                     M_occupied=params$M_occupied,
+                     Lfinal=params$Lfinal,
+                     Lramp=params$Lramp,
+                     Mfinal=params$Mfinal,
+                     Mramp=params$Mramp,
+                     avg_LOS_ICU=params$avg_LOS_ICU,
+                     avg_LOS_Floor=params$avg_LOS_Floor,
+                     p_death_ICU2=params$p_death_ICU2,
+                     p_death_ICU3=params$p_death_ICU3,
+                     p_death_floor2=params$p_death_floor2,
+                     p_death_floor3=params$p_death_floor3)
+
+rownames(txt_params) <- NULL
+
+knitr::kable(txt_params)
 ```
 
-A plot of `params$I_init` random points.
+# Plots 
 
-```{r}
-plot(rnorm(params$I_init), rnorm(params$I_init))
+
+```{r, echo=FALSE}
+plots<-plot_hospital(t=params$t,
+                     young=params$young,
+                     medium=params$medium,
+                     I_init=params$I_init,
+                     I_final=params$I_final,
+                     distribution=params$distribution,
+                     doublingtime=params$doublingtime,
+                     rampslope=params$rampslope,
+                     M=params$M,
+                     L=params$L,
+                     L_occupied=params$L_occupied,
+                     M_occupied=params$M_occupied,
+                     Lfinal=params$Lfinal,
+                     Lramp=params$Lramp,
+                     Mfinal=params$Mfinal,
+                     Mramp=params$Mramp,
+                     avg_LOS_ICU=params$avg_LOS_ICU,
+                     avg_LOS_Floor=params$avg_LOS_Floor,
+                     p_death_ICU2=params$p_death_ICU2,
+                     p_death_ICU3=params$p_death_ICU3,
+                     p_death_floor2=params$p_death_floor2,
+                     p_death_floor3=params$p_death_floor3,
+                     doprotocols=params$doprotocols)
+
+    plot(plots[[1]]) 
+    plot(plots[[2]])
+    plot(plots[[3]])
+    plot(plots[[4]]) 
 ```
+
+# Summary 
+
+
+```{r, echo=FALSE}
+
+txt <- text_hospital(t=params$t,
+                     young=params$young,
+                     medium=params$medium,
+                     I_init=params$I_init,
+                     I_final=params$I_final,
+                     distribution=params$distribution,
+                     doublingtime=params$doublingtime,
+                     rampslope=params$rampslope,
+                     M=params$M,
+                     L=params$L,
+                     L_occupied=params$L_occupied,
+                     M_occupied=params$M_occupied,
+                     Lfinal=params$Lfinal,
+                     Lramp=params$Lramp,
+                     Mfinal=params$Mfinal,
+                     Mramp=params$Mramp,
+                     avg_LOS_ICU=params$avg_LOS_ICU,
+                     avg_LOS_Floor=params$avg_LOS_Floor,
+                     p_death_ICU2=params$p_death_ICU2,
+                     p_death_ICU3=params$p_death_ICU3,
+                     p_death_floor2=params$p_death_floor2,
+                     p_death_floor3=params$p_death_floor3,
+                     doprotocols=params$doprotocols)
+
+    knitr::kable(txt)
+    
+```
+
+
+
+
+# About the application
+
+This app implements a model for utilization of ICU beds, floor beds, and patient deaths due to COVID-19.  The model was developed by the COVID-19 Statistics,
+Policy modeling and Epidemiology Collective (C-SPEC).  The app was written by [Soheil Eshghi](http://www.soheileshghi.com/), [Margret Erlendsdottir] (https://medicine.yale.edu/profile/margret_erlendsdottir/), 
+[Maile Thayer Phillips](https://medicine.yale.edu/profile/maile_phillips/), [Suzan Iloglu](https://medicine.yale.edu/profile/suzan_iloglu/), [Christian Testa](https://ctesta.com) 
+and [Forrest W. Crawford](http://www.crawfordlab.io) using the [R](http://www.r-project.org) [shiny](http://shiny.rstudio.com/) framework. 
+
+We are especially grateful to [Gregg Gonsalves](https://medicine.yale.edu/profile/gregg_gonsalves/), [David Paltiel] (https://medicine.yale.edu/profile/david_paltiel/),
+Hanna Ehrlich, Raphael Sherak,  Melanie Chitwood, Thomas Thornhill, [Nicole Swartwood](https://prevention-policy-modeling-lab.sph.harvard.edu/nicole-swartwood/), 
+and Stephanie Perniciaro for advice and comments.  
+
+Direct queries to <forrest.crawford@yale.edu>.
+
+Source code at <https://github.com/fcrawford/covid19_icu>. 
+
+Report issues to the [Github issues page](https://github.com/fcrawford/covid19_icu/issues).
 
 

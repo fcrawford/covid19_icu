@@ -77,7 +77,7 @@ plot_hospital<- function(t,
         geom_bar(size=1.5, stat="identity")+
       theme_bw(base_size=14) +
         labs(x="Time (Day)", y="Patients")+
-        ggtitle("Number of COVID19+ presentations to the health system")+
+        ggtitle("COVID19+ presentations to the health system")+
         theme(panel.border = element_blank(), axis.line = element_line(colour = "black"))      
       
      
