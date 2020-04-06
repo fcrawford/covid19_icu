@@ -81,6 +81,13 @@ capacity_ramping<-function(start,
 }
 
 
+empirical_ynhh<- function ()
+{
+  params = read.csv( system.file("content/EDvisits_YNHHS_04042020.csv", package='covid19icu') )
+
+  
+  params
+}
 ############## run the queuing model
 
 
