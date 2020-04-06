@@ -55,17 +55,15 @@ medium: .638
 ##### Triage Percentages
 # MS: Mild Symptoms, C:ICU, F: Floor
 # Ages: 0-18
-percentage_MS1: 0.984
-percentage_C1: 0.0
-percentage_F1: 0.016
-# Ages: 18-65
-percentage_MS2: 0.783
-percentage_C2: 0.058
-percentage_F2: 0.159
-# Ages: 65+
-percentage_MS3: 0.589
-percentage_C3: 0.162
-percentage_F3: 0.249
+percentage_MS1: 0.75
+percentage_C1: 0.125
+percentage_F1: 0.125
+percentage_MS2: 0.4597701
+percentage_C2: 0.0935961
+percentage_F2: 0.4466338
+percentage_MS3: 0.1060606
+percentage_C3: 0.1454545
+percentage_F3: 0.7484848
 
 # Average time to triage in days (currently, undifferentiated by age)
 t_Triage: 0.125
