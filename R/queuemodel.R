@@ -13,72 +13,6 @@
 # eta = rate of movement to an ICU bed from queue
 # zeta = rate of movement to a floor bed from queue
 
-############## Reporting rate function determines who shows up to the ED 3/23
-#' @export
-report_rate<-function(t,
-                          initial_report, 
-                          final_report, 
-                          distribution,
-                          growth_rate,
-                          rampslope){
-  
-  report_rate<-rep(0,t)
-  if (distribution=="uniform"){
-    report_rate<-rep(initial_report,t)
-  }
-  if (distribution=="logistic"){
-    z <- log(1/0.005-1)
-    zz  <- seq(-z*(1+(2/(t-3))),
-               z*(1+(2/(t-3))),
-               by=(2*z)/(t-3))
-    zzz  <- as.numeric(final_report-initial_report)/(1+exp(-zz))
-    report_rate<-zzz+initial_report
-  }
-  if (distribution=="ramp"){
-    times = seq(1, t, by=1)
-    report_rate<- initial_report + rampslope*times
-  }
-  
-  if (distribution=="geometric"){
-    geometric_factor<- exp(1/t* log(final_report/initial_report))
-    report_rate<- (geometric_factor^(1:t))*initial_report	
-  }
-  
-  if (distribution=="exponential"){
-    
-    
-    report_rate<- (exp(growth_rate*(1:t)))*initial_report	
-  }
-  
-  try(if (length(report_rate) != t)(stop("reporting rate time scale does not match inputted timescale")))
-  
-  return(report_rate)
-}
-
-
-# capacity ramp building
-capacity_ramping<-function(start,
-                               finish,
-                               ramp,
-                               t){
-  capacity <- rep(start, t)
-  if (ramp[1]!=0){
-    capacity[ramp[1]:ramp[2]]= start + (finish-start)* (0:(ramp[2]-ramp[1]))/(ramp[2]-ramp[1]);
-    capacity[ramp[2]:t] = finish;
-  } else if (ramp[2]!=0){
-    capacity[(ramp[1]+1):ramp[2]]= start + (finish-start)* (1:(ramp[2]-ramp[1]))/(ramp[2]-ramp[1]);
-    capacity[ramp[2]:t] = finish;
-  } else{
-    capacity[1:t] = finish;
-    
-  }
-  
-  
-  
-  
-  capacity
-  
-}
 
 
 ############## run the queuing model
@@ -86,79 +20,57 @@ capacity_ramping<-function(start,
 
 #' @export
 hospital_queues<- function(t,
-                                         young,
-                                         medium,
-                                         #######################
-                                         I_init,
-                                         I_final,
-                                         distribution,
-                                         doublingtime,
-                                         rampslope,
-                                         #######################
-                                         M,
-                                         L,
-                                         L_occupied,
-                                         M_occupied,
-                                         Lfinal,
-                                         Lramp,
-                                         Mfinal,
-                                         Mramp,
-                                         ######################
-                                         avg_LOS_ICU,
-                                         avg_LOS_Floor,
+                                         # young,
+                                         # medium,
+                                         # #######################
+                                         # I_init,
+                                         # I_final,
+                                         # distribution,
+                                         # doublingtime,
+                                         # rampslope,
+                                         # #######################
+                                         # M,
+                                         # L,
+                                         # L_occupied,
+                                         # M_occupied,
+                                         # Lfinal,
+                                         # Lramp,
+                                         # Mfinal,
+                                         # Mramp,
+                                         # ######################
+                                         # avg_LOS_ICU,
+                                         # avg_LOS_Floor,
+                                         # #####################
+                                         # p_death_ICU2,
+                                         # p_death_ICU3,
+                                         # p_death_floor2,
+                                         # p_death_floor3,
                                          #####################
-                                         p_death_ICU2,
-                                         p_death_ICU3,
-                                         p_death_floor2,
-                                         p_death_floor3,
-                                         #####################
+                                        params,
                                          slope,
                                          doprotocols=0,
+                                         #####################
+                                         floor_capacity_timeseries,
+                                         icu_capacity_timeseries,
+                                         ed_visits_timeseries,
                                          ...
 ){
   
 
   
-  
-  # read in fixed and derived parameters
-  
-  params = update_inputs(t,
-                                       young,
-                                       medium,
-                                       #######################
-                                       I_init,
-                                       I_final,
-                                       distribution,
-                                       doublingtime,
-                                       rampslope,
-                                       #######################
-                                       M,
-                                       L,
-                                       L_occupied,
-                                       M_occupied,
-                                       Lramp,
-                                       Mramp,
-                                       ######################
-                                       avg_LOS_ICU,
-                                       avg_LOS_Floor,
-                                       #####################
-                                       p_death_ICU2,
-                                       p_death_ICU3,
-                                       p_death_floor2,
-                                       p_death_floor3,
-                                       #####################
-                                       slope
-                                       );
-  
-  if(doprotocols==0) {
-    params$Mfinal=params$M
-    params$Lfinal=params$L
-  } else{
-    params$Mfinal=Mfinal
-    params$Lfinal=Lfinal
-    
-    
-  }
+  # 
+  # # read in fixed and derived parameters
+  # 
+  # 
+  # if(doprotocols==0) {
+  #   params$Mfinal=params$M
+  #   params$Lfinal=params$L
+  # } else{
+  #   params$Mfinal=Mfinal
+  #   params$Lfinal=Lfinal
+  #   
+  #   
+  # }
   
   
   ############## SET INITIAL CONDITIONS
@@ -193,30 +105,15 @@ hospital_queues<- function(t,
   ### create functions for reports and ramping
   
   reports <- approxfun(
-    report_rate(
-      t = params$t, 
-      initial_report = params$I_init, 
-      final_report = params$I_final, 
-      distribution=params$distribution, 
-      growth_rate=log(2)/params$doublingtime, 
-      rampslope=params$rampslope
-    ),
+    ed_visits_timeseries,
     rule=2)
   
   capacity_L <- approxfun(
-    capacity_ramping(
-      start=params$L,
-      finish=params$Lfinal,
-      ramp=c(params$floorcapramp1,params$floorcapramp2),
-      t=params$t),
+    floor_capacity_timeseries,
     rule=2);
   
   capacity_M <- approxfun(
-    capacity_ramping(
-      start=params$M,
-      finish=params$Mfinal,
-      ramp=c(params$icucapramp1,params$icucapramp2),
-      t=params$t),
+    icu_capacity_timeseries,
     rule=2);
   
   
