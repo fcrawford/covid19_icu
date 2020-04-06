@@ -93,7 +93,7 @@ Under specified parameters, capacities, and expansion strategies, the model pred
 
 * A hospital case-fatality rate of **`r txt2["Case fatality ratio for COVID19+ patients", "Value"]`**.
 
-* Accommodating all COVID19+ patients will require an **`r txt2["Extra floor beds needed for COVID19+ patients", "Value"]` extra floor beds** and **`r txt["Extra ICU beds needed for COVID19+ patients", "Value"]` extra ICU beds**.
+* Accommodating all COVID19+ patients will require **`r txt2["Extra floor beds needed for COVID19+ patients", "Value"]` extra floor beds** and **`r txt["Extra ICU beds needed for COVID19+ patients", "Value"]` extra ICU beds**.
 
 # Parameter Values 
 
