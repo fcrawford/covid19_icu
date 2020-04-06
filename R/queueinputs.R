@@ -25,6 +25,8 @@ update_inputs <- function(t,
                                         p_death_floor3,#
                                         #####################
                                         slope,
+                                        #####################
+                                        ed_visit_timeseries,
                                         ... #
                                         ) {
   
@@ -95,6 +97,15 @@ update_inputs <- function(t,
 
   if(!missing(slope)) params$slope=slope;
   
+  ########################################## NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW 
+  if(!missing(ed_visit_timeseries)) {
+    params$ed_visit_timeseries = ed_visit_timeseries;
+  } else {
+    
+    params$ed_visit_timeseries=rep(0,20);
+    
+  }
+  ###########################################
   
   ## Leaving ED
   

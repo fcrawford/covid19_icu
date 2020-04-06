@@ -29,37 +29,88 @@ plot_hospital<- function(t,
                                        #####################
                                        slope,
                                        doprotocols=0,
+                                       dynamicModel=0,
                                        ...){
   
-      hospital <- hospital_queues(t=t,
-                                      young=young,
-                                      medium=medium,
-                                      #######################
-                                      I_init=I_init,
-                                      I_final=I_final,
-                                      distribution=distribution,
-                                      doublingtime=doublingtime,
-                                      rampslope=rampslope,
-                                      #######################
-                                      M=M,
-                                      L=L,
-                                      L_occupied=L_occupied,
-                                      M_occupied=M_occupied,
-                                      Lfinal=Lfinal,
-                                      Lramp=Lramp,
-                                      Mfinal=Mfinal,
-                                      Mramp= Mramp,
-                                      ######################
-                                      avg_LOS_ICU=avg_LOS_ICU,
-                                      avg_LOS_Floor=avg_LOS_Floor,
-                                      #####################
-                                      p_death_ICU2=p_death_ICU2,
-                                      p_death_ICU3=p_death_ICU3,
-                                      p_death_floor2=p_death_floor2,
-                                      p_death_floor3=p_death_floor3,
+  
+          params = yaml.load_file( system.file("content/parameter_values.yaml", package='covid19icu') )
+          
+          
+          params = update_inputs(t,
+                                 young,
+                                 medium,
+                                 #######################
+                                 I_init,
+                                 I_final,
+                                 distribution,
+                                 doublingtime,
+                                 rampslope,
+                                 #######################
+                                 M,
+                                 L,
+                                 L_occupied,
+                                 M_occupied,
+                                 Lramp,
+                                 Mramp,
+                                 ######################
+                                 avg_LOS_ICU,
+                                 avg_LOS_Floor,
+                                 #####################
+                                 p_death_ICU2,
+                                 p_death_ICU3,
+                                 p_death_floor2,
+                                 p_death_floor3,
+                                 #####################
+                                 slope,
+                                 ed_visit_timeseries
+                                 );
+          
+  
+          hospital_input <- hospital_input_generation (    dynamicModel=dynamicModel,
+                                                                      t=params$t,
+                                                                      I_init=params$I_init,
+                                                                      I_final=params$I_final,
+                                                                      distribution=params$distribution,
+                                                                      doublingtime=params$doublingtime,
+                                                                      rampslope=params$rampslope,
+                                                                      ed_visit_timeseries=params$ed_visit_timeseries
+                                                                      )
+          if(doprotocols==0) {
+            params$M_final=params$M
+            params$L_final=params$L
+          }
+          
+          floor_capacity_function <- floor_capacity_timeseries (t=params$t,
+                                                                  L=params$L,
+                                                                  L_occupied=params$L_occupied,
+                                                                  L_final=params$L_final,
+                                                                  L_ramp=c(params$floorcapramp1, params$floorcapramp2), 
+                                                                  doprotocols
+                                                                  )
+            
+            
+          icu_capacity_function <- icu_capacity_timeseries(t=params$t,
+                                                             M=params$M,
+                                                             M_occupied=params$M_occupied,
+                                                             M_final=params$M_final,
+                                                             M_ramp=c(params$icucapramp1, params$icucapramp2),
+                                                             doprotocols
+                                                             )   
+      
+          if (dynamicModel==1){
+            t= length(hospital_input)
+          }
+  
+          hospital <- hospital_queues(t=t,
+                                      params=params,
                                       #####################
                                       slope=slope,
-                                      doprotocols=doprotocols)
+                                      doprotocols=doprotocols,
+                                      #####################
+                                      floor_capacity_timeseries=floor_capacity_function,
+                                      icu_capacity_timeseries=icu_capacity_function,
+                                      ed_visits_timeseries=hospital_input
+                                      )
       
 
 
