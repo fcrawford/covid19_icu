@@ -247,29 +247,46 @@ fluidPage(theme=shinytheme("simplex"),
       tabsetPanel(
         tabPanel("Scenario", fluid=TRUE,
           includeMarkdown(system.file("content/instructions.md", package='covid19icu')),
-          h4("Scenario:"),
+          h3("Scenario:"),
           sliderInput("time", "Time Horizon (days)",     min=1, max=params$t_Max, step=1, value=params$t),
-          radioButtons("distrib", "Change in number of COVID19+ presentations to the health system per day",
+
+
+
+          radioButtons("scenarioSelect", h4("Scenario selection"), c("Static"="static", "Dynamic model-based"="dynamic"), inline=TRUE,selected="static"),
+
+          conditionalPanel(condition="input.scenarioSelect == 'static'",
+            radioButtons("distrib", "Change in number of COVID19+ presentations to the health system per day",
                        c("Exponential"="exponential",
                          "Linear"="ramp",
                          "Saturated"="logistic",
                          "Flat"="uniform"),
                        inline=TRUE,
                        selected="exponential"),
-          sliderInput("initrep", "Initial COVID19+ presentations to the health system per day", min=1, max=params$I_initmax, value=params$I_init),
-          conditionalPanel(
-            condition = "input.distrib=='logistic'",
-            sliderInput("finalrep", "Peak number of COVID19+ presentations to the health system per day", min=1, max=params$I_finalmax, value=params$I_final)
-            ),
-	conditionalPanel(
-            condition = "input.distrib=='ramp'",
-            sliderInput("rampslope", "Rate of increase in number of COVID19+ presentations to the health system per day", min=params$rampslope_min, max=params$rampslope_max, value=params$rampslope, step = params$rampslope_step)
-            ),
-          conditionalPanel(
-            condition = "input.distrib == 'exponential'",
-            sliderInput("doubling_time", "Doubling time for COVID19+ presentations to the health system per day (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime, step=0.1)
+            sliderInput("initrep", "Initial COVID19+ presentations to the health system per day", min=1, max=params$I_initmax, value=params$I_init),
+            conditionalPanel(
+              condition = "input.distrib=='logistic'",
+              sliderInput("finalrep", "Peak number of COVID19+ presentations to the health system per day", min=1, max=params$I_finalmax, value=params$I_final)
+              ),
+	         conditionalPanel(
+              condition = "input.distrib=='ramp'",
+              sliderInput("rampslope", "Rate of increase in number of COVID19+ presentations to the health system per day", min=params$rampslope_min, 
+                          max=params$rampslope_max, value=params$rampslope, step = params$rampslope_step)
+              ),
+            conditionalPanel(
+              condition = "input.distrib == 'exponential'",
+              sliderInput("doubling_time", "Doubling time for COVID19+ presentations to the health system per day (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime, step=0.1)
             )
-          # DOWNLOAD BUTTON, hidden for now. 
+          ),
+          conditionalPanel(condition="input.scenarioSelect == 'dynamic'", 
+            radioButtons("dynamicModel", "Dynamic model projection",
+                         c("Foo"="foo",
+                           "Bar"="bar",
+                           "Baz"="baz"),
+                         inline=TRUE,
+                         selected="foo")
+          )
+
+
           , hr(),
         downloadButton("report", "Download scenario report")
         ),
