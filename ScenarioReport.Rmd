@@ -33,7 +33,7 @@ params:
   doprotocols: NA
 ---
 
-This report includes the parameters values, plot outputs, and summary of key results from the model.  Note that these model outputs are completely dependent on user-defined inputs and depend on assumptions encoded in the model structure. Please familiarize yourself with the model structure and inputs for accurate interpretation of these outputs.  The model structure can be found on the "About" tab of the COVID-19 Hospital Capacity online webapp (<https://forrestcrawford.shinyapps.io/covid19_icu/>).
+This report includes the parameters values, plot outputs, and summary of key results from the model, given user-defined inputs.  Model outputs are completely dependent on user-defined inputs and depend on assumptions encoded in the model structure. Please familiarize yourself with the model structure and inputs for accurate interpretation of these outputs.  The model structure can be found on the "About" tab of the COVID-19 Hospital Capacity online webapp (<https://forrestcrawford.shinyapps.io/covid19_icu/>).
 
 # Key points
 
