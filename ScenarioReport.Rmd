@@ -5,11 +5,6 @@ date: "Generated on `r format(Sys.time(), '%d %B, %Y')`"
 output: 
   pdf_document:
     df_print: kable
-    latex_engine: xelatex
-header-includes:
-  - \usepackage{helvet}
-  - \usepackage[T1]{fontenc}
-  - \renewcommand\familydefault{\sfdefault} 
 fontsize: 11pt
 geometry: margin=1in
 params:
