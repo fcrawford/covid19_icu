@@ -38,8 +38,11 @@ params:
   doprotocols: NA
 ---
 
+This report includes the parameters values, plot outputs, and summary of key results from the model.  Note that these model outputs are completely dependent on user-defined inputs and depend on assumptions encoded in the model structure. Please familiarize yourself with the model structure and inputs for accurate interpretation of these outputs.  The model structure can be found on the "About" tab of the COVID-19 Hospital Capacity online webapp (<https://forrestcrawford.shinyapps.io/covid19_icu/>).
 
 # Parameter Values 
+
+These are the values set by the user to describe the number of COVID19+ patients presenting to the health care system, health system capacity, and features of the patient population.
 
 ```{r, echo=FALSE}
 txt_params = text_parameters(t=params$t,
@@ -72,9 +75,6 @@ knitr::kable(txt_params)
 
 # Plots 
 
-## Margret's edits
-
-
 ```{r, echo=FALSE}
 plots<-plot_hospital(t=params$t,
                      young=params$young,
@@ -99,15 +99,36 @@ plots<-plot_hospital(t=params$t,
                      p_death_floor2=params$p_death_floor2,
                      p_death_floor3=params$p_death_floor3,
                      doprotocols=params$doprotocols)
+```
 
+
+This is a plot of user-defined inputs to the simulation: the number of COVID19+ cases presenting to the health system each day during the simulation.
+
+```{r, echo = FALSE, fig.width = 10, fig.height = 5.6}
     plot(plots[[1]]) 
+```
+
+This is a plot of cumulative COVID19+ presentations and deaths at each time point during the simulation.
+
+```{r, echo = FALSE, fig.width = 10, fig.height = 5.6}
     plot(plots[[2]])
+```
+
+\newpage
+
+This plot illustrates the number of deaths which will occur during the simulation.  The total number of deaths is broken down by location in the hospital.
+
+```{r, echo = FALSE, fig.width = 10, fig.height = 5.6}
     plot(plots[[3]])
+```
+
+This plot illustrates the number of patients who are projected to utilize ICU of floor beds during the simulation.  If floor and ICU capacity are exceeded, a label appears which indicates the day on which this occurs.
+
+```{r, echo = FALSE, fig.width = 10, fig.height = 5.6}
     plot(plots[[4]]) 
 ```
 
 # Summary 
-
 
 ```{r, echo=FALSE}
 
@@ -135,21 +156,23 @@ txt <- text_hospital(t=params$t,
                      p_death_floor3=params$p_death_floor3,
                      doprotocols=params$doprotocols)
 
+    names(txt) = c()
+
     knitr::kable(txt)
     
 ```
 
 
-
+\newpage
 
 # About the application
 
 This app implements a model for utilization of ICU beds, floor beds, and patient deaths due to COVID-19.  The model was developed by the COVID-19 Statistics,
-Policy modeling and Epidemiology Collective (C-SPEC).  The app was written by [Soheil Eshghi](http://www.soheileshghi.com/), [Margret Erlendsdottir] (https://medicine.yale.edu/profile/margret_erlendsdottir/), 
+Policy modeling and Epidemiology Collective (C-SPEC).  The app was written by [Soheil Eshghi](http://www.soheileshghi.com/), [Margret Erlendsdottir](https://medicine.yale.edu/profile/margret_erlendsdottir/), 
 [Maile Thayer Phillips](https://medicine.yale.edu/profile/maile_phillips/), [Suzan Iloglu](https://medicine.yale.edu/profile/suzan_iloglu/), [Christian Testa](https://ctesta.com) 
 and [Forrest W. Crawford](http://www.crawfordlab.io) using the [R](http://www.r-project.org) [shiny](http://shiny.rstudio.com/) framework. 
 
-We are especially grateful to [Gregg Gonsalves](https://medicine.yale.edu/profile/gregg_gonsalves/), [David Paltiel] (https://medicine.yale.edu/profile/david_paltiel/),
+We are especially grateful to [Gregg Gonsalves](https://medicine.yale.edu/profile/gregg_gonsalves/), [David Paltiel](https://medicine.yale.edu/profile/david_paltiel/),
 Hanna Ehrlich, Raphael Sherak,  Melanie Chitwood, Thomas Thornhill, [Nicole Swartwood](https://prevention-policy-modeling-lab.sph.harvard.edu/nicole-swartwood/), 
 and Stephanie Perniciaro for advice and comments.  
 
