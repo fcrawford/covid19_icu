@@ -89,10 +89,10 @@ text_hospital = function(t,
     pt_init = sum((hospital %>% select(C1, C2, C3, FL1, FL2, FL3))[1,])
     
     ###calculate initial utilization by percentage
-    M_inf = 3e15
-    M_occupied_inf = M*M_occupied/(100*M_inf)
-    L_inf = 3e15
-    L_occupied_inf = L*L_occupied/(100*L_inf)
+    M_inf = hospital$CTotal[1] + max(hospital$Number_seen_at_ED)
+    M_occupied_inf = M*M_occupied/(M_inf)
+    L_inf = hospital$FTotal[1] + max(hospital$Number_seen_at_ED)
+    L_occupied_inf = L*L_occupied/(L_inf)
     
     
     ###calculate max utilization
