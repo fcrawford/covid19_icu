@@ -70,20 +70,30 @@ txt <- text_hospital(t=params$t,
     rownames(txt) = txt$Variable
      
     txt$Value = as.character(txt$Value)
+    
+    txt2 = txt
+    
+      if (txt2["Days to floor overflow","Value"] == "No shortage"){
+      txt2["Days to floor overflow","Value"] = "a time beyond the simulation"
+    } else {txt2["Days to floor overflow","Value"] = paste(txt2["Days to floor overflow","Value"], " days")}
+    
+    if (txt2["Days to ICU overflow","Value"] == "No shortage"){
+      txt2["Days to ICU overflow","Value"] = "a time beyond the simulation"
+    } else {txt2["Days to ICU overflow","Value"] = paste(txt2["Days to ICU overflow","Value"], " days")}
 
 ```
    
 Under specified parameters, capacities, and expansion strategies, the model predicts:
 
-* ICU beds will reach capacity at **`r txt["Days to ICU overflow", "Value"]` days**.
+* ICU beds will reach capacity at **`r txt2["Days to ICU overflow", "Value"]`**.
 
-* Floor beds will reach capacity at **`r txt["Days to floor overflow", "Value"]` days**.
+* Floor beds will reach capacity at **`r txt2["Days to floor overflow", "Value"]`**.
 
-* The total number of deaths will be **`r txt["Total deaths of COVID19+ patients", "Value"]`**.
+* The total number of deaths will be **`r txt2["Total deaths of COVID19+ patients", "Value"]`**.
 
-* A hospital case-fatality rate of **`r txt["Case fatality ratio for COVID19+ patients", "Value"]`**.
+* A hospital case-fatality rate of **`r txt2["Case fatality ratio for COVID19+ patients", "Value"]`**.
 
-* Accommodating all COVID19+ patients will require an **`r txt["Extra floor beds needed for COVID19+ patients", "Value"]` extra floor beds** and **`r txt["Extra ICU beds needed for COVID19+ patients", "Value"]` extra ICU beds**.
+* Accommodating all COVID19+ patients will require an **`r txt2["Extra floor beds needed for COVID19+ patients", "Value"]` extra floor beds** and **`r txt["Extra ICU beds needed for COVID19+ patients", "Value"]` extra ICU beds**.
 
 # Parameter Values 
 
