@@ -121,6 +121,7 @@ hospital_queues_ynhh<- function(t,
                                          #####################
                                          slope,
                                          doprotocols=0,
+                                        read_in=0,
                                          ...
 ){
   
@@ -198,35 +199,67 @@ hospital_queues_ynhh<- function(t,
   )
   
   ### create functions for reports and ramping
+  if (read_in==0)
+  {
+    
+    reports <- approxfun(
+      report_rate(
+        t = params$t,
+        initial_report = params$I_init,
+        final_report = params$I_final,
+        distribution=params$distribution,
+        growth_rate=log(2)/params$doublingtime,
+        rampslope=params$rampslope
+      ),
+      rule=2)
+    
+
+    
+    youngs <-  function(time){
+      reports(time) * params$young
+    }
+    
+    mediums <- function(time){
+      reports(time) * params$medium
+    }
+    olds <- function(time){
+      reports(time) * params$old
+    }
+    
+  } else{
+    reports <- empirical_ynhh();
+    
+    params$t=max(reports$time)
+    
+    youngs <- approxfun( 
+      x= reports$time,
+      y= reports$young,
+      method="constant",
+      f=0,
+      rule=2);
+    
+    mediums <- approxfun( 
+      x= reports$time,
+      y= reports$medium,
+      method="constant",
+      f=0,
+      rule=2);
+    
+    
+    olds <- approxfun( 
+      x= reports$time,
+      y= reports$old,
+      method="constant",
+      f=0,
+      rule=2);
+    
+    
+    
+    
+  }
+
   
-  # reports <- approxfun(
-  #   report_rate(
-  #     t = params$t, 
-  #     initial_report = params$I_init, 
-  #     final_report = params$I_final, 
-  #     distribution=params$distribution, 
-  #     growth_rate=log(2)/params$doublingtime, 
-  #     rampslope=params$rampslope
-  #   ),
-  #   rule=2)
   
-  reports <- empirical_ynhh();
-  
-  youngs <- approxfun( 
-    x= reports$time,
-    y= reports$young,
-    rule=2);
-  
-  mediums <- approxfun( 
-    x= reports$time,
-    y= reports$medium,
-    rule=2);
-  
-  
-  olds <- approxfun( 
-    x= reports$time,
-    y= reports$old,
-    rule=2);
   
   capacity_L <- approxfun(
     capacity_ramping(
