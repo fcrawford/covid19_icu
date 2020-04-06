@@ -153,6 +153,8 @@ This is a plot of user-defined inputs to the simulation: the number of COVID19+ 
     plot(plots[[1]]) 
 ```
 
+\newpage
+
 This is a plot of cumulative COVID19+ presentations and deaths at each time point during the simulation.
 
 ```{r, echo = FALSE, fig.width = 10, fig.height = 5.6}
@@ -165,6 +167,8 @@ This plot illustrates the number of deaths which will occur during the simulatio
 ```{r, echo = FALSE, fig.width = 10, fig.height = 5.6}
     plot(plots[[3]])
 ```
+
+\newpage
 
 This plot illustrates the number of patients who are projected to utilize ICU of floor beds during the simulation.  If floor and ICU capacity are exceeded, a label appears which indicates the day on which this occurs.
 
