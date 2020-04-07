@@ -26,7 +26,7 @@ update_inputs <- function(t,
                                         #####################
                                         slope,
                                         #####################
-                                        ed_visit_timeseries,
+                                        ed_visits_timeseries,
                                         ... #
                                         ) {
   
@@ -98,11 +98,11 @@ update_inputs <- function(t,
   if(!missing(slope)) params$slope=slope;
   
   ########################################## NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW 
-  if(!missing(ed_visit_timeseries)) {
-    params$ed_visit_timeseries = ed_visit_timeseries;
+  if(!missing(ed_visits_timeseries)) {
+    params$ed_visits_timeseries = ed_visits_timeseries;
   } else {
     
-    params$ed_visit_timeseries=rep(0,20);
+    params$ed_visits_timeseries=rep(0,20);
     
   }
   ###########################################

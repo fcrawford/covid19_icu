@@ -70,25 +70,26 @@ capacity_ramping<-function(start,
 
 #' @export
 hospital_input_generation <- function(dynamicModel=0,
-                                      t,
-                                      I_init,
-                                      I_final,
-                                      distribution,
-                                      doublingtime,
-                                      rampslope,
-                                      ed_visit_timeseries
+                                      params
+                                      #t,
+                                      #I_init,
+                                      #I_final,
+                                      #distribution,
+                                      #doublingtime,
+                                      #rampslope,
+                                      #ed_visit_timeseries
 ){
   
   if (dynamicModel==0)
     output<- report_rate(
-      t = t, 
-      initial_report = I_init, 
-      final_report = I_final, 
-      distribution=distribution, 
-      growth_rate=log(2)/doublingtime, 
-      rampslope=rampslope
+      t = params$t, 
+      initial_report = params$I_init, 
+      final_report = params$I_final, 
+      distribution=params$distribution, 
+      growth_rate=log(2)/params$doublingtime, 
+      rampslope=params$rampslope
     ) else{
-      output<- ed_visit_timeseries
+      output<- params$ed_visits_timeseries
       
     }
   output
@@ -96,19 +97,20 @@ hospital_input_generation <- function(dynamicModel=0,
 }
 
 #' @export
-floor_capacity_timeseries <- function(t,
-                                      L,
-                                      L_occupied,
-                                      L_final,
-                                      L_ramp, 
+floor_capacity_timeseries <- function(#t,
+                                      #L,
+                                      #L_occupied,
+                                      #L_final,
+                                      #L_ramp,
+                                      params,
                                       doprotocols=0
 ){
   
   output<- capacity_ramping(
-    start=L,
-    finish=L_final,
-    ramp=c(L_ramp[1],L_ramp[2]),
-    t=t)
+    start=params$L,
+    finish=params$L_final,
+    ramp=c(params$floorcapramp1,params$floorcapramp2),
+    t=params$t)
   
 
   
@@ -119,18 +121,19 @@ floor_capacity_timeseries <- function(t,
 
 
 
-icu_capacity_timeseries <- function(t,
-                                    M,
-                                    M_occupied,
-                                    M_final,
-                                    M_ramp,
+icu_capacity_timeseries <- function(#t,
+                                    # M,
+                                    # M_occupied,
+                                    # M_final,
+                                    # M_ramp,
+                                    params,
                                     doprotocols=0){
   
   output<- capacity_ramping(
-    start=M,
-    finish=M_final,
-    ramp=c(M_ramp[1],M_ramp[2]),
-    t=t)
+    start=params$M,
+    finish=params$M_final,
+    ramp=c(params$icucapramp1,params$icucapramp2),
+    t=params$t)
   
   output
   
