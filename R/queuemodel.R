@@ -19,7 +19,7 @@
 
 
 #' @export
-hospital_queues<- function(t,
+hospital_queues<- function(              # t,
                                          # young,
                                          # medium,
                                          # #######################
@@ -46,8 +46,8 @@ hospital_queues<- function(t,
                                          # p_death_floor2,
                                          # p_death_floor3,
                                          #####################
-                                        params,
-                                         slope,
+                                         params,
+                                         # slope,
                                          doprotocols=0,
                                          #####################
                                          floor_capacity_timeseries,
@@ -57,7 +57,7 @@ hospital_queues<- function(t,
 ){
   
 
-  
+
   # 
   # # read in fixed and derived parameters
   # 
