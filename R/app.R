@@ -77,20 +77,20 @@ server <- function(input, output, session) {
                                                                  medium =input$ages[2]-input$ages[1],
                                                                  #######################
                                                                  I_init= input$initrep,
-                                                                 I_final=input$finalrep,,
-                                                                 distribution =input$distrib,,
+                                                                 I_final=input$finalrep,
+                                                                 distribution =input$distrib,
                                                                  doublingtime=input$doubling_time,
                                                                  rampslope=input$rampslope,
                                                                  #######################
                                                                  M=ifelse(is.na(input$icucap),params$M,input$icucap),
                                                                  L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-                                                                 L_occupied=input$L_occupied,,
-                                                                 M_occupied=input$M_occupied,,
+                                                                 L_occupied=input$L_occupied,
+                                                                 M_occupied=input$M_occupied,
                                                                  Lramp=input$floorcapramp,
                                                                  Mramp=input$icucapramp,
                                                                  ######################
                                                                  avg_LOS_ICU=input$avgicudischargetime,
-                                                                 avg_LOS_Floor=input$avgfloordischargetime,,
+                                                                 avg_LOS_Floor=input$avgfloordischargetime,
                                                                  #####################
                                                                  p_death_ICU2= input$ICUdeath_medium,
                                                                  p_death_ICU3= input$ICUdeath_old,
@@ -144,27 +144,27 @@ server <- function(input, output, session) {
                                                medium =input$ages[2]-input$ages[1],
                                                #######################
                                                I_init= input$initrep,
-                                               I_final=input$finalrep,,
-                                               distribution =input$distrib,,
+                                               I_final=input$finalrep,
+                                               distribution =input$distrib,
                                                doublingtime=input$doubling_time,
                                                rampslope=input$rampslope,
                                                #######################
                                                M=ifelse(is.na(input$icucap),params$M,input$icucap),
                                                L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-                                               L_occupied=input$L_occupied,,
-                                               M_occupied=input$M_occupied,,
+                                               L_occupied=input$L_occupied,
+                                               M_occupied=input$M_occupied,
                                                Lramp=input$floorcapramp,
                                                Mramp=input$icucapramp,
                                                ######################
                                                avg_LOS_ICU=input$avgicudischargetime,
-                                               avg_LOS_Floor=input$avgfloordischargetime,,
+                                               avg_LOS_Floor=input$avgfloordischargetime,
                                                #####################
                                                p_death_ICU2= input$ICUdeath_medium,
                                                p_death_ICU3= input$ICUdeath_old,
                                                p_death_floor2=input$floordeath_medium,
                                                p_death_floor3=input$floordeath_old,
                                                #####################
-                                               ed_visits_timeseries=  as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]])),
+                                               ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]])),
                           dynamicModel=input$dynamicModel,
                           #ed_visit_timeseries=ifelse((input$dynamicModel), c(0,0,0), input$ed_visit_timeseries),
                           doprotocols=input$doprotocols)
@@ -205,20 +205,20 @@ server <- function(input, output, session) {
                                                             medium =input$ages[2]-input$ages[1],
                                                             #######################
                                                             I_init= input$initrep,
-                                                            I_final=input$finalrep,,
-                                                            distribution =input$distrib,,
+                                                            I_final=input$finalrep,
+                                                            distribution =input$distrib,
                                                             doublingtime=input$doubling_time,
                                                             rampslope=input$rampslope,
                                                             #######################
                                                             M=ifelse(is.na(input$icucap),params$M,input$icucap),
                                                             L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-                                                            L_occupied=input$L_occupied,,
-                                                            M_occupied=input$M_occupied,,
+                                                            L_occupied=input$L_occupied,
+                                                            M_occupied=input$M_occupied,
                                                             Lramp=input$floorcapramp,
                                                             Mramp=input$icucapramp,
                                                             ######################
                                                             avg_LOS_ICU=input$avgicudischargetime,
-                                                            avg_LOS_Floor=input$avgfloordischargetime,,
+                                                            avg_LOS_Floor=input$avgfloordischargetime,
                                                             #####################
                                                             p_death_ICU2= input$ICUdeath_medium,
                                                             p_death_ICU3= input$ICUdeath_old,
@@ -365,16 +365,26 @@ fluidPage(theme=shinytheme("simplex"),
           conditionalPanel(condition="input.scenarioSelect == 'dynamic'", 
             radioButtons("dynamicModel", "Dynamic model projection",
                          c("Scenario Generation"=0,
-                           "User Input"=1),
+                           "Input ED visits"=1,
+                           "Input Infection incidence"=2),
                          inline=TRUE,
                          selected=0)
           ),
             
             conditionalPanel( condition= "input.dynamicModel==1",
-                textInput("ed_visits_timeseries", label = h6("Input ED visit timeseries"), value = "0,0,0,0,0,0,0,0")
+                textInput("ed_visits_timeseries", label = h6("ED visit time-series"), value = "0,0,0,0,0,0,0,0")
             
             
-            )
+            ),
+          conditionalPanel( condition= "input.dynamicModel==2",
+                            textInput("infecton_timeseries", label = h6("Infection incidence time-series"), value = "0,0,0,0,0,0,0,0"),
+                            
+                            
+          sliderInput("reporting_delay", "Time from infection incidence to presenting to ED",     min=1, max=20, step=1, value=10),
+          
+          sliderInput("reporting_percentage", "Percentage of infectives presenting to ED",     min=1, max=100, step=1, value=20),
+          
+          )
               
           
           , hr(),
