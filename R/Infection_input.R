@@ -8,8 +8,8 @@ reporting_infections<- function(
   doprotocols=0,
   #####################
   infection_timeseries= c(0,0,0),
-  reporting_rate,
-  reporting_percentage=0.1,
+  reporting_rate=0.1,
+  reporting_percentage=0.3,
   ...
 ){
  
