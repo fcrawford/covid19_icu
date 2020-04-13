@@ -45,59 +45,32 @@ server <- function(input, output, session) {
     
     output$hospitalPlot <- renderPlot({
     # put slider control values here as arguments
-    plots<-plot_hospital(#                   t=input$time,
-                         #                   young=input$ages[1],
-                         #                   medium=input$ages[2]-input$ages[1],
-                         #                   #######################
-                         #                   I_init=input$initrep,
-                         #                   I_final=input$finalrep,
-                         #                   distribution=input$distrib,
-                         #                   doublingtime=input$doubling_time,
-                         #                   rampslope=input$rampslope,
-                         #                   #######################
-                         #                   M=ifelse(is.na(input$icucap),params$M,input$icucap),
-                         #                   L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-                         #                   L_occupied=input$L_occupied,
-                         #                   M_occupied=input$M_occupied,
-                         #                   Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
-                         #                   Lramp=input$floorcapramp,
-                         #                   Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
-                         #                   Mramp=input$icucapramp,
-                         #                   ######################
-                         #                   avg_LOS_ICU=input$avgicudischargetime,
-                         #                   avg_LOS_Floor=input$avgfloordischargetime,
-                         #                   #####################
-                         #                   p_death_ICU2 = input$ICUdeath_medium,
-                         #                   p_death_ICU3= input$ICUdeath_old,
-                         #                   p_death_floor2=input$floordeath_medium,
-                         #                   p_death_floor3= input$floordeath_old,
-                                           #####################
-                                            params=update_inputs(t=input$time,
-                                                                 young= input$ages[1],
-                                                                 medium =input$ages[2]-input$ages[1],
-                                                                 #######################
-                                                                 I_init= input$initrep,
-                                                                 I_final=input$finalrep,
-                                                                 distribution =input$distrib,
-                                                                 doublingtime=input$doubling_time,
-                                                                 rampslope=input$rampslope,
-                                                                 #######################
-                                                                 M=ifelse(is.na(input$icucap),params$M,input$icucap),
-                                                                 L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-                                                                 L_occupied=input$L_occupied,
-                                                                 M_occupied=input$M_occupied,
-                                                                 Lramp=input$floorcapramp,
-                                                                 Mramp=input$icucapramp,
-                                                                 ######################
-                                                                 avg_LOS_ICU=input$avgicudischargetime,
-                                                                 avg_LOS_Floor=input$avgfloordischargetime,
-                                                                 #####################
-                                                                 p_death_ICU2= input$ICUdeath_medium,
-                                                                 p_death_ICU3= input$ICUdeath_old,
-                                                                 p_death_floor2=input$floordeath_medium,
-                                                                 p_death_floor3=input$floordeath_old,
-                                                                 #####################
-                                                                 ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]])),
+    plots<-plot_hospital(params=update_inputs(t=input$time,
+                                              young= input$ages[1],
+                                              medium =input$ages[2]-input$ages[1],
+                                              #######################
+                                              I_init= input$initrep,
+                                              I_final=input$finalrep,
+                                              distribution =input$distrib,
+                                              doublingtime=input$doubling_time,
+                                              rampslope=input$rampslope,
+                                              #######################
+                                              M=ifelse(is.na(input$icucap),params$M,input$icucap),
+                                              L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
+                                              L_occupied=input$L_occupied,
+                                              M_occupied=input$M_occupied,
+                                              Lramp=input$floorcapramp,
+                                              Mramp=input$icucapramp,
+                                              ######################
+                                              avg_LOS_ICU=input$avgicudischargetime,
+                                              avg_LOS_Floor=input$avgfloordischargetime,
+                                              #####################
+                                              p_death_ICU2= input$ICUdeath_medium,
+                                              p_death_ICU3= input$ICUdeath_old,
+                                              p_death_floor2=input$floordeath_medium,
+                                              p_death_floor3=input$floordeath_old,
+                                              #####################
+                                              ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]])),
                                             dynamicModel=input$dynamicModel,
                                             doprotocols=input$doprotocols)
     
@@ -112,34 +85,7 @@ server <- function(input, output, session) {
   
   output$hospitalTable <- renderTable({
     
-     text = text_hospital(# t=input$time,
-                          # young=input$ages[1],
-                          # medium=input$ages[2]-input$ages[1],
-                          # #######################
-                          # I_init=input$initrep,
-                          # I_final=input$finalrep,
-                          # distribution=input$distrib,
-                          # doublingtime=input$doubling_time,
-                          # rampslope=input$rampslope,
-                          # #######################
-                          # M=ifelse(is.na(input$icucap),params$M,input$icucap),
-                          # L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-                          # L_occupied=input$L_occupied,
-                          # M_occupied=input$M_occupied,
-                          # Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
-                          # Lramp=input$floorcapramp,
-                          # Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
-                          # Mramp=input$icucapramp,
-                          # #####################
-                          # avg_LOS_ICU=input$avgicudischargetime,
-                          # avg_LOS_Floor=input$avgfloordischargetime,
-                          # #####################
-                          # p_death_ICU2 = input$ICUdeath_medium,
-                          # p_death_ICU3= input$ICUdeath_old,
-                          # p_death_floor2=input$floordeath_medium,
-                          # p_death_floor3= input$floordeath_old,
-                          # #####################
-                          params=update_inputs(t=input$time,
+     text = text_hospital(params=update_inputs(t=input$time,
                                                young= input$ages[1],
                                                medium =input$ages[2]-input$ages[1],
                                                #######################
@@ -166,69 +112,38 @@ server <- function(input, output, session) {
                                                #####################
                                                ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]])),
                           dynamicModel=input$dynamicModel,
-                          #ed_visit_timeseries=ifelse((input$dynamicModel), c(0,0,0), input$ed_visit_timeseries),
                           doprotocols=input$doprotocols)
   })
 
   output$keypoints <- renderText({
-     dat = text_hospital(#              t=input$time,
-                         #              young=input$ages[1],
-                         #               medium=input$ages[2]-input$ages[1],
-                         # 
-                         #               #######################
-                         #               I_init=input$initrep,
-                         #               I_final=input$finalrep,
-                         #               distribution=input$distrib,
-                         #               doublingtime=input$doubling_time,
-                         #               rampslope=input$rampslope,
-                         #               #######################
-                         #               M=ifelse(is.na(input$icucap),params$M,input$icucap),
-                         #               L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-                         #               L_occupied=input$L_occupied,
-                         #               M_occupied=input$M_occupied,
-                         #               Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
-                         #               Lramp=input$floorcapramp,
-                         #               Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
-                         #               Mramp=input$icucapramp,
-                         #               ######################
-                         #               avg_LOS_ICU=input$avgicudischargetime,
-                         #               avg_LOS_Floor=input$avgfloordischargetime,
-                         #               #####################
-                         #               p_death_ICU2 = input$ICUdeath_medium,
-                         #               p_death_ICU3= input$ICUdeath_old,
-                         #               p_death_floor2=input$floordeath_medium,
-                         #               p_death_floor3= input$floordeath_old,
-                         #               #####################
-                                       doprotocols=input$doprotocols,
-                                       params=update_inputs(t=input$time,
-                                                            young= input$ages[1],
-                                                            medium =input$ages[2]-input$ages[1],
-                                                            #######################
-                                                            I_init= input$initrep,
-                                                            I_final=input$finalrep,
-                                                            distribution =input$distrib,
-                                                            doublingtime=input$doubling_time,
-                                                            rampslope=input$rampslope,
-                                                            #######################
-                                                            M=ifelse(is.na(input$icucap),params$M,input$icucap),
-                                                            L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
-                                                            L_occupied=input$L_occupied,
-                                                            M_occupied=input$M_occupied,
-                                                            Lramp=input$floorcapramp,
-                                                            Mramp=input$icucapramp,
-                                                            ######################
-                                                            avg_LOS_ICU=input$avgicudischargetime,
-                                                            avg_LOS_Floor=input$avgfloordischargetime,
-                                                            #####################
-                                                            p_death_ICU2= input$ICUdeath_medium,
-                                                            p_death_ICU3= input$ICUdeath_old,
-                                                            p_death_floor2=input$floordeath_medium,
-                                                            p_death_floor3=input$floordeath_old,
-                                                            #####################
-                                                            ed_visits_timeseries=  as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]])),
-                                       dynamicModel=input$dynamicModel
-                                       #ed_visit_timeseries=ifelse((input$dynamicModel), c(0,0,0), input$ed_visit_timeseries)
-                         )
+     dat = text_hospital(doprotocols=input$doprotocols,
+                         params=update_inputs(t=input$time,
+                                              young= input$ages[1],
+                                              medium =input$ages[2]-input$ages[1],
+                                              #######################
+                                              I_init= input$initrep,
+                                              I_final=input$finalrep,
+                                              distribution =input$distrib,
+                                              doublingtime=input$doubling_time,
+                                              rampslope=input$rampslope,
+                                              #######################
+                                              M=ifelse(is.na(input$icucap),params$M,input$icucap),
+                                              L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
+                                              L_occupied=input$L_occupied,
+                                              M_occupied=input$M_occupied,
+                                              Lramp=input$floorcapramp,
+                                              Mramp=input$icucapramp,
+                                              ######################
+                                              avg_LOS_ICU=input$avgicudischargetime,
+                                              avg_LOS_Floor=input$avgfloordischargetime,
+                                              #####################
+                                              p_death_ICU2= input$ICUdeath_medium,
+                                              p_death_ICU3= input$ICUdeath_old,
+                                              p_death_floor2=input$floordeath_medium,
+                                              p_death_floor3=input$floordeath_old,
+                                              #####################
+                                              ed_visits_timeseries=  as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]])),
+                                       dynamicModel=input$dynamicModel)
     
     rownames(dat) = dat$Variable
      
