@@ -252,9 +252,11 @@ fluidPage(theme=shinytheme("simplex"),
 
 
 
-          radioButtons("scenarioSelect", h4("Scenario selection"), c("Static"="static", "Dynamic model-based"="dynamic"), inline=TRUE,selected="static"),
+          #radioButtons("scenarioSelect", h4("Scenario selection"), c("Static"="static", "Dynamic model-based"="dynamic"), inline=TRUE,selected="static"),
+          #conditionalPanel(condition="input.scenarioSelect == 'static'",
 
-          conditionalPanel(condition="input.scenarioSelect == 'static'",
+
+            # Keep this static functionality
             radioButtons("distrib", "Change in number of COVID19+ presentations to the health system per day",
                        c("Exponential"="exponential",
                          "Linear"="ramp",
@@ -276,7 +278,13 @@ fluidPage(theme=shinytheme("simplex"),
               condition = "input.distrib == 'exponential'",
               sliderInput("doubling_time", "Doubling time for COVID19+ presentations to the health system per day (days)", min=params$doublingtime_min, max=params$doublingtime_max, value=params$doublingtime, step=0.1)
             )
-          ),
+          # end static functionality
+
+
+          # development version only 
+          # set condition to "0==0" to show scenario type selection
+          ,
+          conditionalPanel(condition="0==1",
           conditionalPanel(condition="input.scenarioSelect == 'dynamic'", 
             radioButtons("dynamicModel", "Dynamic model projection",
                          c("Scenario Generation"=0,
@@ -285,24 +293,17 @@ fluidPage(theme=shinytheme("simplex"),
                          inline=TRUE,
                          selected=0)
           ),
-            
-            conditionalPanel( condition= "input.dynamicModel==1",
-                textInput("ed_visits_timeseries", label = h6("ED visit time-series"), value = "0,0,0,0,0,0,0,0")
-            
-            
-            ),
-          conditionalPanel( condition= "input.dynamicModel==2",
-                            textInput("infecton_timeseries", label = h6("Infection incidence time-series"), value = "0,0,0,0,0,0,0,0"),
-                            
-                            
-          sliderInput("reporting_delay", "Time from infection incidence to presenting to ED",     min=1, max=20, step=1, value=10),
-          
-          sliderInput("reporting_percentage", "Percentage of infectives presenting to ED",     min=1, max=100, step=1, value=20),
-          
-          )
-              
-          
-          , hr(),
+          conditionalPanel( condition= "input.dynamicModel==1",
+             textInput("ed_visits_timeseries", label = h6("ED visit time-series"), value = "0,0,0,0,0,0,0,0")
+          ),
+          conditionalPanel(condition= "input.dynamicModel==2",
+                textInput("infecton_timeseries", label = h6("Infection incidence time-series"), value = "0,0,0,0,0,0,0,0"),
+                sliderInput("reporting_delay", "Time from infection incidence to presenting to ED",     min=1, max=20, step=1, value=10),
+                sliderInput("reporting_percentage", "Percentage of infectives presenting to ED",     min=1, max=100, step=1, value=20),
+          ) 
+          ) 
+          , 
+          hr(),
         downloadButton("report", "Download scenario report")
         ),
         tabPanel("Capacity", fluid=TRUE,
