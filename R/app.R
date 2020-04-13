@@ -205,7 +205,7 @@ server <- function(input, output, session) {
         file.copy("ScenarioReport.Rmd", tempReport, overwrite = TRUE)
 
         # Set up parameters to pass to Rmd document
-        params <- list(t=input$time,
+        params <- list(params=update_inputs(t=input$time,
                          young=input$ages[1],
                          medium=input$ages[2]-input$ages[1],
                          I_init=input$initrep,
@@ -217,9 +217,9 @@ server <- function(input, output, session) {
                          L=ifelse(is.na(input$floorcap),params$L,input$floorcap),
                          L_occupied=input$L_occupied,
                          M_occupied=input$M_occupied,
-                         Lfinal=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
+                         #L_final=ifelse(is.na(input$floorcaptarget),params$L,input$floorcaptarget),
                          Lramp=input$floorcapramp,
-                         Mfinal=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
+                         #M_final=ifelse(is.na(input$icucaptarget),params$M,input$icucaptarget),
                          Mramp=input$icucapramp,
                          avg_LOS_ICU=input$avgicudischargetime,
                          avg_LOS_Floor=input$avgfloordischargetime,
@@ -227,7 +227,13 @@ server <- function(input, output, session) {
                          p_death_ICU3= input$ICUdeath_old,
                          p_death_floor2=input$floordeath_medium,
                          p_death_floor3= input$floordeath_old,
-                         doprotocols=input$doprotocols)
+                         doprotocols=input$doprotocols,
+                       ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]]),
+                       #####################
+                       #L_final=input$floorcaptarget,
+                       M_final=input$icucaptarget),
+                        #####################
+                        dynamicModel=input$dynamicModels)
 
 
         # Knit the document, passing in the `params` list, and eval it in a
