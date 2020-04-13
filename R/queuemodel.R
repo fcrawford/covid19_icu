@@ -19,68 +19,11 @@
 
 
 #' @export
-hospital_queues<- function(              # t,
-                                         # young,
-                                         # medium,
-                                         # #######################
-                                         # I_init,
-                                         # I_final,
-                                         # distribution,
-                                         # doublingtime,
-                                         # rampslope,
-                                         # #######################
-                                         # M,
-                                         # L,
-                                         # L_occupied,
-                                         # M_occupied,
-                                         # Lfinal,
-                                         # Lramp,
-                                         # Mfinal,
-                                         # Mramp,
-                                         # ######################
-                                         # avg_LOS_ICU,
-                                         # avg_LOS_Floor,
-                                         # #####################
-                                         # p_death_ICU2,
-                                         # p_death_ICU3,
-                                         # p_death_floor2,
-                                         # p_death_floor3,
-                                         #####################
-                                         params,
-                                         # slope,
-                                         doprotocols=0,
-                                         #####################
-                                         floor_capacity_timeseries,
-                                         icu_capacity_timeseries,
-                                         ed_visits_timeseries,
-                                         ...
-){
+hospital_queues<- function(params, doprotocols=0, floor_capacity_timeseries, icu_capacity_timeseries, ed_visits_timeseries, ...){
   
 
 
-  # 
-  # # read in fixed and derived parameters
-  # 
-  # 
-  # if(doprotocols==0) {
-  #   params$Mfinal=params$M
-  #   params$Lfinal=params$L
-  # } else{
-  #   params$Mfinal=Mfinal
-  #   params$Lfinal=Lfinal
-  #   
-  #   
-  # }
-  
-  
   ############## SET INITIAL CONDITIONS
-  
-  
-  
-  
-  #ptm <- proc.time()
-  
-  ##########
   
   init       <- c(I=rep(0.0, times=3),
                   P=c(params$young, params$medium, params$old) * params$I_init, 
@@ -102,7 +45,7 @@ hospital_queues<- function(              # t,
                   FTotal= params$L * params$L_occupied/100
   )
   
-  ### create functions for reports and ramping
+  ### functions for reports and ramping
   
   reports <- approxfun(
     ed_visits_timeseries,
