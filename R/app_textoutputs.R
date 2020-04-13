@@ -126,7 +126,7 @@ text_parameters = function( doprotocols, dynamicModel, params, ...){
   
   
 
-df = data.frame(t=c("Time horizon", t),
+df = data.frame(t=c("Time horizon", params$t),
                 young=c("Proportion COVID+ admissions <18 years", params$young),
                 medium=c("Proportion COVID+ admissions 18-65 years",params$medium),
                 I_init=c("Initial infections per day", params$I_init),
@@ -138,10 +138,10 @@ df = data.frame(t=c("Time horizon", t),
                      L=c("Initial Floor capacity", params$L),
                      L_occupied=c("Initial Floor occupancy %", params$L_occupied),
                      M_occupied=c("Initial ICU occupancy %", params$M_occupied),
-                     Lfinal=c("Target floor capacity", params$Lfinal),
-                     Lramp=c("Floor ramp", paste(Lramp[1],"--",params$Lramp[2])),
-                     Mfinal=c("Target ICU capacity", params$Mfinal),
-                     Mramp=c("ICU ramp", paste(Mramp[1],"--",params$Mramp[2])),
+                     L_final=c("Target floor capacity", params$L_final),
+                     Lramp=c("Floor ramp", paste(params$floorcapramp1,"--",params$floorcapramp2)),
+                     M_final=c("Target ICU capacity", params$M_final),
+                     Mramp=c("ICU ramp", paste(params$icucapramp1,"--",params$icucapramp2)),
                      avg_LOS_ICU=c("Average time in ICU for COVID+ patients", params$avg_LOS_ICU),
                      avg_LOS_Floor=c("Average time on floor for COVID+ patiens", params$avg_LOS_Floor),
                      p_death_ICU2=c("Probability of death in ICU, 18-65 years, given time in ICU", params$p_death_ICU2),
