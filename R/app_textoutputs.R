@@ -1,116 +1,31 @@
 #' @export
-text_hospital = function(              # t,
-                                       # young,
-                                       # medium,
-                                       # #######################
-                                       # I_init,
-                                       # I_final,
-                                       # distribution,
-                                       # doublingtime,
-                                       # rampslope,
-                                       # #######################
-                                       # M,
-                                       # L,
-                                       # L_occupied,
-                                       # M_occupied,
-                                       # Lfinal,
-                                       # Lramp,
-                                       # Mfinal,
-                                       # Mramp,
-                                       # ######################
-                                       # avg_LOS_ICU,
-                                       # avg_LOS_Floor,
-                                       # #####################
-                                       # p_death_ICU2,
-                                       # p_death_ICU3,
-                                       # p_death_floor2,
-                                       # p_death_floor3,
-                                       # #####################
-                                       # slope,
-                                       doprotocols=0,
-                                       dynamicModel=0,
-                                       params,
-                                       ...){
+text_hospital = function(doprotocols=0, dynamicModel=0, params, ...){
   
   
   
   
-    hospital_input <- hospital_input_generation (               dynamicModel=dynamicModel,
-                                                                params=params
-                                                                # t=params$t,
-                                                                # I_init=params$I_init,
-                                                                # I_final=params$I_final,
-                                                                # distribution=params$distribution,
-                                                                # doublingtime=params$doublingtime,
-                                                                # rampslope=params$rampslope,
-                                                                # ed_visits_timeseries=params$ed_visits_timeseries
-    )
+    hospital_input <- hospital_input_generation (dynamicModel=dynamicModel, params=params)
     
     if (dynamicModel==1){
       params$t= length(hospital_input)
     }
-    
-    
     
     if(doprotocols==0) {
       params$M_final=params$M
       params$L_final=params$L
     }
     
-    floor_capacity_function <- floor_capacity_timeseries ( #t=params$t,
-      #                                                         L=params$L,
-      #                                                         L_occupied=params$L_occupied,
-      #                                                         L_final=params$L_final,
-      #                                                         L_ramp=c(params$floorcapramp1, params$floorcapramp2), 
-                                                                params=params,
-                                                                doprotocols
-    )
+    floor_capacity_function <- floor_capacity_timeseries (params=params, doprotocols)
     
     
-    icu_capacity_function <- icu_capacity_timeseries(# t=params$t,
-                                                    # M=params$M,
-                                                    # M_occupied=params$M_occupied,
-                                                    # M_final=params$M_final,
-                                                    # M_ramp=c(params$icucapramp1, params$icucapramp2),
-                                                    params=params,
-                                                    doprotocols
-    )   
+    icu_capacity_function <- icu_capacity_timeseries( params=params, doprotocols)   
 
-    hospital <- hospital_queues(              # t=t,
-                                              # young=young,
-                                              # medium=medium,
-                                              # #######################
-                                              # I_init=I_init,
-                                              # I_final=I_final,
-                                              # distribution=distribution,
-                                              # doublingtime=doublingtime,
-                                              # rampslope=rampslope,
-                                              # #######################
-                                              # M=M,
-                                              # L=L,
-                                              # L_occupied=L_occupied,
-                                              # M_occupied=M_occupied,
-                                              # Lfinal=Lfinal,
-                                              # Lramp=Lramp,
-                                              # Mfinal=Mfinal,
-                                              # Mramp= Mramp,
-                                              # ######################
-                                              # avg_LOS_ICU=avg_LOS_ICU,
-                                              # avg_LOS_Floor=avg_LOS_Floor,
-                                              # #####################
-                                              # p_death_ICU2=p_death_ICU2,
-                                              # p_death_ICU3=p_death_ICU3,
-                                              # p_death_floor2=p_death_floor2,
-                                              # p_death_floor3=p_death_floor3,
-                                              # #####################
-                                              # slope=slope,
-                                              doprotocols=doprotocols,
-                                              dynamicModel=dynamicModel,
-                                              # ed_visits_timeseries =ed_visits_timeseries,
-                                              params=params,
-                                              floor_capacity_timeseries=floor_capacity_function,
-                                              icu_capacity_timeseries=icu_capacity_function,
-                                              ed_visits_timeseries= hospital_input)
+    hospital <- hospital_queues(doprotocols=doprotocols,
+                                dynamicModel=dynamicModel,
+                                params=params,
+                                floor_capacity_timeseries=floor_capacity_function,
+                                icu_capacity_timeseries=icu_capacity_function,
+                                ed_visits_timeseries= hospital_input)
     
 
     hospital$totaldead<- hospital$Dead_at_ICU + hospital$Dead_in_ED + hospital$Dead_on_Floor+ hospital$Dead_waiting_for_Floor+ hospital$Dead_waiting_for_ICU+ hospital$Dead_with_mild_symptoms
@@ -154,62 +69,19 @@ text_hospital = function(              # t,
     params$M_occupied= M_occupied_inf;
     params$L_occupied= L_occupied_inf;
     
-    floor_capacity_function <- floor_capacity_timeseries (#t=params$t,
-      #                                                         L=params$L,
-      #                                                         L_occupied=params$L_occupied,
-      #                                                         L_final=params$L_final,
-      #                                                         L_ramp=c(params$floorcapramp1, params$floorcapramp2), 
-                                                                params=params,
-                                                                doprotocols
-    )
+    floor_capacity_function <- floor_capacity_timeseries( params=params, doprotocols)
     
     
-    icu_capacity_function <- icu_capacity_timeseries(# t=params$t,
-                                                      # M=params$M,
-                                                      # M_occupied=params$M_occupied,
-                                                      # M_final=params$M_final,
-                                                      # M_ramp=c(params$icucapramp1, params$icucapramp2),
-                                                      params=params,
-                                                      doprotocols
-    )   
+    icu_capacity_function <- icu_capacity_timeseries( params=params, doprotocols)   
     
     
     ###calculate max utilization
-    hospital_inf <- hospital_queues(#t=t,
-                                    # young=young,
-                                    # medium=medium,
-                                    # #######################
-                                    # I_init=I_init,
-                                    # I_final=I_final,
-                                    # distribution=distribution,
-                                    # doublingtime=doublingtime,
-                                    # rampslope=rampslope,
-                                    # #######################
-                                    # M=M_inf,
-                                    # L=L_inf,
-                                    # L_occupied=L_occupied_inf,
-                                    # M_occupied=M_occupied_inf,
-                                    # Lfinal=L_inf,
-                                    # Lramp=c(0,0),
-                                    # Mfinal=M_inf,
-                                    # Mramp=c(0,0),
-                                    # ######################
-                                    # avg_LOS_ICU=avg_LOS_ICU,
-                                    # avg_LOS_Floor=avg_LOS_Floor,
-                                    # #####################
-                                    # p_death_ICU2=p_death_ICU2,
-                                    # p_death_ICU3=p_death_ICU3,
-                                    # p_death_floor2=p_death_floor2,
-                                    # p_death_floor3=p_death_floor3,
-                                    # #####################
-                                    # slope=slope,
-                                      doprotocols=0,
-                                      dynamicModel=dynamicModel,
-                                      #ed_visits_timeseries =ed_visits_timeseries,
-                                      params=params,
-                                      floor_capacity_timeseries=floor_capacity_function,
-                                      icu_capacity_timeseries=icu_capacity_function,
-                                      ed_visits_timeseries= hospital_input)
+    hospital_inf <- hospital_queues(doprotocols=0,
+                                    dynamicModel=dynamicModel,
+                                    params=params,
+                                    floor_capacity_timeseries=floor_capacity_function,
+                                    icu_capacity_timeseries=icu_capacity_function,
+                                    ed_visits_timeseries= hospital_input)
     
     if(max(hospital_inf$CTotal)-M_temp>0){
       C_needed = max(hospital_inf$CTotal) - M_temp
@@ -250,38 +122,7 @@ text_hospital = function(              # t,
 ####################################
 
 #' @export
-text_parameters = function(            # t,
-                                       # young,
-                                       # medium,
-                                       # #######################
-                                       # I_init,
-                                       # I_final,
-                                       # distribution,
-                                       # doublingtime,
-                                       # rampslope,
-                                       # #######################
-                                       # M,
-                                       # L,
-                                       # L_occupied,
-                                       # M_occupied,
-                                       # Lfinal,
-                                       # Lramp,
-                                       # Mfinal,
-                                       # Mramp,
-                                       # ######################
-                                       # avg_LOS_ICU,
-                                       # avg_LOS_Floor,
-                                       # #####################
-                                       # p_death_ICU2,
-                                       # p_death_ICU3,
-                                       # p_death_floor2,
-                                       # p_death_floor3,
-                                       # #####################
-                                       # slope,
-                                       doprotocols,
-                                       dynamicModel,
-                                       params,
-                                       ...){
+text_parameters = function( doprotocols, dynamicModel, params, ...){
   
   
 
