@@ -27,12 +27,14 @@ update_inputs <- function(t,
                           slope,
                           #####################
                           ed_visits_timeseries,
+                          #####################
+                          M_final,
+                          L_final,
                           ... #
                           ) {
   
   params = yaml.load_file( system.file("content/parameter_values.yaml", package='covid19icu') )
-  
-  
+
   #### Initializing the parameters not set
   
   if(!missing(t)) params$t=t
@@ -69,6 +71,10 @@ update_inputs <- function(t,
     params$floorcapramp1=Lramp[1];
     params$floorcapramp2=Lramp[2];
   }
+  
+  if(!missing(M_final)) params$M_final=M_final;
+  if(!missing(L_final)) params$L_final=L_final;
+  
   ###########################################
   if(!missing(avg_LOS_ICU)) 
   {
