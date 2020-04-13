@@ -8,29 +8,33 @@ output:
 fontsize: 11pt
 geometry: margin=1in
 params:
-  t: NA
-  young: NA
-  medium: NA
-  I_init: NA
-  I_final: NA
-  distribution: NA
-  doublingtime: NA
-  rampslope: NA
-  M: NA
-  L: NA
-  L_occupied: NA 
-  M_occupied: NA 
-  Lfinal: NA 
-  Lramp: NA 
-  Mfinal: NA 
-  Mramp: NA 
-  avg_LOS_ICU: NA
-  avg_LOS_Floor: NA
-  p_death_ICU2: NA
-  p_death_ICU3: NA
-  p_death_floor2: NA
-  p_death_floor3: NA
-  doprotocols: NA
+    t: NA
+    young: NA
+    medium: NA
+    I_init: NA
+    I_final: NA
+    distribution: NA
+    doublingtime: NA
+    rampslope: NA
+    M: NA
+    L: NA
+    L_occupied: NA 
+    M_occupied: NA 
+    Lfinal: NA 
+    Lramp: NA 
+    Mfinal: NA 
+    Mramp: NA 
+    avg_LOS_ICU: NA
+    avg_LOS_Floor: NA
+    p_death_ICU2: NA
+    p_death_ICU3: NA
+    p_death_floor2: NA
+    p_death_floor3: NA
+    doprotocols: NA
+    dynamicModel: NA
+    ed_visits_timeseries: NA
+    L_final: NA
+    M_final: NA
 ---
 
 This report includes the parameters values, plot outputs, and summary of key results from the model, given user-defined inputs.  Model outputs are completely dependent on user-defined inputs and depend on assumptions encoded in the model structure. Please familiarize yourself with the model structure and inputs for accurate interpretation of these outputs.  The model structure can be found on the "About" tab of the COVID-19 Hospital Capacity online webapp (<https://forrestcrawford.shinyapps.io/covid19_icu/>).
@@ -38,43 +42,60 @@ This report includes the parameters values, plot outputs, and summary of key res
 # Key points
 
 ```{r, echo=FALSE}
-txt <- text_hospital(t=params$t,
-                     young=params$young,
-                     medium=params$medium,
-                     I_init=params$I_init,
-                     I_final=params$I_final,
-                     distribution=params$distribution,
-                     doublingtime=params$doublingtime,
-                     rampslope=params$rampslope,
-                     M=params$M,
-                     L=params$L,
-                     L_occupied=params$L_occupied,
-                     M_occupied=params$M_occupied,
-                     Lfinal=params$Lfinal,
-                     Lramp=params$Lramp,
-                     Mfinal=params$Mfinal,
-                     Mramp=params$Mramp,
-                     avg_LOS_ICU=params$avg_LOS_ICU,
-                     avg_LOS_Floor=params$avg_LOS_Floor,
-                     p_death_ICU2=params$p_death_ICU2,
-                     p_death_ICU3=params$p_death_ICU3,
-                     p_death_floor2=params$p_death_floor2,
-                     p_death_floor3=params$p_death_floor3,
-                     doprotocols=params$doprotocols)
+
+params_rmd =update_inputs(t=params$t,
+                    young= params$young,
+                    medium =params$medium,
+                    #######################
+                    I_init= params$I_init,
+                    I_final=params$I_final,
+                    distribution =params$distribution,
+                    doublingtime=params$doublingtime,
+                    rampslope=params$rampslope,
+                    #######################
+                    M=params$M,
+                    L=params$L,
+                    L_occupied=params$L_occupied,
+                    M_occupied=params$M_occupied,
+                    Lramp=params$Lramp,
+                    Mramp=params$Mramp,
+                    ######################
+                    avg_LOS_ICU=params$avg_LOS_ICU,
+                    avg_LOS_Floor=params$avg_LOS_Floor,
+                    #####################
+                    p_death_ICU2= params$p_death_ICU2,
+                    p_death_ICU3= params$p_death_ICU3,
+                    p_death_floor2=params$p_death_floor2,
+                    p_death_floor3=params$p_death_floor3,
+                    #####################
+                    ed_visits_timeseries=  params$ed_visits_timeseries,
+                    #####################
+                    L_final=params$L_final,
+                    M_final=params$M_final)
+
+dynamicModel = 0
+
+txt <- text_hospital(doprotocols=params$doprotocols,
+                     params = params_rmd,
+                     dynamicModel=dynamicModel)
+
+
 
     rownames(txt) = txt$Variable
-     
+
     txt$Value = as.character(txt$Value)
-    
+
     txt2 = txt
-    
+
       if (txt2["Days to floor overflow","Value"] == "No shortage"){
       txt2["Days to floor overflow","Value"] = "a time beyond the simulation"
     } else {txt2["Days to floor overflow","Value"] = paste(txt2["Days to floor overflow","Value"], " days")}
-    
+
     if (txt2["Days to ICU overflow","Value"] == "No shortage"){
       txt2["Days to ICU overflow","Value"] = "a time beyond the simulation"
     } else {txt2["Days to ICU overflow","Value"] = paste(txt2["Days to ICU overflow","Value"], " days")}
+
+
 
 ```
    
@@ -95,28 +116,9 @@ Under specified parameters, capacities, and expansion strategies, the model pred
 These are the values set by the user to describe the number of COVID19+ patients presenting to the health care system, health system capacity, and features of the patient population.
 
 ```{r, echo=FALSE}
-txt_params = text_parameters(t=params$t,
-                     young=params$young,
-                     medium=params$medium,
-                     I_init=params$I_init,
-                     I_final=params$I_final,
-                     distribution=params$distribution,
-                     doublingtime=params$doublingtime,
-                     rampslope=params$rampslope,
-                     M=params$M,
-                     L=params$L,
-                     L_occupied=params$L_occupied,
-                     M_occupied=params$M_occupied,
-                     Lfinal=params$Lfinal,
-                     Lramp=params$Lramp,
-                     Mfinal=params$Mfinal,
-                     Mramp=params$Mramp,
-                     avg_LOS_ICU=params$avg_LOS_ICU,
-                     avg_LOS_Floor=params$avg_LOS_Floor,
-                     p_death_ICU2=params$p_death_ICU2,
-                     p_death_ICU3=params$p_death_ICU3,
-                     p_death_floor2=params$p_death_floor2,
-                     p_death_floor3=params$p_death_floor3)
+txt_params = text_parameters(doprotocols = params$doprotocols,
+                             params = params_rmd,
+                             dynamicModel = dynamicModel)
 
 rownames(txt_params) <- NULL
 
@@ -126,36 +128,16 @@ knitr::kable(txt_params)
 # Plots 
 
 ```{r, echo=FALSE}
-plots<-plot_hospital(t=params$t,
-                     young=params$young,
-                     medium=params$medium,
-                     I_init=params$I_init,
-                     I_final=params$I_final,
-                     distribution=params$distribution,
-                     doublingtime=params$doublingtime,
-                     rampslope=params$rampslope,
-                     M=params$M,
-                     L=params$L,
-                     L_occupied=params$L_occupied,
-                     M_occupied=params$M_occupied,
-                     Lfinal=params$Lfinal,
-                     Lramp=params$Lramp,
-                     Mfinal=params$Mfinal,
-                     Mramp=params$Mramp,
-                     avg_LOS_ICU=params$avg_LOS_ICU,
-                     avg_LOS_Floor=params$avg_LOS_Floor,
-                     p_death_ICU2=params$p_death_ICU2,
-                     p_death_ICU3=params$p_death_ICU3,
-                     p_death_floor2=params$p_death_floor2,
-                     p_death_floor3=params$p_death_floor3,
-                     doprotocols=params$doprotocols)
+plots<-plot_hospital(doprotocols = params$doprotocols,
+                             params = params_rmd,
+                             dynamicModel = dynamicModel)
 ```
 
 
 This is a plot of user-defined inputs to the simulation: the number of COVID19+ cases presenting to the health system each day during the simulation.
 
 ```{r, echo = FALSE, fig.width = 10, fig.height = 5.6}
-    plot(plots[[1]]) 
+    plot(plots[[1]])
 ```
 
 \newpage
@@ -178,7 +160,7 @@ This plot illustrates the number of deaths which will occur during the simulatio
 This plot illustrates the number of patients who are projected to utilize ICU or floor beds during the simulation.  If floor and ICU capacity are exceeded, a label appears which indicates the day on which this occurs.
 
 ```{r, echo = FALSE, fig.width = 10, fig.height = 5.6}
-    plot(plots[[4]]) 
+    plot(plots[[4]])
 ```
 
 # Summary 

@@ -205,7 +205,7 @@ server <- function(input, output, session) {
         file.copy("ScenarioReport.Rmd", tempReport, overwrite = TRUE)
 
         # Set up parameters to pass to Rmd document
-        params <- list(params=update_inputs(t=input$time,
+        params_rmd <- list(t=input$time,
                          young=input$ages[1],
                          medium=input$ages[2]-input$ages[1],
                          I_init=input$initrep,
@@ -230,7 +230,7 @@ server <- function(input, output, session) {
                        ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]]),
                        #####################
                        L_final=input$floorcaptarget,
-                       M_final=input$icucaptarget),
+                       M_final=input$icucaptarget,
                         #####################
                         dynamicModel=input$dynamicModels,
                        doprotocols=input$doprotocols)
@@ -240,7 +240,7 @@ server <- function(input, output, session) {
         # child of the global environment (this isolates the code in the document
         # from the code in this app).
         rmarkdown::render(tempReport, output_file = file,
-          params = params,
+          params = params_rmd,
           envir = new.env(parent = globalenv())
         )
       }

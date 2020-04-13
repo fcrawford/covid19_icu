@@ -89,6 +89,9 @@ update_inputs <- function(t,
     params$avg_LOS_Floor3=avg_LOS_Floor;
   }
   
+  params$avg_LOS_Floor = avg_LOS_Floor;
+  params$avg_LOS_ICU = avg_LOS_ICU;
+  
   ###########################################
   
   if(!missing(p_death_ICU2)) params$p_death_ICU2=p_death_ICU2;
