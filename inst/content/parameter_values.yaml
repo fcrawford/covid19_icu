@@ -1,224 +1,99 @@
-#### For initializing the app
-####
-### Bed Capacities
-# ICU
-M: 50
-M_Max: 3000
-M_occupied: 12
-icucapramp1: 10
-icucapramp2: 20
-M_final: 50
-
-# Floor
-L: 100
-L_Max: 15000
-L_occupied: 12
-floorcapramp1: 10
-floorcapramp2: 20
-L_final: 100
-
-##### Time Horizon
-
-t_Max: 60
-t: 30
-
-##### Scenarios
-# Cases per day
-I_init: 50
-I_initmax: 1000
-I_final: 1000
-I_finalmax: 3000
-doublingtime: 14
-doublingtime_min: 2
-doublingtime_max: 28
+young: 0.0089955
+medium: 0.6341829
+percentage_MS1: 0.8333333
+percentage_C1: 0.0555556
+percentage_F1: 0.1111111
+percentage_MS2: 0.5177305
+percentage_C2: 0.0914106
+percentage_F2: 0.3908589
+percentage_MS3: 0.1092437
+percentage_C3: 0.1442577
+percentage_F3: 0.7464986
+t_Triage: 0.2119642
+p_death_ICU1: 0.0
+p_death_ICU2: 0.0695652
+p_death_ICU3: 0.2413793
+p_death_Floor1: 0.0
+p_stepup_Floor1: 0.4
+p_death_Floor2: 0.0121581
+p_stepup_Floor2: 0.2218845
+p_death_Floor3: 0.1466165
+p_stepup_Floor3: 0.3082707
+p_death_WF1: 0.0
+p_stepup_WF1: 0.4
+p_tofloor1: 0.9
+p_death_WF2: 0.0121581
+p_stepup_WF2: 0.2218845
+p_tofloor2: 0.9
+p_death_WF3: 0.1466165
+p_stepup_WF3: 0.3082707
+p_tofloor3: 0.9
+avg_LOS_ICU1: 1.6663194
+avg_LOS_ICU2: 4.1811051
+avg_LOS_ICU3: 4.2989823
+avg_LOS_Floor1: 1.5134722
+avg_LOS_Floor2: 2.9830357
+avg_LOS_Floor3: 3.2461779
+M: 180.0
+M_final: 180.0
+M_Max: 3000.0
+M_occupied: 66.0
+icucapramp1: 10.0
+icucapramp2: 20.0
+L: 578.0
+L_final: 578.0
+L_Max: 15000.0
+L_occupied: 46.0
+floorcapramp1: 10.0
+floorcapramp2: 20.0
+t_Max: 60.0
+t: 30.0
+I_init: 50.0
+I_initmax: 1000.0
+I_final: 1000.0
+I_finalmax: 3000.0
+doublingtime: 14.0
+doublingtime_min: 2.0
+doublingtime_max: 28.0
 rampslope: 1.2
-rampslope_min: 0
-rampslope_max: 5
+rampslope_min: 0.0
+rampslope_max: 5.0
 rampslope_step: 0.1
-distribution: "exponential"
-
-##### Discharge Rates
-# App initializations:
-avgfloordischargetime: 7
-avgicudischargetime: 10
+distribution: exponential
+avgfloordischargetime: 6.0
+avgicudischargetime: 9.0
 minfloordischargetime: 0.5
 minicudischargetime: 0.5
-maxfloordischargetime: 25
-maxicudischargetime: 25
-
-##### Age structure of ED Visits
-# Ages: 0-18
-young: .05
-# Ages: 18-65
-medium: .638
-
-
-
-##### Triage Percentages
-# MS: Mild Symptoms, C:ICU, F: Floor
-# Ages: 0-18
-percentage_MS1: 0.75
-percentage_C1: 0.125
-percentage_F1: 0.125
-percentage_MS2: 0.4597701
-percentage_C2: 0.0935961
-percentage_F2: 0.4466338
-percentage_MS3: 0.1060606
-percentage_C3: 0.1454545
-percentage_F3: 0.7484848
-
-# Average time to triage in days (currently, undifferentiated by age)
-t_Triage: 0.125
-
-
-##### Outcomes (percentages)
-#####
-#####
-#  In the ICU (death or step-down)
-# Ages: 0-18
-p_death_ICU1: 0.0
-# Ages: 18-65
-p_death_ICU2: 0.11
-# Ages: 65+
-p_death_ICU3: 0.41
-
-#  On the Floor (death or step-up or discharge)
-# Ages: 0-18
-p_death_Floor1: 0
-p_stepup_Floor1: 0.5
+maxfloordischargetime: 25.0
+maxicudischargetime: 25.0
 max_p_death_Floor1: 0.9
-# Ages: 18-65
-p_death_Floor2: 0.008
-p_stepup_Floor2: 0.33
 max_p_death_Floor2: 0.9
-# Ages: 65+
-p_death_Floor3: 0.032
-p_stepup_Floor3: 0.44
 max_p_death_Floor3: 0.9
-
-
-#  In the ICU Queue (death or to the ICU if empty)
-# Ages: 0-18
 p_toicu1: 0.5
-# Ages: 18-65
 p_toicu2: 0.5
-# Ages: 65+
 p_toicu3: 0.5
-
-#  In the Floor Queue (death or step-up or discharge or to floor if empty)
-# Ages: 0-18
-p_death_WF1: 0.0
-p_stepup_WF1: 0.1
-p_tofloor1: 0.9 # if empty
-
-# Ages: 18-65
-p_death_WF2: 0.008
-p_stepup_WF2: 0.1
-p_tofloor2: 0.9 # if empty
-
-# Ages: 65+
-p_death_WF3: 0.032
-p_stepup_WF3: 0.1
-p_tofloor3: 0.9 # if empty
-
-#  Post discharge from ED (death or return or recovery)
-# Ages: 0-18
 p_return_MS1: 0.05
 p_death_MS1: 0.0066
-
-# Ages: 18-65
 p_return_MS2: 0.05
 p_death_MS2: 0.0066
-
-# Ages: 65+
 p_return_MS3: 0.05
 p_death_MS3: 0.0066
-
-### Average Lengths of Stay (days)
-###
-###
-#  In ICU
-# Ages: 0-18
-avg_LOS_ICU1: 10
-
-# Ages: 18-65
-avg_LOS_ICU2: 10
-
-# Ages: 65+
-avg_LOS_ICU3: 10
-
-#  On the floor
-# Ages: 0-18
-avg_LOS_Floor1: 7
-
-# Ages: 18-65
-avg_LOS_Floor2: 7
-
-# Ages: 65+
-avg_LOS_Floor3: 7
-
-#  In the floor queue if no floor bed is available throughout
-# Ages: 0-18
-avg_LOS_FloorQ1: 7
-
-# Ages: 18-65
-avg_LOS_FloorQ2: 7
-
-# Ages: 65+
-avg_LOS_FloorQ3: 7
-
-#  In the ICU queue if no ICU bed is available throughout
-# Ages: 0-18
+avg_LOS_FloorQ1: 7.0
+avg_LOS_FloorQ2: 7.0
+avg_LOS_FloorQ3: 7.0
 avg_timetodeath_CQ1: 0.25
-
-# Ages: 18-65
 avg_timetodeath_CQ2: 0.25
-
-# Ages: 65+
 avg_timetodeath_CQ3: 0.25
-
-
-#  Post-discharge from ED to resolution (return, death, or recovery)
-# Ages: 0-18
-avg_T_exit1: 10
-
-# Ages: 18-65
-avg_T_exit2: 10
-
-# Ages: 65+
-avg_T_exit3: 10
-
-##### Sigmoid slope
-slope: 50
-
-
-####### Not Operational
-
-# Proportion of symptomatic infectives presenting to ED
-# Ages: 0-18
-#p_lambda1: .106
-# Ages: 18-65
-#p_lambda2: .364
-# Ages: 65+
-#p_lambda3: .612
-
-# Death rate of symptomatic infectives prior to presenting to the ED
+avg_T_exit1: 10.0
+avg_T_exit2: 10.0
+avg_T_exit3: 10.0
+slope: 50.0
 mu_I1: 0.0
 mu_I2: 0.0
 mu_I3: 0.0
-
-
-# Death rate of symptomatic infectives at ED prior to triage
 mu_P1: 0.0
 mu_P2: 0.0
 mu_P3: 0.0
-
-
-# Expected time to recovery pre-triage
-d_phi: 14
-
-# Expected time to death pre-triage
-d_mu: 12
-
-# Expected proportion which recover without treatment
-p_phi: .85
+d_phi: 14.0
+d_mu: 12.0
+p_phi: 0.85
