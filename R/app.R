@@ -38,10 +38,11 @@ server <- function(input, output, session) {
 
        if(!is.na(input$icucaptarget) && !is.na(input$icucap) && input$icucaptarget<input$icucap) { 
           updateNumericInput(session, "icucaptarget", value=input$icucap)
-        }
-        
+       }
+
       })
     #####################################################################################################
+    
     
     output$hospitalPlot <- renderPlot({
     # put slider control values here as arguments
@@ -70,14 +71,14 @@ server <- function(input, output, session) {
                                               p_death_floor2=input$floordeath_medium,
                                               p_death_floor3=input$floordeath_old,
                                               #####################
-                                              ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]])),
+                                              ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]]),
+                                              #####################
+                                               L_final=input$floorcaptarget,
+                                               M_final=input$icucaptarget),
+                                              #####################
                                             dynamicModel=input$dynamicModel,
                                             doprotocols=input$doprotocols)
-    
-    
-    
-    
-    
+
     
     plot_grid(plots[[1]], plots[[2]],plots[[3]],plots[[4]], nrow=2, ncol=2, labels=c('A', 'B', 'C', 'D'), align="hv")
 
@@ -110,7 +111,11 @@ server <- function(input, output, session) {
                                                p_death_floor2=input$floordeath_medium,
                                                p_death_floor3=input$floordeath_old,
                                                #####################
-                                               ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]])),
+                                               ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]]),
+                          #####################
+                          L_final=input$floorcaptarget,
+                          M_final=input$icucaptarget),
+                          #####################
                           dynamicModel=input$dynamicModel,
                           doprotocols=input$doprotocols)
   })
@@ -142,7 +147,11 @@ server <- function(input, output, session) {
                                               p_death_floor2=input$floordeath_medium,
                                               p_death_floor3=input$floordeath_old,
                                               #####################
-                                              ed_visits_timeseries=  as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]])),
+                                              ed_visits_timeseries=  as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]]),
+                         #####################
+                         L_final=input$floorcaptarget,
+                         M_final=input$icucaptarget),
+                         #####################
                                        dynamicModel=input$dynamicModel)
     
     rownames(dat) = dat$Variable

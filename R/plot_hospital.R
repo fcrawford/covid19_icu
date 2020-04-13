@@ -10,10 +10,12 @@ plot_hospital<- function( doprotocols=0, dynamicModel=0, params, ...){
           
           
           
-          if(doprotocols==0) {
+          if(doprotocols== 0 ) {
             params$M_final=params$M
             params$L_final=params$L
           }
+          
+
           
           floor_capacity_function <- floor_capacity_timeseries(params=params, doprotocols)
             

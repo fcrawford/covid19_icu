@@ -7,6 +7,7 @@ M_Max: 3000
 M_occupied: 12
 icucapramp1: 10
 icucapramp2: 20
+M_final: 50
 
 # Floor
 L: 100
@@ -14,6 +15,7 @@ L_Max: 15000
 L_occupied: 12
 floorcapramp1: 10
 floorcapramp2: 20
+L_final: 100
 
 ##### Time Horizon
 
