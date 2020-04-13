@@ -257,7 +257,7 @@ fluidPage(theme=shinytheme("simplex"),
         tabPanel("Scenario", fluid=TRUE,
           includeMarkdown(system.file("content/instructions.md", package='covid19icu')),
           h3("Scenario:"),
-          sliderInput("time", "Time Horizon (days)",     min=1, max=params$t_Max, step=1, value=params$t),
+          sliderInput("time", "Time Horizon (days)",     min=2, max=params$t_Max, step=1, value=params$t),
 
 
 
