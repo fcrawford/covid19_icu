@@ -227,13 +227,13 @@ server <- function(input, output, session) {
                          p_death_ICU3= input$ICUdeath_old,
                          p_death_floor2=input$floordeath_medium,
                          p_death_floor3= input$floordeath_old,
-                         doprotocols=input$doprotocols,
                        ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]]),
                        #####################
-                       #L_final=input$floorcaptarget,
+                       L_final=input$floorcaptarget,
                        M_final=input$icucaptarget),
                         #####################
-                        dynamicModel=input$dynamicModels)
+                        dynamicModel=input$dynamicModels,
+                       doprotocols=input$doprotocols)
 
 
         # Knit the document, passing in the `params` list, and eval it in a
