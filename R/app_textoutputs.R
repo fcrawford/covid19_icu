@@ -150,8 +150,8 @@ df = data.frame(t=c("Time horizon", params$t),
                      avg_LOS_Floor=c("Average time on floor for COVID+ patiens", params$avg_LOS_Floor),
                      p_death_ICU2=c("Probability of death in ICU, 18-65 years, given time in ICU", params$p_death_ICU2),
                      p_death_ICU3=c("Probability of death in ICU, 65+ years, given time in ICU", params$p_death_ICU3),
-                     p_death_floor2=c("Probability of death on floor, 18-65 years, given time on floor", params$p_death_floor2),
-                     p_death_floor3=c("Probability of death on floor, 65+ years, given time on floor", params$p_death_floor3))
+                     p_death_floor2=c("Probability of death on floor, 18-65 years, given time on floor", params$p_death_Floor2),
+                     p_death_floor3=c("Probability of death on floor, 65+ years, given time on floor", params$p_death_Floor3))
 
 
 df = t(df)
