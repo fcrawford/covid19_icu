@@ -1,34 +1,34 @@
 #' @export
 update_inputs <- function(t,
-                                        young,#
-                                        medium,#
-                                        #######################
-                                        I_init,#
-                                        I_final,#
-                                        distribution,#
-                                        doublingtime,#
-                                        rampslope,#
-                                        #######################
-                                        M,#
-                                        L,#
-                                        L_occupied,#
-                                        M_occupied,#
-                                        Lramp,#
-                                        Mramp,#
-                                        ######################
-                                        avg_LOS_ICU,#
-                                        avg_LOS_Floor,#
-                                        #####################
-                                        p_death_ICU2,#
-                                        p_death_ICU3,#
-                                        p_death_floor2,#
-                                        p_death_floor3,#
-                                        #####################
-                                        slope,
-                                        #####################
-                                        ed_visits_timeseries,
-                                        ... #
-                                        ) {
+                          young,#
+                          medium,#
+                          #######################
+                          I_init,#
+                          I_final,#
+                          distribution,#
+                          doublingtime,#
+                          rampslope,#
+                          #######################
+                          M,#
+                          L,#
+                          L_occupied,#
+                          M_occupied,#
+                          Lramp,#
+                          Mramp,#
+                          ######################
+                          avg_LOS_ICU,#
+                          avg_LOS_Floor,#
+                          #####################
+                          p_death_ICU2,#
+                          p_death_ICU3,#
+                          p_death_floor2,#
+                          p_death_floor3,#
+                          #####################
+                          slope,
+                          #####################
+                          ed_visits_timeseries,
+                          ... #
+                          ) {
   
   params = yaml.load_file( system.file("content/parameter_values.yaml", package='covid19icu') )
   
