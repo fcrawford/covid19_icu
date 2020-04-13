@@ -15,10 +15,10 @@ text_hospital = function(doprotocols=0, dynamicModel=0, params, ...){
       params$L_final=params$L
     }
     
-    floor_capacity_function <- floor_capacity_timeseries (params=params, doprotocols)
+    floor_capacity_function <- floor_capacity_timeseries (params=params, doprotocols=doprotocols)
     
     
-    icu_capacity_function <- icu_capacity_timeseries( params=params, doprotocols)   
+    icu_capacity_function <- icu_capacity_timeseries( params=params, doprotocols=doprotocols)   
 
     hospital <- hospital_queues(doprotocols=doprotocols,
                                 dynamicModel=dynamicModel,
@@ -64,23 +64,27 @@ text_hospital = function(doprotocols=0, dynamicModel=0, params, ...){
     L_temp = params$L
     M_temp = params$M
     
-    params$M= M_inf
-    params$L= L_inf
-    params$M_occupied= M_occupied_inf;
-    params$L_occupied= L_occupied_inf;
+    params_inf = params
     
-    floor_capacity_function <- floor_capacity_timeseries( params=params, doprotocols)
+    params_inf$M= M_inf
+    params_inf$L= L_inf
+    params_inf$M_occupied= M_occupied_inf;
+    params_inf$L_occupied= L_occupied_inf;
+    params_inf$M_final = params_inf$M
+    params_inf$L_final = params_inf$L
+    
+    floor_capacity_function_inf <- floor_capacity_timeseries( params=params_inf, doprotocols=doprotocols)
     
     
-    icu_capacity_function <- icu_capacity_timeseries( params=params, doprotocols)   
+    icu_capacity_function_inf <- icu_capacity_timeseries( params=params_inf, doprotocols=doprotocols)   
     
     
     ###calculate max utilization
     hospital_inf <- hospital_queues(doprotocols=0,
                                     dynamicModel=dynamicModel,
-                                    params=params,
-                                    floor_capacity_timeseries=floor_capacity_function,
-                                    icu_capacity_timeseries=icu_capacity_function,
+                                    params=params_inf,
+                                    floor_capacity_timeseries=floor_capacity_function_inf,
+                                    icu_capacity_timeseries=icu_capacity_function_inf,
                                     ed_visits_timeseries= hospital_input)
     
     if(max(hospital_inf$CTotal)-M_temp>0){
