@@ -9,9 +9,9 @@ report_rate<-function(t,
   
   ############## Reporting rate function determines who shows up to the ED 
   
-  report_rate<-rep(0,t)
+  report_rate<-c(initial_report,rep(0,t))
   if (distribution=="uniform"){
-    report_rate<-rep(initial_report,t)
+    report_rate[2:(t+1)]<-rep(initial_report,t)
   }
   if (distribution=="logistic"){
     z <- log(1/0.005-1)
@@ -19,25 +19,25 @@ report_rate<-function(t,
                z*(1+(2/(t-3))),
                by=(2*z)/(t-3))
     zzz  <- as.numeric(final_report-initial_report)/(1+exp(-zz))
-    report_rate<-zzz+initial_report
+    report_rate[2:(t+1)]<-zzz+initial_report
   }
   if (distribution=="ramp"){
     times = seq(1, t, by=1)
-    report_rate<- initial_report + rampslope*times
+    report_rate[2:(t+1)]<- initial_report + rampslope*times
   }
   
   if (distribution=="geometric"){
     geometric_factor<- exp(1/t* log(final_report/initial_report))
-    report_rate<- (geometric_factor^(1:t))*initial_report	
+    report_rate[2:(t+1)]<- (geometric_factor^(1:t))*initial_report	
   }
   
   if (distribution=="exponential"){
     
     
-    report_rate<- (exp(growth_rate*(1:t)))*initial_report	
+    report_rate[2:(t+1)]<- (exp(growth_rate*(1:t)))*initial_report	
   }
   
-  try(if (length(report_rate) != t)(stop("reporting rate time scale does not match inputted timescale")))
+  try(if (length(report_rate) != (t+1))(stop("reporting rate time scale does not match inputted timescale")))
   
   return(report_rate)
 }
@@ -109,8 +109,8 @@ floor_capacity_timeseries <- function(#t,
   output<- capacity_ramping(
     start=params$L,
     finish=params$L_final,
-    ramp=c(params$floorcapramp1,params$floorcapramp2),
-    t=params$t)
+    ramp=c(params$floorcapramp1+1,params$floorcapramp2+1),
+    t=params$t+1)
   
 
   
@@ -132,8 +132,8 @@ icu_capacity_timeseries <- function(#t,
   output<- capacity_ramping(
     start=params$M,
     finish=params$M_final,
-    ramp=c(params$icucapramp1,params$icucapramp2),
-    t=params$t)
+    ramp=c(params$icucapramp1+1,params$icucapramp2+1),
+    t=params$t+1)
   
   output
   
