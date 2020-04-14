@@ -122,9 +122,11 @@ hospital_queues<- function(params, doprotocols=0, floor_capacity_timeseries, icu
   }
   
   
-  out <- as.data.frame(ode(y=init, times= c(1:params$t), func=model, parms=params, method="lsodes"))
+  out <- as.data.frame(ode(y=init, times= c(0:params$t), func=model, parms=params, method="lsodes"))
   names(out)[2:ncol(out)] = names(init)
   #print(proc.time() - ptm)
+  
+  out=out[out$time %in% 1:params$t,]
   
   out$reports <- reports(1:params$t);
   out$capacity_L <- capacity_L(1:params$t);

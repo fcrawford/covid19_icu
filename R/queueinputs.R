@@ -81,16 +81,18 @@ update_inputs <- function(t,
       params$avg_LOS_ICU1=avg_LOS_ICU;
       params$avg_LOS_ICU2=avg_LOS_ICU;
       params$avg_LOS_ICU3=avg_LOS_ICU;
+      params$avg_LOS_ICU = avg_LOS_ICU;
+      
   }
   if(!missing(avg_LOS_Floor)) 
   {
     params$avg_LOS_Floor1=avg_LOS_Floor;
     params$avg_LOS_Floor2=avg_LOS_Floor;
     params$avg_LOS_Floor3=avg_LOS_Floor;
+    params$avg_LOS_Floor = avg_LOS_Floor;
   }
   
-  params$avg_LOS_Floor = avg_LOS_Floor;
-  params$avg_LOS_ICU = avg_LOS_ICU;
+  
   
   ###########################################
   
