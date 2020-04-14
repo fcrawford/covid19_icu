@@ -97,3 +97,14 @@ mu_P3: 0.0
 d_phi: 14.0
 d_mu: 12.0
 p_phi: 0.85
+
+
+max_reporting_delay: 15
+min_reporting_delay: 1
+average_reporting_delay: 10
+max_reporting_percentage: 100
+min_reporting_percentage: 0
+average_reporting_percentage: 20
+max_starting_infectives: 1000
+min_starting_infectives: 0
+average_starting_infectives: 50

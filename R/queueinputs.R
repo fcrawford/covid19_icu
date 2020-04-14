@@ -30,12 +30,20 @@ update_inputs <- function(t,
                           #####################
                           M_final,
                           L_final,
+                          #####################
+                          reporting_delay,
+                          reporting_percentage,
+                          starting_infectives,
+                          infection_timeseries,
                           ... #
                           ) {
   
   params = yaml.load_file( system.file("content/parameter_values.yaml", package='covid19icu') )
-
-  #### Initializing the parameters not set
+  
+  print(infection_timeseries)
+  
+  
+  ## Initializing the parameters not set
   
   if(!missing(t)) params$t=t
   
@@ -116,6 +124,19 @@ update_inputs <- function(t,
     params$ed_visits_timeseries=rep(0,20);
     
   }
+  
+  if(!missing(infection_timeseries)) {
+    params$infection_timeseries = infection_timeseries;
+  } else {
+    
+    params$infection_timeseries=rep(0,20);
+    
+  }
+  
+  if(!missing(reporting_delay)) params$average_reporting_delay=reporting_delay;
+  if(!missing(reporting_percentage)) params$average_reporting_percentage=reporting_percentage;
+  if(!missing(starting_infectives)) params$average_starting_infectives=starting_infectives;
+  
   ###########################################
   
   ## Leaving ED
