@@ -40,9 +40,6 @@ update_inputs <- function(t,
   
   params = yaml.load_file( system.file("content/parameter_values.yaml", package='covid19icu') )
   
-  print(infection_timeseries)
-  
-  
   ## Initializing the parameters not set
   
   if(!missing(t)) params$t=t

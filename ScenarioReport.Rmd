@@ -33,6 +33,10 @@ params:
     doprotocols: NA
     dynamicModel: NA
     ed_visits_timeseries: NA
+    infection_timeseries: NA
+    reporting_delay: NA
+    reporting_percentage: NA
+    starting_infectives: NA
     L_final: NA
     M_final: NA
 ---
@@ -69,6 +73,10 @@ params_rmd =update_inputs(t=params$t,
                     p_death_floor3=params$p_death_floor3,
                     #####################
                     ed_visits_timeseries=  params$ed_visits_timeseries,
+                    infection_timeseries=  params$infection_timeseries,
+                    reporting_delay=  params$reporting_delay,
+                    reporting_percentage=  params$reporting_percentage,
+                    starting_infectives=  params$starting_infectives,
                     #####################
                     L_final=params$L_final,
                     M_final=params$M_final)

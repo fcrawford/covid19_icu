@@ -4,7 +4,7 @@ plot_hospital<- function( doprotocols=0, dynamicModel=0, params, ...){
   
           hospital_input <- hospital_input_generation(dynamicModel=dynamicModel, params=params)
           
-          print(hospital_input)
+          #print(hospital_input)
           
           if (dynamicModel!=0){
             params$t= length(hospital_input)

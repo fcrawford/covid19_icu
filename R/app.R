@@ -71,7 +71,7 @@ server <- function(input, output, session) {
                                               p_death_floor2=input$floordeath_medium,
                                               p_death_floor3=input$floordeath_old,
                                               #####################
-                                              ed_visits_timeseries= as.numeric(strsplit((input$ed_visits_timeseries), split = ",")[[1]]),
+                                              ed_visits_timeseries= as.numeric(strsplit(input$ed_visits_timeseries, split = ",")[[1]]),
                                               #####################
                                                L_final=input$floorcaptarget,
                                                M_final=input$icucaptarget,
@@ -79,7 +79,7 @@ server <- function(input, output, session) {
                                               reporting_delay= input$reporting_delay,
                                               reporting_percentage = input$reporting_percentage,
                                               starting_infectives= input$starting_infectives,
-                                              infection_timeseries= as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]])
+                                              infection_timeseries= as.numeric(strsplit(input$infection_timeseries, split = ",")[[1]])
                                               ),
                                       #####################
                                       dynamicModel=input$dynamicModel,
@@ -126,7 +126,7 @@ server <- function(input, output, session) {
                                   reporting_delay= input$reporting_delay,
                                   reporting_percentage = input$reporting_percentage,
                                   starting_infectives= input$starting_infectives,
-                                  infection_timeseries= as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]]),
+                                  infection_timeseries= as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]])
                                 ),
                                   #####################
                                   dynamicModel=input$dynamicModel,
@@ -170,7 +170,7 @@ server <- function(input, output, session) {
                                              reporting_delay= input$reporting_delay,
                                              reporting_percentage = input$reporting_percentage,
                                              starting_infectives= input$starting_infectives,
-                                             infection_timeseries=  as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]]),
+                                             infection_timeseries=  as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]])
                                              
                                              
                                              ),
@@ -330,9 +330,7 @@ fluidPage(theme=shinytheme("simplex"),
 
 
           # development version only 
-          # set condition to "0==0" to show scenario type selection
           ,
-          conditionalPanel(condition="0==0",
           conditionalPanel(condition="input.scenarioSelect == 'dynamic'", 
             radioButtons("dynamicModel", "Dynamic model projection",
                          c("Scenario Generation"=0, "Input ED Visits"=1,"Input Infection Incidence"=2),
@@ -343,12 +341,12 @@ fluidPage(theme=shinytheme("simplex"),
              textInput("ed_visits_timeseries", label = h6("ED visit time-series"), value = "0,0,0,0,0,0,0,0")
           ),
           conditionalPanel(condition= "input.dynamicModel==2",
-                textInput("infecton_timeseries", label = h6("Infection incidence time-series"), value = "0,0,0,0,0,0,0,0"),
+                textInput("infection_timeseries", label = h6("Infection incidence time-series"), value = "0,0,0,0,0,0,0,0"),
                 sliderInput("reporting_delay", "Time from infection incidence to presenting to ED",     min=params$min_reporting_delay, max=params$max_reporting_delay, step=1, value=params$average_reporting_delay),
                 sliderInput("reporting_percentage", "Percentage of infectives presenting to ED",     min=params$min_reporting_percentage, max=params$max_reporting_percentage, step=1, value=params$average_reporting_percentage),
                 sliderInput("starting_infectives", "Number of previously-infected currently-infective individuals at day 0",     min=params$min_starting_infectives, max=params$max_starting_infectives, step=1, value=params$average_starting_infectives),
           ) 
-          ) 
+           
           , 
           hr(),
         downloadButton("report", "Download scenario report")
