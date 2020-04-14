@@ -109,7 +109,7 @@ floor_capacity_timeseries <- function(#t,
   output<- capacity_ramping(
     start=params$L,
     finish=params$L_final,
-    ramp=c(params$floorcapramp1+1,params$floorcapramp2+1),
+    ramp=c(params$floorcapramp1,params$floorcapramp2),
     t=params$t+1)
   
 
@@ -132,7 +132,7 @@ icu_capacity_timeseries <- function(#t,
   output<- capacity_ramping(
     start=params$M,
     finish=params$M_final,
-    ramp=c(params$icucapramp1+1,params$icucapramp2+1),
+    ramp=c(params$icucapramp1,params$icucapramp2),
     t=params$t+1)
   
   output
