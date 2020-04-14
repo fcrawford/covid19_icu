@@ -16,7 +16,7 @@ reporting_infections<- function(
   infections <- approxfun(
     params$infection_timeseries,
     rule=2)
-  print(params$infection_timeseries)
+  #print(params$infection_timeseries)
   
   model <- function(time, state, parameters) {
     with(as.list(c(state, parameters)), {
