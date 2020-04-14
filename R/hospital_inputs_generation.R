@@ -80,7 +80,7 @@ hospital_input_generation <- function(dynamicModel=0,
                                       #ed_visit_timeseries
 ){
   
-  if (dynamicModel==0)
+  if (dynamicModel==0){
     output<- report_rate(
       t = params$t, 
       initial_report = params$I_init, 
@@ -88,8 +88,10 @@ hospital_input_generation <- function(dynamicModel=0,
       distribution=params$distribution, 
       growth_rate=log(2)/params$doublingtime, 
       rampslope=params$rampslope
-    ) else{
-      output<- params$ed_visits_timeseries
+    )} else if (dynamicModel==1){
+      output<- c(params$ed_visits_timeseries)
+    } else{
+      output<- reporting_infections(params)
       
     }
   output

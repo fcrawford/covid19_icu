@@ -5,37 +5,38 @@
 #' @export
 reporting_infections<- function(              
   params,
-  doprotocols=0,
-  #####################
-  infection_timeseries= c(0,0,0),
-  reporting_rate=0.1,
-  reporting_percentage=0.3,
   ...
 ){
  
-  init       <- c(ED=0)
+  init       <- c(I=params$average_starting_infectives,
+                  ED=0)
+  
+  params$t=length( params$infection_timeseries)
   
   infections <- approxfun(
-    infection_timeseries*reporting_percentage,
+    params$infection_timeseries,
     rule=2)
+  print(params$infection_timeseries)
   
   model <- function(time, state, parameters) {
     with(as.list(c(state, parameters)), {
-      ED = state[1]
-     
-      dED  <-   reporting_rate * infections(time) 
+      I = state[1]
+      ED = state[2]
       
-      return(list(dED)
+      dI <- - 1/average_reporting_delay * I + infections(time);
+      dED  <-   1/average_reporting_delay * average_reporting_percentage/100 * I;
+
+          return(list(c(dI, dED))
           
         )
     })
   }
   
   
-  out <- as.data.frame(ode(y=init, times= c(1:length(infection_timeseries)), func=model, parms=params, method="lsodes"))
+  out <- as.data.frame(ode(y=init, times= c(0:params$t), func=model, parms=params, method="lsodes"))
   names(out)[2:ncol(out)] = names(init)
   #print(proc.time() - ptm)
   
-  return(out)
+  return(diff(out$ED, lag=1))
   
 }
