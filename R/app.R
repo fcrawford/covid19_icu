@@ -257,7 +257,7 @@ server <- function(input, output, session) {
                          L_final=input$floorcaptarget,
                          M_final=input$icucaptarget,
                          #####################
-                         dynamicModel=input$dynamicModels,
+                         dynamicModel=input$dynamicModel,
                          doprotocols=input$doprotocols,
                          #####################
                          reporting_delay= input$reporting_delay,

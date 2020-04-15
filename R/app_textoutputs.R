@@ -127,33 +127,60 @@ text_hospital = function(doprotocols=0, dynamicModel=0, params, ...){
 
 #' @export
 text_parameters = function( doprotocols, dynamicModel, params, ...){
+
+  df = data.frame(t=c("Time horizon", params$t),
+                  young=c("Proportion COVID+ admissions <18 years", params$young),
+                  medium=c("Proportion COVID+ admissions 18-65 years",params$medium),
+                  M=c("Initial ICU capacity", params$M),
+                  L=c("Initial Floor capacity", params$L),
+                  L_occupied=c("Initial Floor occupancy %", params$L_occupied),
+                  M_occupied=c("Initial ICU occupancy %", params$M_occupied),
+                  avg_LOS_ICU=c("Average time in ICU for COVID+ patients", params$avg_LOS_ICU),
+                  avg_LOS_Floor=c("Average time on floor for COVID+ patients", params$avg_LOS_Floor),
+                  p_death_ICU2=c("Probability of death in ICU, 18-65 years, given time in ICU", params$p_death_ICU2),
+                  p_death_ICU3=c("Probability of death in ICU, 65+ years, given time in ICU", params$p_death_ICU3),
+                  p_death_floor2=c("Probability of death on floor, 18-65 years, given time on floor", params$p_death_Floor2),
+                  p_death_floor3=c("Probability of death on floor, 65+ years, given time on floor", params$p_death_Floor3))
+    
+  
+  if(doprotocols==1){
+    df$L_final=c("Target floor capacity", params$L_final);
+    df$Lramp=c("Floor ramp", paste(params$floorcapramp1,"--",params$floorcapramp2));
+    df$M_final=c("Target ICU capacity", params$M_final);
+    df$Mramp=c("ICU ramp", paste(params$icucapramp1,"--",params$icucapramp2));
+    
+    
+  }
+  
+  df$I_init=c("Initial infections per day", params$I_init);
+  
+  if(dynamicModel==0)
+  {
+    
+    df$distribution=c("ED presentation curve", params$distribution);
+
+    if(params$distribution=="exponential"){
+      df$doublingtime=c("Doubling time (exponential growth)", params$doublingtime);
+    }
+    if(params$distribution=="ramp"){
+      df$rampslope=c("Ramp slope (linear growth)", params$rampslope);
+    }
+    if(params$distribution=="logistic"){  
+      df$I_final=c("Final infections per day", params$I_final);
+    }
+  } else if (dynamicModel==1){
+    df$distribution=c("ED presentation curve", "User Input");
+    
+  } else {
+    df$distribution=c("Infection incidence curve", "User Input");
+    df$reporting_delay=c("Average reporting delay in days", params$average_reporting_delay);
+    df$reporting_percentage=c("Average reporting % (out of all infections)", params$average_reporting_percentage);
+    df$starting_infectives=c("Infectives yet to report on day 0", params$average_starting_infectives);
+  }
   
   
-
-df = data.frame(t=c("Time horizon", params$t),
-                young=c("Proportion COVID+ admissions <18 years", params$young),
-                medium=c("Proportion COVID+ admissions 18-65 years",params$medium),
-                I_init=c("Initial infections per day", params$I_init),
-                     I_final=c("Final infections per day", params$I_final),
-                     distribution=c("ED presentation curve", params$distribution),
-                     doublingtime=c("Doubling time (exponential growth)", params$doublingtime),
-                     rampslope=c("Ramp slope (linear growth)", params$rampslope),
-                     M=c("Initial ICU capacity", params$M),
-                     L=c("Initial Floor capacity", params$L),
-                     L_occupied=c("Initial Floor occupancy %", params$L_occupied),
-                     M_occupied=c("Initial ICU occupancy %", params$M_occupied),
-                     L_final=c("Target floor capacity", params$L_final),
-                     Lramp=c("Floor ramp", paste(params$floorcapramp1,"--",params$floorcapramp2)),
-                     M_final=c("Target ICU capacity", params$M_final),
-                     Mramp=c("ICU ramp", paste(params$icucapramp1,"--",params$icucapramp2)),
-                     avg_LOS_ICU=c("Average time in ICU for COVID+ patients", params$avg_LOS_ICU),
-                     avg_LOS_Floor=c("Average time on floor for COVID+ patiens", params$avg_LOS_Floor),
-                     p_death_ICU2=c("Probability of death in ICU, 18-65 years, given time in ICU", params$p_death_ICU2),
-                     p_death_ICU3=c("Probability of death in ICU, 65+ years, given time in ICU", params$p_death_ICU3),
-                     p_death_floor2=c("Probability of death on floor, 18-65 years, given time on floor", params$p_death_Floor2),
-                     p_death_floor3=c("Probability of death on floor, 65+ years, given time on floor", params$p_death_Floor3))
-
-
+  
+  
 df = t(df)
 
 

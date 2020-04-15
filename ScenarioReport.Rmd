@@ -1,8 +1,10 @@
 ---
 title: "Scenario Report: COVID-19 Hospital Capacity"
 date: "Generated on `r format(Sys.time(), '%d %B, %Y')`"
-output: pdf_document
+output: 
+    pdf_document:
         df_print: kable
+        keep_tex: true
 fontsize: 11pt
 geometry: margin=1in
 params:
@@ -79,11 +81,11 @@ params_rmd =update_inputs(t=params$t,
                     L_final=params$L_final,
                     M_final=params$M_final)
 
-dynamicModel = 0
+#dynamicModel = 0
 
 txt <- text_hospital(doprotocols=params$doprotocols,
                      params = params_rmd,
-                     dynamicModel=dynamicModel)
+                     dynamicModel=params$dynamicModel)
 
 
 
@@ -105,6 +107,8 @@ txt <- text_hospital(doprotocols=params$doprotocols,
 
 ```
 
+print
+
 Under specified parameters, capacities, and expansion strategies, the model predicts:
 
 * ICU beds will reach capacity at **`r txt2["Days to ICU overflow", "Value"]`**.
@@ -124,7 +128,7 @@ These are the values set by the user to describe the number of COVID19+ patients
 ```{r, echo=FALSE}
 txt_params = text_parameters(doprotocols = params$doprotocols,
                              params = params_rmd,
-                             dynamicModel = dynamicModel)
+                             dynamicModel = params$dynamicModel)
 
 rownames(txt_params) <- NULL
 
@@ -136,7 +140,7 @@ knitr::kable(txt_params)
 ```{r, echo=FALSE}
 plots<-plot_hospital(doprotocols = params$doprotocols,
                              params = params_rmd,
-                             dynamicModel = dynamicModel)
+                             dynamicModel = params$dynamicModel)
 ```
 
 
