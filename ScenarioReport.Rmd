@@ -1,10 +1,8 @@
-
 ---
 title: "Scenario Report: COVID-19 Hospital Capacity"
 date: "Generated on `r format(Sys.time(), '%d %B, %Y')`"
-output:
-  pdf_document
-    df_print: kable
+output: pdf_document
+        df_print: kable
 fontsize: 11pt
 geometry: margin=1in
 params:
@@ -72,8 +70,8 @@ params_rmd =update_inputs(t=params$t,
                     p_death_floor2=params$p_death_floor2,
                     p_death_floor3=params$p_death_floor3,
                     #####################
-                    ed_visits_timeseries=  as.numeric(strsplit(params$ed_visits_timeseries, split = ",")[[1]]),
-                    infection_timeseries=  as.numeric(strsplit(params$infection_timeseries, split = ",")[[1]]),
+                    ed_visits_timeseries= params$ed_visits_timeseries,
+                    infection_timeseries= params$infection_timeseries,
                     reporting_delay=  params$reporting_delay,
                     reporting_percentage=  params$reporting_percentage,
                     starting_infectives=  params$starting_infectives,

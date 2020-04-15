@@ -251,8 +251,8 @@ server <- function(input, output, session) {
                          p_death_ICU3= input$ICUdeath_old,
                          p_death_floor2=input$floordeath_medium,
                          p_death_floor3= input$floordeath_old,
-                         ed_visits_timeseries= input$ed_visits_timeseries,
-                         infection_timeseries= input$infection_timeseries,
+                         ed_visits_timeseries= as.numeric(strsplit((input$ed_visits_timeseries), split = ",")[[1]]),
+                         infection_timeseries= as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]]),
                          #####################
                          L_final=input$floorcaptarget,
                          M_final=input$icucaptarget,
