@@ -344,7 +344,7 @@ fluidPage(theme=shinytheme("simplex"),
                 textInput("infection_timeseries", label = h6("Infection incidence time-series"), value = "0,0,0,0,0,0,0,0"),
                 sliderInput("reporting_delay", "Time from infection incidence to presenting to ED",     min=params$min_reporting_delay, max=params$max_reporting_delay, step=1, value=params$average_reporting_delay),
                 sliderInput("reporting_percentage", "Percentage of infectives presenting to ED",     min=params$min_reporting_percentage, max=params$max_reporting_percentage, step=1, value=params$average_reporting_percentage),
-                sliderInput("starting_infectives", "Number of previously-infected currently-infective individuals at day 0",     min=params$min_starting_infectives, max=params$max_starting_infectives, step=1, value=params$average_starting_infectives),
+                sliderInput("starting_infectives", "Number of previously-infected currently-infective individuals at day 0",     min=params$min_starting_infectives, max=(params$max_starting_infectives*100), step=1, value=params$average_starting_infectives),
           ) 
            
           , 
