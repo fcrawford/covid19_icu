@@ -3,8 +3,7 @@
 title: "Scenario Report: COVID-19 Hospital Capacity"
 date: "Generated on `r format(Sys.time(), '%d %B, %Y')`"
 output:
-  html_document:
-    keep_tex: true
+  pdf_document
     df_print: kable
 fontsize: 11pt
 geometry: margin=1in
