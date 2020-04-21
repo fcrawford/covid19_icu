@@ -107,7 +107,6 @@ txt <- text_hospital(doprotocols=params$doprotocols,
 
 ```
 
-print
 
 Under specified parameters, capacities, and expansion strategies, the model predicts:
 

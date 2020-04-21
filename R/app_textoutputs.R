@@ -128,8 +128,7 @@ text_hospital = function(doprotocols=0, dynamicModel=0, params, ...){
 #' @export
 text_parameters = function( doprotocols, dynamicModel, params, ...){
 
-  df = data.frame(t=c("Time horizon", params$t),
-                  young=c("Proportion COVID+ admissions <18 years", params$young),
+  df = data.frame(young=c("Proportion COVID+ admissions <18 years", params$young),
                   medium=c("Proportion COVID+ admissions 18-65 years",params$medium),
                   M=c("Initial ICU capacity", params$M),
                   L=c("Initial Floor capacity", params$L),
@@ -152,11 +151,11 @@ text_parameters = function( doprotocols, dynamicModel, params, ...){
     
   }
   
-  df$I_init=c("Initial infections per day", params$I_init);
+  df$I_init=c("Initial ED presentations per day", params$I_init);
   
   if(dynamicModel==0)
   {
-    
+    df$t=c("Time horizon", params$t);
     df$distribution=c("ED presentation curve", params$distribution);
 
     if(params$distribution=="exponential"){
@@ -166,7 +165,7 @@ text_parameters = function( doprotocols, dynamicModel, params, ...){
       df$rampslope=c("Ramp slope (linear growth)", params$rampslope);
     }
     if(params$distribution=="logistic"){  
-      df$I_final=c("Final infections per day", params$I_final);
+      df$I_final=c("Final ED presentations per day", params$I_final);
     }
   } else if (dynamicModel==1){
     df$distribution=c("ED presentation curve", "User Input");
