@@ -35,6 +35,14 @@ update_inputs <- function(t,
                           reporting_percentage,
                           starting_infectives,
                           infection_timeseries,
+                          #####################
+                          agespecificLOS,
+                          avg_LOS_ICU1,
+                          avg_LOS_Floor1,
+                          avg_LOS_ICU2,
+                          avg_LOS_Floor2,
+                          avg_LOS_ICU3,
+                          avg_LOS_Floor3,
                           ... #
                           ) {
   
@@ -43,7 +51,10 @@ update_inputs <- function(t,
   ## Initializing the parameters not set
   
   if(!missing(t)) params$t=t
+  if(!missing(agespecificLOS)) params$agespecificLOS=agespecificLOS
   
+
+    
   if(!missing(young)) params$young=young;
   if(!missing(medium)) params$medium=medium;
   params$old = 1- params$young - params$medium
@@ -81,24 +92,45 @@ update_inputs <- function(t,
   if(!missing(L_final)) params$L_final=L_final;
   
   ###########################################
-  if(!missing(avg_LOS_ICU)) 
+  if(params$agespecificLOS==0) 
   {
+    if(!missing(avg_LOS_ICU)) 
+    {
       params$avg_LOS_ICU1=avg_LOS_ICU;
       params$avg_LOS_ICU2=avg_LOS_ICU;
       params$avg_LOS_ICU3=avg_LOS_ICU;
       params$avg_LOS_ICU = avg_LOS_ICU;
       
+    }
+    if(!missing(avg_LOS_Floor)) 
+    {
+      params$avg_LOS_Floor1=avg_LOS_Floor;
+      params$avg_LOS_Floor2=avg_LOS_Floor;
+      params$avg_LOS_Floor3=avg_LOS_Floor;
+      params$avg_LOS_Floor = avg_LOS_Floor;
+      params$avg_LOS_FloorQ1=avg_LOS_Floor
+      params$avg_LOS_FloorQ2=avg_LOS_Floor
+      params$avg_LOS_FloorQ3=avg_LOS_Floor
+    }
+    
   }
-  if(!missing(avg_LOS_Floor)) 
+  
+  if(params$agespecificLOS==1) 
   {
-    params$avg_LOS_Floor1=avg_LOS_Floor;
-    params$avg_LOS_Floor2=avg_LOS_Floor;
-    params$avg_LOS_Floor3=avg_LOS_Floor;
-    params$avg_LOS_Floor = avg_LOS_Floor;
+    
+    if(!missing(avg_LOS_ICU1)) params$avg_LOS_ICU1=avg_LOS_ICU1;
+    if(!missing(avg_LOS_ICU2)) params$avg_LOS_ICU2=avg_LOS_ICU2;
+    if(!missing(avg_LOS_ICU3)) params$avg_LOS_ICU3=avg_LOS_ICU3;
+    params$avg_LOS_ICU = params$young*params$avg_LOS_ICU1+params$medium*params$avg_LOS_ICU2+params$old*params$avg_LOS_ICU3;
+    if(!missing(avg_LOS_Floor1)) params$avg_LOS_Floor1=avg_LOS_Floor1;
+    if(!missing(avg_LOS_Floor2)) params$avg_LOS_Floor2=avg_LOS_Floor2;
+    if(!missing(avg_LOS_Floor3)) params$avg_LOS_Floor3=avg_LOS_Floor3;
+    params$avg_LOS_Floor = params$young*params$avg_LOS_Floor1+params$medium*params$avg_LOS_Floor2+params$old*params$avg_LOS_Floor3;
+    if(!missing(avg_LOS_Floor1)) params$avg_LOS_FloorQ1=avg_LOS_Floor1;
+    if(!missing(avg_LOS_Floor2)) params$avg_LOS_FloorQ2=avg_LOS_Floor2;
+    if(!missing(avg_LOS_Floor3)) params$avg_LOS_FloorQ3=avg_LOS_Floor3;
   }
-  
-  
-  
+
   ###########################################
   
   if(!missing(p_death_ICU2)) params$p_death_ICU2=p_death_ICU2;
