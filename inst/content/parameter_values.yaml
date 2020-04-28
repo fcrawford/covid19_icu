@@ -28,6 +28,13 @@ p_tofloor2: 0.9
 p_death_WF3: 0.1466165
 p_stepup_WF3: 0.3082707
 p_tofloor3: 0.9
+agespecificLOS: 0
+avgfloordischargetime: 6.0
+avgicudischargetime: 9.0
+minfloordischargetime: 0.5
+minicudischargetime: 0.5
+maxfloordischargetime: 25.0
+maxicudischargetime: 25.0
 avg_LOS_ICU1: 1.6663194
 avg_LOS_ICU2: 4.1811051
 avg_LOS_ICU3: 4.2989823
@@ -60,12 +67,6 @@ rampslope_min: 0.0
 rampslope_max: 5.0
 rampslope_step: 0.1
 distribution: exponential
-avgfloordischargetime: 6.0
-avgicudischargetime: 9.0
-minfloordischargetime: 0.5
-minicudischargetime: 0.5
-maxfloordischargetime: 25.0
-maxicudischargetime: 25.0
 max_p_death_Floor1: 0.9
 max_p_death_Floor2: 0.9
 max_p_death_Floor3: 0.9

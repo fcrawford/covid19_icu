@@ -65,6 +65,12 @@ server <- function(input, output, session) {
                                               ######################
                                               avg_LOS_ICU=input$avgicudischargetime,
                                               avg_LOS_Floor=input$avgfloordischargetime,
+                                              avg_LOS_ICU1=input$avg_LOS_ICU1,
+                                              avg_LOS_Floor1=input$avg_LOS_Floor1,
+                                              avg_LOS_ICU2=input$avg_LOS_ICU2,
+                                              avg_LOS_Floor2=input$avg_LOS_Floor2,
+                                              avg_LOS_ICU3=input$avg_LOS_ICU3,
+                                              avg_LOS_Floor3=input$avg_LOS_Floor3,
                                               #####################
                                               p_death_ICU2= input$ICUdeath_medium,
                                               p_death_ICU3= input$ICUdeath_old,
@@ -79,7 +85,8 @@ server <- function(input, output, session) {
                                               reporting_delay= input$reporting_delay,
                                               reporting_percentage = input$reporting_percentage,
                                               starting_infectives= input$starting_infectives,
-                                              infection_timeseries= as.numeric(strsplit(input$infection_timeseries, split = ",")[[1]])
+                                              infection_timeseries= as.numeric(strsplit(input$infection_timeseries, split = ",")[[1]]),
+                                              agespecificLOS=input$agespecificLOS
                                               ),
                                       #####################
                                       dynamicModel=input$dynamicModel,
@@ -112,6 +119,12 @@ server <- function(input, output, session) {
                                                ######################
                                                avg_LOS_ICU=input$avgicudischargetime,
                                                avg_LOS_Floor=input$avgfloordischargetime,
+                                               avg_LOS_ICU1=input$avg_LOS_ICU1,
+                                               avg_LOS_Floor1=input$avg_LOS_Floor1,
+                                               avg_LOS_ICU2=input$avg_LOS_ICU2,
+                                               avg_LOS_Floor2=input$avg_LOS_Floor2,
+                                               avg_LOS_ICU3=input$avg_LOS_ICU3,
+                                               avg_LOS_Floor3=input$avg_LOS_Floor3,
                                                #####################
                                                p_death_ICU2= input$ICUdeath_medium,
                                                p_death_ICU3= input$ICUdeath_old,
@@ -126,7 +139,8 @@ server <- function(input, output, session) {
                                   reporting_delay= input$reporting_delay,
                                   reporting_percentage = input$reporting_percentage,
                                   starting_infectives= input$starting_infectives,
-                                  infection_timeseries= as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]])
+                                  infection_timeseries= as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]]),
+                                  agespecificLOS=input$agespecificLOS
                                 ),
                                   #####################
                                   dynamicModel=input$dynamicModel,
@@ -155,7 +169,12 @@ server <- function(input, output, session) {
                                               Mramp=input$icucapramp,
                                               ######################
                                               avg_LOS_ICU=input$avgicudischargetime,
-                                              avg_LOS_Floor=input$avgfloordischargetime,
+                                              avg_LOS_Floor=input$avgfloordischargetime,                                                          avg_LOS_ICU1=input$avg_LOS_ICU1,
+                                              avg_LOS_Floor1=input$avg_LOS_Floor1,
+                                              avg_LOS_ICU2=input$avg_LOS_ICU2,
+                                              avg_LOS_Floor2=input$avg_LOS_Floor2,
+                                              avg_LOS_ICU3=input$avg_LOS_ICU3,
+                                              avg_LOS_Floor3=input$avg_LOS_Floor3,
                                               #####################
                                               p_death_ICU2= input$ICUdeath_medium,
                                               p_death_ICU3= input$ICUdeath_old,
@@ -170,7 +189,8 @@ server <- function(input, output, session) {
                                              reporting_delay= input$reporting_delay,
                                              reporting_percentage = input$reporting_percentage,
                                              starting_infectives= input$starting_infectives,
-                                             infection_timeseries=  as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]])
+                                             infection_timeseries=  as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]]),
+                                             agespecificLOS=input$agespecificLOS
                                              
                                              
                                              ),
@@ -262,7 +282,15 @@ server <- function(input, output, session) {
                          #####################
                          reporting_delay= input$reporting_delay,
                          reporting_percentage = input$reporting_percentage,
-                         starting_infectives= input$starting_infectives)
+                         starting_infectives= input$starting_infectives,
+                         #####################
+                         agespecificLOS=input$agespecificLOS,
+                         avg_LOS_ICU1=input$avg_LOS_ICU1,
+                         avg_LOS_Floor1=input$avg_LOS_Floor1,
+                         avg_LOS_ICU2=input$avg_LOS_ICU2,
+                         avg_LOS_Floor2=input$avg_LOS_Floor2,
+                         avg_LOS_ICU3=input$avg_LOS_ICU3,
+                         avg_LOS_Floor3=input$avg_LOS_Floor3)
 
 
         # Knit the document, passing in the `params` list, and eval it in a
@@ -382,8 +410,21 @@ fluidPage(theme=shinytheme("simplex"),
           includeMarkdown(system.file("content/parameters.md", package='covid19icu')),
           sliderInput("ages",  "Age breakdown of COVID+ admissions (0-18), (18-65), (65+) ", min=0, max=1, value=c(params$young,params$medium+params$young)),
           tableOutput("agebands"),
-          sliderInput("avgfloordischargetime", "Average time on floor for COVID19+ patients", min= params$minfloordischargetime, max=params$maxfloordischargetime, value=params$avgfloordischargetime),
-          sliderInput("avgicudischargetime", "Average time in ICU for COVID19+ patients",     min=params$minicudischargetime, max=params$maxicudischargetime, value=params$avgicudischargetime),
+          radioButtons("agespecificLOS", h4("Age-specific LOS?"), c("Yes"=1, "No"=0), inline=TRUE,selected=0),
+          conditionalPanel(
+            condition = "input.agespecificLOS==0",
+              sliderInput("avgfloordischargetime", "Average time on floor for COVID19+ patients", min= params$minfloordischargetime, max=params$maxfloordischargetime, value=params$avgfloordischargetime),
+              sliderInput("avgicudischargetime", "Average time in ICU for COVID19+ patients",     min=params$minicudischargetime, max=params$maxicudischargetime, value=params$avgicudischargetime)
+            ),
+          conditionalPanel(
+            condition = "input.agespecificLOS==1",
+            sliderInput("avg_LOS_Floor1", "Average time on floor for COVID19+ patients (0-18 years)", min= params$minfloordischargetime, max=params$maxfloordischargetime, value=params$avg_LOS_Floor1),
+            sliderInput("avg_LOS_Floor2", "Average time on floor for COVID19+ patients (18-64 years)", min= params$minfloordischargetime, max=params$maxfloordischargetime, value=params$avg_LOS_Floor2),
+            sliderInput("avg_LOS_Floor3", "Average time on floor for COVID19+ patients (65+ years)", min= params$minfloordischargetime, max=params$maxfloordischargetime, value=params$avg_LOS_Floor3),
+            sliderInput("avg_LOS_ICU1", "Average time in ICU for COVID19+ patients (0-18 years)",     min=params$minicudischargetime, max=params$maxicudischargetime, value=params$avg_LOS_ICU1),
+            sliderInput("avg_LOS_ICU2", "Average time in ICU for COVID19+ patients (18-64 years)",     min=params$minicudischargetime, max=params$maxicudischargetime, value=params$avg_LOS_ICU2),
+            sliderInput("avg_LOS_ICU3", "Average time in ICU for COVID19+ patients (65+ years)",     min=params$minicudischargetime, max=params$maxicudischargetime, value=params$avg_LOS_ICU3)
+          ),
 		#sliderInput("ICUdeath_young", "Probability of death in ICU (<18 years)",     min=0, max=1, value=params$p_death_ICU1),
 		sliderInput("floordeath_medium", "Probability of death for COVID19+ patients on the floor given time on floor (18-64 years)",     min=0, max=params$max_p_death_Floor2, value=params$p_death_Floor2),
 		sliderInput("floordeath_old", "Probability of death for COVID19+ patients on the floor given time on floor (65+ years)",     min=0, max=params$max_p_death_Floor3, value=params$p_death_Floor3),

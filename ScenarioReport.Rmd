@@ -39,6 +39,13 @@ params:
     starting_infectives: NA
     L_final: NA
     M_final: NA
+    agespecificLOS: NA
+    avg_LOS_ICU1: NA
+    avg_LOS_Floor1: NA
+    avg_LOS_ICU2: NA
+    avg_LOS_Floor2: NA
+    avg_LOS_ICU3: NA
+    avg_LOS_Floor3: NA
 ---
 
 This report includes the parameters values, plot outputs, and summary of key results from the model, given user-defined inputs.  Model outputs are completely dependent on user-defined inputs and depend on assumptions encoded in the model structure. Please familiarize yourself with the model structure and inputs for accurate interpretation of these outputs.  The model structure can be found on the "About" tab of the COVID-19 Hospital Capacity online webapp (<https://forrestcrawford.shinyapps.io/covid19_icu/>).
@@ -79,7 +86,15 @@ params_rmd =update_inputs(t=params$t,
                     starting_infectives=  params$starting_infectives,
                     #####################
                     L_final=params$L_final,
-                    M_final=params$M_final)
+                    M_final=params$M_final,
+                    #####################
+                    avg_LOS_ICU1=params$avg_LOS_ICU1,
+                    avg_LOS_Floor1=params$avg_LOS_Floor1,
+                    avg_LOS_ICU2=params$avg_LOS_ICU2,
+                    avg_LOS_Floor2=params$avg_LOS_Floor2,
+                    avg_LOS_ICU3=params$avg_LOS_ICU3,
+                    avg_LOS_Floor3=params$avg_LOS_Floor3,
+                    agespecificLOS=params$agespecificLOS)
 
 #dynamicModel = 0
 
