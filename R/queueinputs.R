@@ -90,6 +90,9 @@ update_inputs <- function(t,
     params$avg_LOS_Floor2=avg_LOS_Floor;
     params$avg_LOS_Floor3=avg_LOS_Floor;
     params$avg_LOS_Floor = avg_LOS_Floor;
+    params$avg_LOS_FloorQ1=avg_LOS_Floor
+    params$avg_LOS_FloorQ2=avg_LOS_Floor
+    params$avg_LOS_FloorQ3=avg_LOS_Floor
   }
   
   
