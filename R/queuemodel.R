@@ -59,6 +59,13 @@ hospital_queues<- function(params, doprotocols=0, floor_capacity_timeseries, icu
     icu_capacity_timeseries,
     rule=2);
   
+  icu_transfers<- approxfun(
+    params$icu_transfers_timeseries,
+    rule=2);
+  
+  floor_transfers<- approxfun(
+    params$floor_transfers_timeseries,
+    rule=2);
   
   
   model <- function(time, state, parameters) {
@@ -85,14 +92,16 @@ hospital_queues<- function(params, doprotocols=0, floor_capacity_timeseries, icu
       C_capped = 1-1/(1+exp(slope*(CTotal -capacity_M(time))))
       F_capped = 1-1/(1+exp(slope*(FTotal -capacity_L(time))))
       
+      floor_trans = floor_transfers(time)
+      icu_trans = icu_transfers(time)
       
       dI  <- c(0,0,0) # - lambda* I - phi_I * I - mu_I * I 
       dP  <- -(sigma_MS+sigma_C+sigma_F+mu_P)*P + xi_MS * MS + age * reports(time) # + lambda_I * I
       dMS <- sigma_MS * P - (phi + mu_MS + xi_MS)* MS
-      dWC <- (theta_WF * WF + theta_F * FL + sigma_C * P)*C_capped - eta*WC *(1-C_capped) -mu_WC * WC
-      dC  <- (theta_WF * WF + theta_F * FL + sigma_C * P + eta*WC)* (1-C_capped) - mu_C*C - chi_C *C
-      dWF <- (sigma_F* P + chi_C*C) * F_capped - zeta * WF * (1-F_capped) - (mu_WF+ theta_WF+chi_LQ)* WF
-      dFL <- (sigma_F* P + chi_C*C + zeta*WF) * (1-F_capped) - (mu_F + theta_F+chi_L)* FL
+      dWC <- (theta_WF * WF + theta_F * FL + sigma_C * P + age *icu_trans)*C_capped - eta*WC *(1-C_capped) -mu_WC * WC
+      dC  <- (theta_WF * WF + theta_F * FL + sigma_C * P + eta*WC + age *icu_trans)* (1-C_capped) - mu_C*C - chi_C *C
+      dWF <- (sigma_F* P + chi_C*C+ age *floor_trans) * F_capped - zeta * WF * (1-F_capped) - (mu_WF+ theta_WF+chi_LQ)* WF
+      dFL <- (sigma_F* P + chi_C*C + zeta*WF+ age *floor_trans) * (1-F_capped) - (mu_F + theta_F+chi_L)* FL
       dR  <- phi* MS + chi_L* FL + phi_I * I + chi_LQ * WF
       dD  <- mu_C * C+ mu_F * FL + mu_I * I + mu_MS *MS + mu_WF * WF + mu_WC * WC + mu_P * P
 
