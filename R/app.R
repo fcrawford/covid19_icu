@@ -86,7 +86,11 @@ server <- function(input, output, session) {
                                               reporting_percentage = input$reporting_percentage,
                                               starting_infectives= input$starting_infectives,
                                               infection_timeseries= as.numeric(strsplit(input$infection_timeseries, split = ",")[[1]]),
-                                              agespecificLOS=input$agespecificLOS
+                                              agespecificLOS=input$agespecificLOS,
+                                              #####################
+                                              icu_transfers_timeseries= as.numeric(strsplit(input$icu_transfers_timeseries, split = ",")[[1]]),
+                                              floor_transfers_timeseries = as.numeric(strsplit(input$floor_transfers_timeseries, split = ",")[[1]])
+                                              
                                               ),
                                       #####################
                                       dynamicModel=input$dynamicModel,
@@ -140,7 +144,10 @@ server <- function(input, output, session) {
                                   reporting_percentage = input$reporting_percentage,
                                   starting_infectives= input$starting_infectives,
                                   infection_timeseries= as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]]),
-                                  agespecificLOS=input$agespecificLOS
+                                  agespecificLOS=input$agespecificLOS,
+                                  #####################
+                                  icu_transfers_timeseries= as.numeric(strsplit(input$icu_transfers_timeseries, split = ",")[[1]]),
+                                  floor_transfers_timeseries = as.numeric(strsplit(input$floor_transfers_timeseries, split = ",")[[1]])
                                 ),
                                   #####################
                                   dynamicModel=input$dynamicModel,
@@ -190,7 +197,10 @@ server <- function(input, output, session) {
                                              reporting_percentage = input$reporting_percentage,
                                              starting_infectives= input$starting_infectives,
                                              infection_timeseries=  as.numeric(strsplit((input$infection_timeseries), split = ",")[[1]]),
-                                             agespecificLOS=input$agespecificLOS
+                                             agespecificLOS=input$agespecificLOS,
+                                             #####################
+                                             icu_transfers_timeseries= as.numeric(strsplit(input$icu_transfers_timeseries, split = ",")[[1]]),
+                                             floor_transfers_timeseries = as.numeric(strsplit(input$floor_transfers_timeseries, split = ",")[[1]])
                                              
                                              
                                              ),
@@ -290,7 +300,10 @@ server <- function(input, output, session) {
                          avg_LOS_ICU2=input$avg_LOS_ICU2,
                          avg_LOS_Floor2=input$avg_LOS_Floor2,
                          avg_LOS_ICU3=input$avg_LOS_ICU3,
-                         avg_LOS_Floor3=input$avg_LOS_Floor3)
+                         avg_LOS_Floor3=input$avg_LOS_Floor3,
+                         #####################
+                         icu_transfers_timeseries= as.numeric(strsplit(input$icu_transfers_timeseries, split = ",")[[1]]),
+                         floor_transfers_timeseries = as.numeric(strsplit(input$floor_transfers_timeseries, split = ",")[[1]]))
 
 
         # Knit the document, passing in the `params` list, and eval it in a
@@ -366,7 +379,9 @@ fluidPage(theme=shinytheme("simplex"),
                          selected=0)
           ),
           conditionalPanel( condition= "input.dynamicModel==1",
-             textInput("ed_visits_timeseries", label = h6("ED visit time-series"), value = "0,0,0,0,0,0,0,0")
+             textInput("ed_visits_timeseries", label = h6("ED visit time-series"), value = "0,0,0,0,0,0,0,0"),
+             textInput("icu_transfers_timeseries", label = h6("ICU transfers time-series"), value = "0,0,0,0,0,0,0,0"),
+             textInput("floor_transfers_timeseries", label = h6("Floor transfers time-series"), value = "0,0,0,0,0,0,0,0")
           ),
           conditionalPanel(condition= "input.dynamicModel==2",
                 textInput("infection_timeseries", label = h6("Infection incidence time-series"), value = "0,0,0,0,0,0,0,0"),

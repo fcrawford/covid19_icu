@@ -43,6 +43,8 @@ update_inputs <- function(t,
                           avg_LOS_Floor2,
                           avg_LOS_ICU3,
                           avg_LOS_Floor3,
+                          icu_transfers_timeseries,
+                          floor_transfers_timeseries,
                           ... #
                           ) {
   
@@ -161,6 +163,25 @@ update_inputs <- function(t,
     params$infection_timeseries=rep(0,20);
     
   }
+  
+  if(!missing(icu_transfers_timeseries)) {
+    params$icu_transfers_timeseries = icu_transfers_timeseries;
+  } else {
+    
+    params$icu_transfers_timeseries=rep(0,20);
+    
+  }
+  
+  if(!missing(floor_transfers_timeseries)) {
+    params$floor_transfers_timeseries = floor_transfers_timeseries;
+  } else {
+    
+    params$floor_transfers_timeseries=rep(0,20);
+    
+  }
+  
+  
+  
   
   if(!missing(reporting_delay)) params$average_reporting_delay=reporting_delay;
   if(!missing(reporting_percentage)) params$average_reporting_percentage=reporting_percentage;
