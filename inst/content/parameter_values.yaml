@@ -28,6 +28,7 @@ p_tofloor2: 0.9
 p_death_WF3: 0.1869266
 p_stepup_WF3: 0.168578
 p_tofloor3: 0.9
+agespecificLOS: 0
 avg_LOS_ICU1: 10.1703498
 avg_LOS_ICU2: 10.1518664
 avg_LOS_ICU3: 9.5280461
