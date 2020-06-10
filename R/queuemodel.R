@@ -113,8 +113,8 @@ hospital_queues<- function(params, doprotocols=0, floor_capacity_timeseries, icu
       dDead_in_ED = mu_P %*% P;
       dNumber_seen_at_ED = reports(time)  +xi_MS %*% MS;
       
-      dCTotaldt = sum((theta_WF * WF + theta_F * FL + sigma_C * P + eta*WC+ icu_trans)* (1-C_capped) - mu_C*C - chi_C *C)
-      dFTotaldt = sum((sigma_F* P + chi_C*C + zeta*WF+floor_trans) * (1-F_capped) - (mu_F+ theta_F+chi_L)* FL) 
+      dCTotaldt = sum((theta_WF * WF + theta_F * FL + sigma_C * P + eta*WC+ age*icu_trans)* (1-C_capped) - mu_C*C - chi_C *C)
+      dFTotaldt = sum((sigma_F* P + chi_C*C + zeta*WF+age*floor_trans) * (1-F_capped) - (mu_F+ theta_F+chi_L)* FL) 
       
       return(
         list(
