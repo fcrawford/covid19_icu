@@ -32,6 +32,8 @@ hospital_queues<- function(params, doprotocols=0, floor_capacity_timeseries, icu
                   C=c(params$young, params$medium, params$old) * params$M * params$M_occupied/100,
                   WF=rep(0.0, times=3),
                   FL=c(params$young, params$medium, params$old) * params$L * params$L_occupied/100,
+                  WF=rep(0.0, times=3),
+                  FL=rep(0.0, times=3),
                   R=rep(0.0, times=3),
                   D=rep(0.0, times=3),
                   Dead_at_ICU =0,
@@ -100,26 +102,28 @@ hospital_queues<- function(params, doprotocols=0, floor_capacity_timeseries, icu
       dMS <- sigma_MS * P - (phi + mu_MS + xi_MS)* MS
       dWC <- (theta_WF * WF + theta_F * FL + sigma_C * P + age *icu_trans)*C_capped - eta*WC *(1-C_capped) -mu_WC * WC
       dC  <- (theta_WF * WF + theta_F * FL + sigma_C * P + eta*WC + age *icu_trans)* (1-C_capped) - mu_C*C - chi_C *C
-      dWF <- (sigma_F* P + chi_C*C+ age *floor_trans) * F_capped - zeta * WF * (1-F_capped) - (mu_WF+ theta_WF+chi_LQ)* WF
-      dFL <- (sigma_F* P + chi_C*C + zeta*WF+ age *floor_trans) * (1-F_capped) - (mu_F + theta_F+chi_L)* FL
-      dR  <- phi* MS + chi_L* FL + phi_I * I + chi_LQ * WF
-      dD  <- mu_C * C+ mu_F * FL + mu_I * I + mu_MS *MS + mu_WF * WF + mu_WC * WC + mu_P * P
+      dWF <- (sigma_F* P + age *floor_trans) * F_capped - zeta * WF * (1-F_capped) - (mu_WF+ theta_WF+chi_LQ)* WF
+      dFL <- (sigma_F* P + zeta*WF+ age *floor_trans) * (1-F_capped) - (mu_F + theta_F+chi_L)* FL
+      dWF2 <- (chi_C*C) * F_capped - zeta * WF2 * (1-F_capped) - (mu_WF+chi_LQ)* WF
+      dFL2 <- (chi_C*C+zeta*WF2) * (1-F_capped) - (mu_F + chi_L)* FL2
+      dR  <- phi* MS + chi_L* FL + + chi_L* FL2 + phi_I * I + chi_LQ * WF + chi_LQ * WF2
+      dD  <- mu_C * C+ mu_F * FL + mu_F * FL2 + mu_I * I + mu_MS *MS + mu_WF * WF+ mu_WF * WF2 + mu_WC * WC + mu_P * P
 
       dDead_at_ICU = mu_C %*% C;
-      dDead_on_Floor = mu_F %*% FL ;
+      dDead_on_Floor = mu_F %*% FL + mu_F %*% FL2 ;
       dDead_waiting_for_ICU = mu_WC %*% WC;
-      dDead_waiting_for_Floor =  mu_WF %*% WF;
+      dDead_waiting_for_Floor =  mu_WF %*% WF + mu_WF %*% WF2;
       dDead_with_mild_symptoms = mu_MS %*%MS;
       dDead_in_ED = mu_P %*% P;
       dNumber_seen_at_ED = reports(time)  +xi_MS %*% MS;
       
       dCTotaldt = sum((theta_WF * WF + theta_F * FL + sigma_C * P + eta*WC+ age*icu_trans)* (1-C_capped) - mu_C*C - chi_C *C)
-      dFTotaldt = sum((sigma_F* P + chi_C*C + zeta*WF+age*floor_trans) * (1-F_capped) - (mu_F+ theta_F+chi_L)* FL) 
+      dFTotaldt = sum((sigma_F* P + chi_C*C + zeta*WF+ zeta* WF2+age*floor_trans) * (1-F_capped) - (mu_F+ theta_F+chi_L)* FL- (mu_F + chi_L)* FL2) 
       
       return(
         list(
           c(dI,dP,dMS, dWC,dC, 
-            dWF, dFL, dR, dD, 
+            dWF, dFL, dWF2, dFL2 dR, dD, 
             dDead_at_ICU, dDead_on_Floor,dDead_waiting_for_ICU, 
             dDead_waiting_for_Floor,dDead_with_mild_symptoms, dDead_in_ED, 
             dNumber_seen_at_ED, dCTotaldt, dFTotaldt
