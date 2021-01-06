@@ -194,15 +194,15 @@ update_inputs <- function(t,
   
   ## Leaving ED
   
-  params$sigma_MS1= params$percentage_MS1 * 1/params$t_Triage;
-  params$sigma_MS2= params$percentage_MS2 * 1/params$t_Triage;
-  params$sigma_MS3= params$percentage_MS3 * 1/params$t_Triage;
-  params$sigma_F1= params$percentage_F1 * 1/params$t_Triage;
-  params$sigma_F2= params$percentage_F2 * 1/params$t_Triage;
-  params$sigma_F3= params$percentage_F3 * 1/params$t_Triage;
-  params$sigma_C1= params$percentage_C1 * 1/params$t_Triage;
-  params$sigma_C2= params$percentage_C2 * 1/params$t_Triage;
-  params$sigma_C3= params$percentage_C3 * 1/params$t_Triage;
+  params$sigma_MS1= params$percentage_MS1 * 1/params$t_Triage1;
+  params$sigma_MS2= params$percentage_MS2 * 1/params$t_Triage2;
+  params$sigma_MS3= params$percentage_MS3 * 1/params$t_Triage3;
+  params$sigma_F1= params$percentage_F1 * 1/params$t_Triage1;
+  params$sigma_F2= params$percentage_F2 * 1/params$t_Triage2;
+  params$sigma_F3= params$percentage_F3 * 1/params$t_Triage3;
+  params$sigma_C1= params$percentage_C1 * 1/params$t_Triage1;
+  params$sigma_C2= params$percentage_C2 * 1/params$t_Triage2;
+  params$sigma_C3= params$percentage_C3 * 1/params$t_Triage3;
   
   # Leaving ICU
   params$mu_C1= params$p_death_ICU1 * 1/params$avg_LOS_ICU1;
@@ -245,17 +245,17 @@ update_inputs <- function(t,
   
   ######################
   # Leaving FL Queue
-  params$mu_WF1= params$p_death_WF1 * 1/params$avg_LOS_FloorQ1;
-  params$theta_WF1= params$p_stepup_WF1 * 1/params$avg_LOS_FloorQ1;
-  params$chi_LQ1= (1-params$p_death_WF1 - params$p_stepup_WF1 )* 1/params$avg_LOS_FloorQ1;
+  params$mu_WF1= params$p_death_WF1 * 1/params$avg_LOS_Floor1;
+  params$theta_WF1= params$p_stepup_WF1 * 1/params$avg_LOS_Floor1;
+  params$chi_LQ1= (1-params$p_death_WF1 - params$p_stepup_WF1 )* 1/params$avg_LOS_Floor1;
   
-  params$mu_WF2= params$p_death_WF2 * 1/params$avg_LOS_FloorQ2;
-  params$theta_WF2= params$p_stepup_WF2 * 1/params$avg_LOS_FloorQ2;
-  params$chi_LQ2= (1-params$p_death_WF2 - params$p_stepup_WF2 )* 1/params$avg_LOS_FloorQ2;
+  params$mu_WF2= params$p_death_WF2 * 1/params$avg_LOS_Floor2;
+  params$theta_WF2= params$p_stepup_WF2 * 1/params$avg_LOS_Floor2;
+  params$chi_LQ2= (1-params$p_death_WF2 - params$p_stepup_WF2 )* 1/params$avg_LOS_Floor2;
   
-  params$mu_WF3= params$p_death_WF3 * 1/params$avg_LOS_FloorQ3;
-  params$theta_WF3= params$p_stepup_WF3 * 1/params$avg_LOS_FloorQ3;
-  params$chi_LQ3= (1-params$p_death_WF3 - params$p_stepup_WF3 )* 1/params$avg_LOS_FloorQ3;
+  params$mu_WF3= params$p_death_WF3 * 1/params$avg_LOS_Floor3;
+  params$theta_WF3= params$p_stepup_WF3 * 1/params$avg_LOS_Floor3;
+  params$chi_LQ3= (1-params$p_death_WF3 - params$p_stepup_WF3 )* 1/params$avg_LOS_Floor3;
   
 
   ## Fast emptying of queue
